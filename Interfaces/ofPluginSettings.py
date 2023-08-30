@@ -21,6 +21,10 @@ from qfluentwidgets import (
     FluentIcon as FIF,
 )
 
+from MCSL2Lib.variables import GlobalMCSL2Variables
+from ..variables import OFVariables
+from ..OpenFrpLib import __version__ as OFLibVersion
+
 
 class OpenFrpSettingsUI(QWidget):
     def __init__(self):
@@ -387,7 +391,7 @@ class OpenFrpSettingsUI(QWidget):
         self.SwitchButton.setOnText("开")
         self.SwitchButton.setOffText("关")
         self.ofLibVerTitle.setText("OpenFrpLib 库当前版本：")
-        self.ofLibVer.setText("[库版本]")
+        self.ofLibVer.setText(OFLibVersion)
         self.ofFrpcSettingsTitle.setText("OpenFrp Frpc 设置")
 
         self.forceTLSTitle.setText("强制TLS流量传输")
@@ -404,5 +408,8 @@ class OpenFrpSettingsUI(QWidget):
         self.frpcDebugModeSwitchBtn.setOffText("关")
         self.SubtitleLabel.setText("检查更新")
         self.pluginVerTitle.setText("插件当前版本：")
-        self.pluginVer.setText("[版本]")
+        self.pluginVer.setText(OFVariables.ofPluginVersion)
         self.pluginCheckUpdateBtn.setText("检查更新")
+        self.ofSettingsSmoothScrollArea.viewport().setStyleSheet(
+            GlobalMCSL2Variables.scrollAreaViewportQss
+        )
