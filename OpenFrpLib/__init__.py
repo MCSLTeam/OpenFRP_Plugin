@@ -9,4 +9,4 @@ from .NetworkController import BYPASS_SYSTEM_PROXY
 from .Account import login, getUserInfo, userSign
 from .Proxies import getUserProxies, newProxy, editProxy, removeProxy, getNodeList
 
-__version__ = "1.0.5"
+__version__ = "1.1.0"

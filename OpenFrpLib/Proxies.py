@@ -82,7 +82,7 @@ def newProxy(Authorization: str,
                  'Authorization': Authorization}
     )
     _newProxyData = _APIData.json()
-    data = str(_newProxyData['data'])
+    data = _newProxyData['data']
     flag = bool(_newProxyData['flag'])
     msg = str(_newProxyData['msg'])
 
@@ -127,7 +127,7 @@ def editProxy(Authorization: str,
                  'Authorization': Authorization}
     )
     _editProxyData = _APIData.json()
-    data = str(_editProxyData['data'])
+    data = _editProxyData['data']
     flag = bool(_editProxyData['flag'])
     msg = str(_editProxyData['msg'])
 
@@ -152,7 +152,7 @@ def removeProxy(Authorization: str,
                  'Authorization': Authorization}
     )
     _removeProxyData = _APIData.json()
-    data = str(_removeProxyData['data'])
+    data = _removeProxyData['data']
     flag = bool(_removeProxyData['flag'])
     msg = str(_removeProxyData['msg'])
 
@@ -173,7 +173,7 @@ def getNodeList(Authorization: str, session: str):
                  'Authorization': Authorization}
     )
     _getNodeListData = _APIData.json()
-    data = dict(_getNodeListData['data'])
+    data = _getNodeListData['data']
     flag = bool(_getNodeListData['flag'])
     msg = str(_getNodeListData['msg'])
 

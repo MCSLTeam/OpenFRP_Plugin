@@ -29,7 +29,7 @@ def login(user: str, password: str):
         headers={'Content-Type': 'application/json'}
     )
     _loginData = _APIData.json()
-    data = str(_loginData['data'])  # Will be expired in 8 hours.
+    data = _loginData['data']  # Will be expired in 8 hours.
     flag = bool(_loginData['flag'])  # Status, true or false.
     msg = str(_loginData['msg'])  # What Msg API returned.
     # Will be expired in 8 hours.
@@ -89,7 +89,7 @@ def getUserInfo(Authorization: str, session: str):
                  'Authorization': Authorization}
     )
     _userData = _APIData.json()
-    data = str(_userData['data'])
+    data = _userData['data']
     flag = bool(_userData['flag'])
     msg = str(_userData['msg'])
 
@@ -120,7 +120,7 @@ def userSign(Authorization: str, session: str):
                  'Authorization': Authorization}
     )
     _userSignData = _APIData.json()
-    data = str(_userSignData['data'])
+    data = _userSignData['data']
     flag = bool(_userSignData['flag'])
     msg = str(_userSignData['msg'])
 
