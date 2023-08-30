@@ -25,7 +25,8 @@ class OpenFrpFrpcConsoleUI(QWidget):
 
         spacerItem = QSpacerItem(20, 10, QSizePolicy.Minimum, QSizePolicy.Fixed)
         self.gridLayout.addItem(spacerItem, 0, 4, 1, 1)
-        self.clearFrpcConsoleBtn = TransparentPushButton(FIF.DELETE, self)
+        self.clearFrpcConsoleBtn = TransparentPushButton(self)
+        self.clearFrpcConsoleBtn.setIcon(FIF.DELETE)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
