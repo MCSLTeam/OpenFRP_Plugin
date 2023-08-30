@@ -34,12 +34,13 @@ from qfluentwidgets import (
 )
 from MCSL2Lib.variables import GlobalMCSL2Variables
 from ..variables import OFVariables, variablesLogout
+from ..OFSettingsController import OFSettingsController
 from ..APIThreads import *
 from .loginWidget import LoginContainer
 from .images import *  # noqa: F401
 from .userInfoWidget import UserInfoContainer
-from ..OpenFrpLib import getUserInfo
 
+ofSettingsController = OFSettingsController()
 
 class OpenFrpMainUI(QWidget):
     def __init__(self):
@@ -731,6 +732,10 @@ class OpenFrpMainUI(QWidget):
                 password=self.loginWidget.passwordLineEdit.text(),
             )
         )
+        if ofSettingsController.fileSettings["last_user"] != "":
+            self.loginWidget.userNameLineEdit.setText(ofSettingsController.fileSettings["last_user"])
+        if ofSettingsController.fileSettings["last_password"] != "":
+            self.loginWidget.passwordLineEdit.setText(ofSettingsController.fileSettings["last_password"])
         self.loginMessageBox.textLayout.addWidget(self.loginWidget.loginWidget)
         self.loginMessageBox.titleLabel.setParent(None)
         self.loginMessageBox.contentLabel.setParent(None)
@@ -764,6 +769,7 @@ class OpenFrpMainUI(QWidget):
             loginThread.start()
 
     def afterLogin(self):
+        ofSettingsController.changeSettings({"last_user": OFVariables.userName, "last_password": OFVariables.userPassword})
         self.loginWidget.loginBtn.setEnabled(True)
         self.loginingInfoBar.close()
         if OFVariables.loginData[2]:
@@ -836,6 +842,7 @@ class OpenFrpMainUI(QWidget):
 
     def logout(self):
         variablesLogout()
+        ofSettingsController.changeSettings({"last_user": OFVariables.userName, "last_password": OFVariables.userPassword})
         self.accountInfoBtn.clicked.disconnect()
         self.userInfoStackedWidget.setCurrentIndex(0)
         self.userName.setText("[用户名]")

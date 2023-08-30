@@ -2,13 +2,14 @@ from Adapters.Plugin import Plugin
 from MCSL2Lib.windowInterface import Window
 from PyQt5.QtCore import Qt
 from .Interfaces.OfInterface import OpenFrpMainUI
+from .OFSettingsController import initOFPluginConfiguration
 from qfluentwidgets import FluentIcon as FIF, InfoBar, InfoBarPosition
 OpenFRP_Plugin = Plugin()
 
 ofInterface = OpenFrpMainUI()
 
 def load():
-    pass
+    initOFPluginConfiguration()
 
 
 def enable():
