@@ -1,0 +1,9 @@
+{
+    "plugin_name": "OpenFRP_Plugin",
+    "version": "1.0.0",
+    "description": "OpenFRP映射的插件",
+    "icon": "of.png",
+    "author": "MCSL开发组",
+    "author_email": "lxhtt@mcsl.com.cn",
+    "on_new_thread": false
+  }
