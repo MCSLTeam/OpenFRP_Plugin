@@ -79,6 +79,11 @@
          <property name="text">
           <string>OpenFrp 内容策略</string>
          </property>
+         <property name="url">
+          <url>
+           <string>https://www.openfrp.net/content/</string>
+          </url>
+         </property>
         </widget>
        </item>
        <item>
@@ -86,12 +91,34 @@
          <property name="text">
           <string>OpenFrp 隐私策略</string>
          </property>
+         <property name="url">
+          <url>
+           <string>https://www.openfrp.net/privacy/</string>
+          </url>
+         </property>
         </widget>
        </item>
        <item>
         <widget class="HyperlinkLabel" name="ofPolicyLabel">
          <property name="text">
           <string>OpenFrp 服务条款</string>
+         </property>
+         <property name="url">
+          <url>
+           <string>https://www.openfrp.net/policy/</string>
+          </url>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="HyperlinkLabel" name="ofRegisterLabel">
+         <property name="text">
+          <string>注册账户</string>
+         </property>
+         <property name="url">
+          <url>
+           <string>https://console.openfrp.net/register</string>
+          </url>
          </property>
         </widget>
        </item>

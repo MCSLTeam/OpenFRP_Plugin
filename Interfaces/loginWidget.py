@@ -1,4 +1,4 @@
-from PyQt5.QtCore import QSize, QRect
+from PyQt5.QtCore import QSize, QRect, QUrl
 from PyQt5.QtWidgets import (
     QWidget,
     QGridLayout,
@@ -65,17 +65,26 @@ class LoginContainer(QWidget):
             self.ofContentLabel.sizePolicy().hasHeightForWidth()
         )
         self.ofContentLabel.setSizePolicy(sizePolicy)
+        self.ofContentLabel.setUrl(QUrl("https://www.openfrp.net/content/"))
         self.ofContentLabel.setObjectName("ofContentLabel")
 
         self.horizontalLayout_2.addWidget(self.ofContentLabel)
         self.ofPrivacyLabel = HyperlinkLabel(self.ofAgreementBtnWidget)
+        self.ofPrivacyLabel.setUrl(QUrl("https://www.openfrp.net/privacy/"))
         self.ofPrivacyLabel.setObjectName("ofPrivacyLabel")
 
         self.horizontalLayout_2.addWidget(self.ofPrivacyLabel)
         self.ofPolicyLabel = HyperlinkLabel(self.ofAgreementBtnWidget)
+        self.ofPolicyLabel.setUrl(QUrl("https://www.openfrp.net/policy/"))
         self.ofPolicyLabel.setObjectName("ofPolicyLabel")
 
         self.horizontalLayout_2.addWidget(self.ofPolicyLabel)
+        
+        self.ofRegisterLabel = HyperlinkLabel(self.ofAgreementBtnWidget)
+        self.ofRegisterLabel.setUrl(QUrl("https://console.openfrp.net/register"))
+        self.ofRegisterLabel.setObjectName("ofRegisterLabel")
+
+        self.horizontalLayout_2.addWidget(self.ofRegisterLabel)
         self.gridLayout.addWidget(self.ofAgreementBtnWidget, 4, 0, 1, 1)
         self.loginTitle = TitleLabel(self.loginWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
