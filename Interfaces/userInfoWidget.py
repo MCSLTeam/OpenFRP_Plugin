@@ -10,12 +10,11 @@ from qfluentwidgets import (
     BodyLabel,
     SubtitleLabel,
     TitleLabel,
+    CardWidget
 )
 
-from qfluentwidgets import BodyLabel, CardWidget, SubtitleLabel, TitleLabel
 
-
-class UserInfoContainer(CardWidget):
+class UserInfoContainer(QWidget):
     def __init__(self):
         super().__init__()
 
@@ -23,14 +22,12 @@ class UserInfoContainer(CardWidget):
 
         self.userInfoWidget = QWidget(self)
         self.userInfoWidget.setGeometry(QRect(10, 20, 471, 361))
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.userInfoWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.userInfoWidget.sizePolicy().hasHeightForWidth())
         self.userInfoWidget.setSizePolicy(sizePolicy)
-        self.userInfoWidget.setMinimumSize(QSize(350, 241))
+        self.userInfoWidget.setFixedSize(QSize(471, 361))
         self.userInfoWidget.setObjectName("userInfoWidget")
 
         self.gridLayout = QGridLayout(self.userInfoWidget)
@@ -50,7 +47,7 @@ class UserInfoContainer(CardWidget):
         self.gridLayout_2 = QGridLayout(self.widget)
         self.gridLayout_2.setObjectName("gridLayout_2")
 
-        self.emailWidget = CardWidget(self.widget)
+        self.emailWidget = QWidget(self.widget)
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -77,7 +74,7 @@ class UserInfoContainer(CardWidget):
 
         self.verticalLayout_2.addWidget(self.email)
         self.gridLayout_2.addWidget(self.emailWidget, 0, 0, 1, 1)
-        self.trafficWidget = CardWidget(self.widget)
+        self.trafficWidget = QWidget(self.widget)
         self.trafficWidget.setMinimumSize(QSize(215, 65))
         self.trafficWidget.setMaximumSize(QSize(215, 65))
         self.trafficWidget.setObjectName("trafficWidget")
@@ -99,7 +96,7 @@ class UserInfoContainer(CardWidget):
 
         self.verticalLayout_4.addWidget(self.traffic)
         self.gridLayout_2.addWidget(self.trafficWidget, 0, 1, 1, 1)
-        self.nickNameWidget = CardWidget(self.widget)
+        self.nickNameWidget = QWidget(self.widget)
         self.nickNameWidget.setMinimumSize(QSize(215, 65))
         self.nickNameWidget.setMaximumSize(QSize(215, 65))
         self.nickNameWidget.setObjectName("nickNameWidget")
@@ -123,7 +120,7 @@ class UserInfoContainer(CardWidget):
 
         self.verticalLayout.addWidget(self.nickName)
         self.gridLayout_2.addWidget(self.nickNameWidget, 1, 0, 1, 1)
-        self.realNameWidget = CardWidget(self.widget)
+        self.realNameWidget = QWidget(self.widget)
         self.realNameWidget.setMinimumSize(QSize(215, 65))
         self.realNameWidget.setMaximumSize(QSize(215, 65))
         self.realNameWidget.setObjectName("realNameWidget")
@@ -147,7 +144,7 @@ class UserInfoContainer(CardWidget):
 
         self.verticalLayout_5.addWidget(self.realName)
         self.gridLayout_2.addWidget(self.realNameWidget, 1, 1, 1, 1)
-        self.numOfProxiesWidget = CardWidget(self.widget)
+        self.numOfProxiesWidget = QWidget(self.widget)
         self.numOfProxiesWidget.setMinimumSize(QSize(215, 65))
         self.numOfProxiesWidget.setMaximumSize(QSize(215, 65))
         self.numOfProxiesWidget.setObjectName("numOfProxiesWidget")
@@ -171,7 +168,7 @@ class UserInfoContainer(CardWidget):
 
         self.verticalLayout_3.addWidget(self.numOfProxies)
         self.gridLayout_2.addWidget(self.numOfProxiesWidget, 2, 0, 1, 1)
-        self.groupWidget = CardWidget(self.widget)
+        self.groupWidget = QWidget(self.widget)
         self.groupWidget.setMinimumSize(QSize(215, 65))
         self.groupWidget.setMaximumSize(QSize(215, 65))
         self.groupWidget.setObjectName("groupWidget")
@@ -193,7 +190,7 @@ class UserInfoContainer(CardWidget):
 
         self.verticalLayout_6.addWidget(self.group)
         self.gridLayout_2.addWidget(self.groupWidget, 2, 1, 1, 1)
-        self.inoutLimitWidget = CardWidget(self.widget)
+        self.inoutLimitWidget = QWidget(self.widget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -238,17 +235,18 @@ class UserInfoContainer(CardWidget):
         self.gridLayout.addWidget(self.userInfoTitle, 0, 0, 1, 1)
 
         self.emailTitle.setText("邮箱")
-        self.email.setText("[邮箱]")
         self.trafficTitle.setText("可用流量")
-        self.traffic.setText("[流量]")
         self.nickNameTitle.setText("昵称")
-        self.nickName.setText("[昵称]")
         self.realNameTitle.setText("实名状态")
-        self.realName.setText("[实名状态]")
         self.numOfProxiesTitle.setText("隧道数")
-        self.numOfProxies.setText("[隧道数]")
         self.groupTitle.setText("用户组")
-        self.group.setText("[用户组]")
         self.inoutLimitTitle.setText("带宽速率")
-        self.inoutLimit.setText("[带宽速率]")
         self.userInfoTitle.setText("用户信息")
+
+        self.email.setText("[邮箱]")
+        self.traffic.setText("[流量]")
+        self.nickName.setText("[昵称]")
+        self.realName.setText("[实名状态]")
+        self.numOfProxies.setText("[隧道数]")
+        self.group.setText("[用户组]")
+        self.inoutLimit.setText("[带宽速率]")

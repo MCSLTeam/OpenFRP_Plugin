@@ -62,7 +62,7 @@
     <item row="4" column="0">
      <widget class="QWidget" name="ofAgreementBtnWidget" native="true">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -77,7 +77,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>OpenFrp 内容策略</string>
+          <string>内容策略</string>
          </property>
          <property name="url">
           <url>
@@ -88,8 +88,14 @@
        </item>
        <item>
         <widget class="HyperlinkLabel" name="ofPrivacyLabel">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
-          <string>OpenFrp 隐私策略</string>
+          <string>隐私策略</string>
          </property>
          <property name="url">
           <url>
@@ -100,8 +106,14 @@
        </item>
        <item>
         <widget class="HyperlinkLabel" name="ofPolicyLabel">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
-          <string>OpenFrp 服务条款</string>
+          <string>服务条款</string>
          </property>
          <property name="url">
           <url>
@@ -109,6 +121,22 @@
           </url>
          </property>
         </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>200</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
        <item>
         <widget class="HyperlinkLabel" name="ofRegisterLabel">

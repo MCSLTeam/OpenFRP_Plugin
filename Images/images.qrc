@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="OFImages">
+    <file>user.png</file>
+  </qresource>
+</RCC>

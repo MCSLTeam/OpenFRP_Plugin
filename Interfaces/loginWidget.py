@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import (
     QGridLayout,
     QSizePolicy,
     QHBoxLayout,
+    QSpacerItem,
 )
 
 from qfluentwidgets import (
@@ -61,25 +62,34 @@ class LoginContainer(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.ofContentLabel.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.ofContentLabel.sizePolicy().hasHeightForWidth())
         self.ofContentLabel.setSizePolicy(sizePolicy)
         self.ofContentLabel.setUrl(QUrl("https://www.openfrp.net/content/"))
         self.ofContentLabel.setObjectName("ofContentLabel")
 
         self.horizontalLayout_2.addWidget(self.ofContentLabel)
         self.ofPrivacyLabel = HyperlinkLabel(self.ofAgreementBtnWidget)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.ofPrivacyLabel.sizePolicy().hasHeightForWidth())
+        self.ofPrivacyLabel.setSizePolicy(sizePolicy)
         self.ofPrivacyLabel.setUrl(QUrl("https://www.openfrp.net/privacy/"))
         self.ofPrivacyLabel.setObjectName("ofPrivacyLabel")
 
         self.horizontalLayout_2.addWidget(self.ofPrivacyLabel)
         self.ofPolicyLabel = HyperlinkLabel(self.ofAgreementBtnWidget)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.ofPolicyLabel.sizePolicy().hasHeightForWidth())
+        self.ofPolicyLabel.setSizePolicy(sizePolicy)
         self.ofPolicyLabel.setUrl(QUrl("https://www.openfrp.net/policy/"))
         self.ofPolicyLabel.setObjectName("ofPolicyLabel")
 
         self.horizontalLayout_2.addWidget(self.ofPolicyLabel)
-        
+        spacerItem = QSpacerItem(200, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
+        self.horizontalLayout_2.addItem(spacerItem)
         self.ofRegisterLabel = HyperlinkLabel(self.ofAgreementBtnWidget)
         self.ofRegisterLabel.setUrl(QUrl("https://console.openfrp.net/register"))
         self.ofRegisterLabel.setObjectName("ofRegisterLabel")
@@ -125,12 +135,19 @@ class LoginContainer(QWidget):
         self.horizontalLayout.addWidget(self.cancelBtn)
         self.gridLayout.addWidget(self.loginBtnWidget, 5, 0, 1, 1)
 
-        self.ofContentLabel.setText("OpenFrp 内容策略")
-        self.ofPrivacyLabel.setText("OpenFrp 隐私策略")
-        self.ofPolicyLabel.setText("OpenFrp 服务条款")
+        self.ofContentLabel.setText("内容策略")
+        self.ofPrivacyLabel.setText("隐私策略")
+        self.ofPolicyLabel.setText("服务条款")
+        self.ofRegisterLabel.setText("注册账户")
+        self.ofContentLabel.setFixedSize(QSize(56, 19))
+        self.ofPrivacyLabel.setFixedSize(QSize(56, 19))
+        self.ofPolicyLabel.setFixedSize(QSize(56, 19))
+        self.ofRegisterLabel.setFixedSize(QSize(56, 19))
         self.loginTitle.setText("登录")
         self.userNameLineEdit.setPlaceholderText("用户名或邮箱")
         self.tipLabel.setText("登录 OpenFrp 账户即代表您遵守以下协议。")
         self.passwordLineEdit.setPlaceholderText("密码")
         self.loginBtn.setText("登录")
         self.cancelBtn.setText("取消")
+        self.userNameLineEdit.setClearButtonEnabled(True)
+        self.passwordLineEdit.setEchoMode(LineEdit.Password)
