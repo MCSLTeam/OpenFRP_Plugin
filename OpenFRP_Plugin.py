@@ -25,13 +25,13 @@ def load():
 
 def enable():
     try:
-        Window().addSubInterface(ofInterface, FIF.WIFI, "OpenFrp")
-        Window().addSubInterface(ofFrpcInterface, FIF.COMMAND_PROMPT, "OF终端")
+        Window().addSubInterface(ofInterface, FIF.WIFI, "OpenFrp", position=NavigationItemPosition.SCROLL)
+        Window().addSubInterface(ofFrpcInterface, FIF.COMMAND_PROMPT, "OF终端", position=NavigationItemPosition.SCROLL)
         Window().addSubInterface(
             ofSettingInterface,
             FIF.SETTING,
             "OF设置",
-            position=NavigationItemPosition.BOTTOM,
+            position=NavigationItemPosition.SCROLL,
         )
         InfoBar.success(
             title="提示",

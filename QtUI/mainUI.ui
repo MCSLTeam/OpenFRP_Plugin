@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>700</width>
+    <width>708</width>
     <height>550</height>
    </rect>
   </property>
@@ -204,7 +204,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>648</width>
+            <width>656</width>
             <height>380</height>
            </rect>
           </property>
@@ -309,19 +309,6 @@
      </widget>
      <widget class="QWidget" name="newProxyPage">
       <layout class="QGridLayout" name="gridLayout_5">
-       <item row="0" column="1">
-        <widget class="TitleLabel" name="newProxyTitle">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>OpenFrp - 新建隧道</string>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="2" colspan="2">
         <spacer name="horizontalSpacer_2">
          <property name="orientation">
@@ -335,11 +322,21 @@
          </property>
         </spacer>
        </item>
+       <item row="0" column="1">
+        <widget class="TitleLabel" name="newProxyTitle">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>OpenFrp - 新建隧道</string>
+         </property>
+        </widget>
+       </item>
        <item row="0" column="0">
         <widget class="TransparentToolButton" name="newProxyBackBtn"/>
-       </item>
-       <item row="1" column="0" colspan="3">
-        <widget class="QWidget" name="nodeWidget" native="true"/>
        </item>
        <item row="1" column="3">
         <widget class="SmoothScrollArea" name="configureProxyScrollArea">
@@ -365,17 +362,20 @@
           <enum>QFrame::NoFrame</enum>
          </property>
          <property name="verticalScrollBarPolicy">
-          <enum>Qt::ScrollBarAsNeeded</enum>
+          <enum>Qt::ScrollBarAlwaysOff</enum>
          </property>
          <property name="widgetResizable">
           <bool>true</bool>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
          </property>
          <widget class="QWidget" name="configureProxyScrollAreaWidgetContents">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>328</width>
+            <width>345</width>
             <height>882</height>
            </rect>
           </property>
@@ -833,6 +833,89 @@
            </item>
            <item row="24" column="0" colspan="2">
             <widget class="PlainTextEdit" name="custom"/>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="PrimaryPushButton" name="finishNewProxyBtn">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>新建</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" rowspan="2" colspan="3">
+        <widget class="QStackedWidget" name="nodeStackedWidget">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="currentIndex">
+          <number>1</number>
+         </property>
+         <widget class="QWidget" name="loadingPage">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_8">
+           <item row="0" column="0">
+            <layout class="QGridLayout" name="loadingStatusLayout"/>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="nodePage">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_6">
+           <item row="0" column="0">
+            <widget class="SmoothScrollArea" name="nodeScrollArea">
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="widgetResizable">
+              <bool>true</bool>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+             <widget class="QWidget" name="nodeScrollAreaWidgetContents">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>287</width>
+                <height>435</height>
+               </rect>
+              </property>
+              <layout class="QGridLayout" name="gridLayout_10">
+               <item row="0" column="0">
+                <layout class="QGridLayout" name="nodeLayout"/>
+               </item>
+              </layout>
+             </widget>
+            </widget>
            </item>
           </layout>
          </widget>

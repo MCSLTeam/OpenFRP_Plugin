@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>280</width>
-    <height>170</height>
+    <width>300</width>
+    <height>190</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,74 +18,123 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>280</width>
-    <height>170</height>
+    <width>300</width>
+    <height>190</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>280</width>
-    <height>170</height>
+    <width>300</width>
+    <height>190</height>
    </size>
   </property>
   <property name="windowTitle">
    <string/>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="2">
-    <widget class="SubtitleLabel" name="SubtitleLabel">
-     <property name="text">
-      <string>[节点名称]</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="StrongBodyLabel" name="nodeTag">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">StrongBodyLabel {
-	color: red;
-}</string>
-     </property>
-     <property name="text">
-      <string>[状态]</string>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="0">
-    <widget class="BodyLabel" name="num">
+    <widget class="QWidget" name="nodeWidget" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="styleSheet">
-      <string notr="true">BodyLabel {
+     <property name="minimumSize">
+      <size>
+       <width>280</width>
+       <height>170</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>280</width>
+       <height>170</height>
+      </size>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <widget class="BodyLabel" name="num">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">BodyLabel {
     color: white;
     background-color: #009faa;
 	border-radius: 3px;
 	padding: 2px;
 }</string>
-     </property>
-     <property name="text">
-      <string>#</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1" colspan="2">
-    <widget class="BodyLabel" name="nodeInfo">
-     <property name="text">
-      <string>[详情]</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-     </property>
+        </property>
+        <property name="text">
+         <string>#</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="StrongBodyLabel" name="nodeTag">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">StrongBodyLabel {
+	color: red;
+}</string>
+        </property>
+        <property name="text">
+         <string>[状态]</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="SubtitleLabel" name="nodeName">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>[节点名称]</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="1" column="0" colspan="4">
+       <widget class="BodyLabel" name="nodeInfo">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>[详情]</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>

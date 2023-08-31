@@ -1,5 +1,6 @@
+from json import dumps
 from PyQt5.QtCore import QSize, Qt, QRect
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtGui import QPixmap, QColor
 from PyQt5.QtWidgets import (
     QWidget,
     QGridLayout,
@@ -32,15 +33,18 @@ from qfluentwidgets import (
     InfoBarPosition,
     InfoBar,
 )
+from MCSL2Lib.loadingTipWidget import LoadFailedTip, LoadingTip
 from MCSL2Lib.variables import GlobalMCSL2Variables
 from ..variables import OFVariables, variablesLogout
 from ..OFSettingsController import OFSettingsController
 from ..APIThreads import *
 from .loginWidget import LoginContainer
+from .singleNodeWidget import SingleNodeWidget
 from .images import *  # noqa: F401
 from .userInfoWidget import UserInfoContainer
 
 ofSettingsController = OFSettingsController()
+
 
 class OpenFrpMainUI(QWidget):
     def __init__(self):
@@ -271,6 +275,8 @@ class OpenFrpMainUI(QWidget):
         self.gridLayout_5 = QGridLayout(self.newProxyPage)
         self.gridLayout_5.setObjectName("gridLayout_5")
 
+        spacerItem1 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.gridLayout_5.addItem(spacerItem1, 0, 2, 1, 2)
         self.newProxyTitle = TitleLabel(self.newProxyPage)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -282,16 +288,10 @@ class OpenFrpMainUI(QWidget):
         self.newProxyTitle.setObjectName("newProxyTitle")
 
         self.gridLayout_5.addWidget(self.newProxyTitle, 0, 1, 1, 1)
-        spacerItem1 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-        self.gridLayout_5.addItem(spacerItem1, 0, 2, 1, 2)
-        self.newProxyBackBtn = TransparentToolButton(self.newProxyPage)
+        self.newProxyBackBtn = TransparentToolButton(FIF.PAGE_LEFT, self.newProxyPage)
         self.newProxyBackBtn.setObjectName("newProxyBackBtn")
 
         self.gridLayout_5.addWidget(self.newProxyBackBtn, 0, 0, 1, 1)
-        self.nodeWidget = QWidget(self.newProxyPage)
-        self.nodeWidget.setObjectName("nodeWidget")
-
-        self.gridLayout_5.addWidget(self.nodeWidget, 1, 0, 1, 3)
         self.configureProxyScrollArea = SmoothScrollArea(self.newProxyPage)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -303,12 +303,15 @@ class OpenFrpMainUI(QWidget):
         self.configureProxyScrollArea.setMinimumSize(QSize(345, 0))
         self.configureProxyScrollArea.setMaximumSize(QSize(345, 16777215))
         self.configureProxyScrollArea.setFrameShape(QFrame.NoFrame)
-        self.configureProxyScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.configureProxyScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.configureProxyScrollArea.setWidgetResizable(True)
+        self.configureProxyScrollArea.setAlignment(
+            Qt.AlignLeading | Qt.AlignLeft | Qt.AlignTop
+        )
         self.configureProxyScrollArea.setObjectName("configureProxyScrollArea")
 
         self.configureProxyScrollAreaWidgetContents = QWidget()
-        self.configureProxyScrollAreaWidgetContents.setGeometry(QRect(0, 0, 328, 882))
+        self.configureProxyScrollAreaWidgetContents.setGeometry(QRect(0, 0, 345, 882))
         self.configureProxyScrollAreaWidgetContents.setObjectName(
             "configureProxyScrollAreaWidgetContents"
         )
@@ -593,6 +596,7 @@ class OpenFrpMainUI(QWidget):
         )
         self.requestFromTitle.setSizePolicy(sizePolicy)
         self.requestFromTitle.setObjectName("requestFromTitle")
+
         self.gridLayout_7.addWidget(self.requestFromTitle, 20, 0, 1, 1)
         self.selectNode = BodyLabel(self.configureProxyScrollAreaWidgetContents)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
@@ -655,7 +659,74 @@ class OpenFrpMainUI(QWidget):
             self.configureProxyScrollAreaWidgetContents
         )
         self.gridLayout_5.addWidget(self.configureProxyScrollArea, 1, 3, 1, 1)
+        self.finishNewProxyBtn = PrimaryPushButton(self.newProxyPage)
+        sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.finishNewProxyBtn.sizePolicy().hasHeightForWidth()
+        )
+        self.finishNewProxyBtn.setSizePolicy(sizePolicy)
+        self.finishNewProxyBtn.setMinimumSize(QSize(0, 50))
+        self.finishNewProxyBtn.setObjectName("finishNewProxyBtn")
+
+        self.gridLayout_5.addWidget(self.finishNewProxyBtn, 2, 3, 1, 1)
+        self.nodeStackedWidget = QStackedWidget(self.newProxyPage)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.nodeStackedWidget.sizePolicy().hasHeightForWidth()
+        )
+        self.nodeStackedWidget.setSizePolicy(sizePolicy)
+        self.nodeStackedWidget.setObjectName("nodeStackedWidget")
+
+        self.loadingPage = QWidget()
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.loadingPage.sizePolicy().hasHeightForWidth())
+        self.loadingPage.setSizePolicy(sizePolicy)
+        self.loadingPage.setObjectName("loadingPage")
+
+        self.gridLayout_8 = QGridLayout(self.loadingPage)
+        self.gridLayout_8.setObjectName("gridLayout_8")
+
+        self.loadingStatusLayout = QGridLayout()
+        self.loadingStatusLayout.setObjectName("loadingStatusLayout")
+
+        self.gridLayout_8.addLayout(self.loadingStatusLayout, 0, 0, 1, 1)
+        self.nodeStackedWidget.addWidget(self.loadingPage)
+        self.nodePage = QWidget()
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.nodePage.sizePolicy().hasHeightForWidth())
+        self.nodePage.setSizePolicy(sizePolicy)
+        self.nodePage.setObjectName("nodePage")
+
+        self.gridLayout_6 = QGridLayout(self.nodePage)
+        self.gridLayout_6.setObjectName("gridLayout_6")
+
+        self.nodeScrollArea = SmoothScrollArea(self.nodePage)
+        self.nodeScrollArea.setFrameShape(QFrame.NoFrame)
+        self.nodeScrollArea.setWidgetResizable(True)
+        self.nodeScrollArea.setAlignment(Qt.AlignCenter)
+        self.nodeScrollArea.setObjectName("nodeScrollArea")
+
+        self.nodeScrollAreaWidgetContents = QWidget()
+        self.nodeScrollAreaWidgetContents.setGeometry(QRect(0, 0, 287, 435))
+        self.nodeScrollAreaWidgetContents.setObjectName("nodeScrollAreaWidgetContents")
+
+        self.nodeLayout = FlowLayout(self.nodeScrollAreaWidgetContents, needAni=True)
+        self.nodeLayout.setObjectName("nodeLayout")
+
+        self.nodeScrollArea.setWidget(self.nodeScrollAreaWidgetContents)
+        self.gridLayout_6.addWidget(self.nodeScrollArea, 0, 0, 1, 1)
+        self.nodeStackedWidget.addWidget(self.nodePage)
+        self.gridLayout_5.addWidget(self.nodeStackedWidget, 1, 0, 2, 3)
         self.stackedWidget.addWidget(self.newProxyPage)
+
         self.gridLayout.addWidget(self.stackedWidget, 1, 1, 1, 1)
         spacerItem5 = QSpacerItem(10, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem5, 1, 0, 2, 1)
@@ -664,6 +735,7 @@ class OpenFrpMainUI(QWidget):
 
         self.stackedWidget.setCurrentIndex(0)
         self.userInfoStackedWidget.setCurrentIndex(0)
+        self.nodeStackedWidget.setCurrentIndex(0)
 
         self.titleLabel.setText("OpenFrp 开放映射")
         self.pluginVerTitle.setText("插件版本：")
@@ -708,6 +780,7 @@ class OpenFrpMainUI(QWidget):
         self.dataGzip.setOnText("已启用")
         self.dataGzip.setOffText("已关闭")
         self.requestPass.setPlaceholderText("1145141919810")
+        self.finishNewProxyBtn.setText("新建")
 
         self.configureProxyScrollArea.viewport().setStyleSheet(
             GlobalMCSL2Variables.scrollAreaViewportQss
@@ -715,12 +788,22 @@ class OpenFrpMainUI(QWidget):
         self.ofProxiesSmoothScrollArea.viewport().setStyleSheet(
             GlobalMCSL2Variables.scrollAreaViewportQss
         )
-        proxyLayout = FlowLayout(self.nodeWidget)
+        self.nodeScrollArea.viewport().setStyleSheet(
+            GlobalMCSL2Variables.scrollAreaViewportQss
+        )
         self.userImage.setPixmap(QPixmap(":/OFImages/user.png"))
         self.userImage.setFixedSize(QSize(60, 60))
         self.loginEntryBtn.clicked.connect(self.initLoginInterface)
+        self.newProxyBackBtn.clicked.connect(
+            lambda: self.stackedWidget.setCurrentIndex(0)
+        )
+        self.newProxyBtn.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(1))
+        self.newProxyBtn.clicked.connect(self.getNodeList_API)
+        self.newProxyBtn.setEnabled(False)
+        self.refreshProxyListBtn.setEnabled(False)
 
     def initLoginInterface(self):
+        OFVariables.loginData.clear()
         self.loginMessageBox = MessageBox("", "", self)
         self.loginWidget = LoginContainer()
         self.loginWidget.cancelBtn.clicked.connect(self.loginMessageBox.hide)
@@ -733,9 +816,13 @@ class OpenFrpMainUI(QWidget):
             )
         )
         if ofSettingsController.fileSettings["last_user"] != "":
-            self.loginWidget.userNameLineEdit.setText(ofSettingsController.fileSettings["last_user"])
+            self.loginWidget.userNameLineEdit.setText(
+                ofSettingsController.fileSettings["last_user"]
+            )
         if ofSettingsController.fileSettings["last_password"] != "":
-            self.loginWidget.passwordLineEdit.setText(ofSettingsController.fileSettings["last_password"])
+            self.loginWidget.passwordLineEdit.setText(
+                ofSettingsController.fileSettings["last_password"]
+            )
         self.loginMessageBox.textLayout.addWidget(self.loginWidget.loginWidget)
         self.loginMessageBox.titleLabel.setParent(None)
         self.loginMessageBox.contentLabel.setParent(None)
@@ -769,7 +856,12 @@ class OpenFrpMainUI(QWidget):
             loginThread.start()
 
     def afterLogin(self):
-        ofSettingsController.changeSettings({"last_user": OFVariables.userName, "last_password": OFVariables.userPassword})
+        ofSettingsController.changeSettings(
+            {
+                "last_user": OFVariables.userName,
+                "last_password": OFVariables.userPassword,
+            }
+        )
         self.loginWidget.loginBtn.setEnabled(True)
         self.loginingInfoBar.close()
         if OFVariables.loginData[2]:
@@ -785,6 +877,8 @@ class OpenFrpMainUI(QWidget):
                 parent=self,
             )
             self.userInfoStackedWidget.setCurrentIndex(1)
+            self.newProxyBtn.setEnabled(True)
+            self.refreshProxyListBtn.setEnabled(True)
             self.getUserInfo_API()
         else:
             InfoBar.error(
@@ -797,6 +891,7 @@ class OpenFrpMainUI(QWidget):
             )
 
     def getUserInfo_API(self):
+        OFVariables.userInfo.clear()
         self.accountInfoBtn.setEnabled(False)
         self.logoutBtn.setEnabled(False)
         getUserInfoThread = GetUserInfoThread(self)
@@ -842,8 +937,68 @@ class OpenFrpMainUI(QWidget):
 
     def logout(self):
         variablesLogout()
-        ofSettingsController.changeSettings({"last_user": OFVariables.userName, "last_password": OFVariables.userPassword})
+        ofSettingsController.changeSettings(
+            {
+                "last_user": OFVariables.userName,
+                "last_password": OFVariables.userPassword,
+            }
+        )
         self.accountInfoBtn.clicked.disconnect()
         self.userInfoStackedWidget.setCurrentIndex(0)
         self.userName.setText("[用户名]")
         self.userEmail.setText("[用户邮箱]")
+
+    def getNodeList_API(self):
+        OFVariables.nodeListData = []
+        try:
+            for i in reversed(range(self.nodeLayout.count())):
+                self.nodeLayout.itemAt(i).widget().deleteLater()
+            for i in reversed(range(self.loadingStatusLayout.count())):
+                self.loadingStatusLayout.itemAt(i).widget().deleteLater()
+        except Exception:
+            pass
+        self.loadingWidget = LoadingTip()
+        getNodeListThread = GetNodeListThread(self)
+        getNodeListThread.finished.connect(self.afterGetNodeList)
+        self.loadingStatusLayout.addWidget(self.loadingWidget)
+        getNodeListThread.start()
+
+    def afterGetNodeList(self):
+        for i in reversed(range(self.loadingStatusLayout.count())):
+            self.loadingStatusLayout.itemAt(i).widget().deleteLater()
+        if OFVariables.nodeListData[1]:
+            self.nodeStackedWidget.setCurrentIndex(1)
+            self.initNodeListWidget()
+        else:
+            self.loadFailedWidget = LoadFailedTip()
+            self.loadFailedWidget.refreshBtn.clicked.connect(self.getNodeList_API)
+            self.loadingStatusLayout.addWidget(self.loadFailedWidget)
+
+    def initNodeListWidget(self):
+        for i in range(int(OFVariables.nodeListData[0]["total"])):
+            nodeWidget = SingleNodeWidget()
+            nodeWidget.nodeName.setText(OFVariables.nodeListData[0]["list"][i]["name"])
+            nodeWidget.nodeTag.setText(
+                f"""{'[满载]' if OFVariables.nodeListData[0]['list'][i]['fullyLoaded'] else ''}{'[VIP]' if not 'normal' in OFVariables.nodeListData[0]['list'][i]['group'] else ''}""",
+            )
+            if nodeWidget.nodeTag.text() == "  ":
+                nodeWidget.nodeTag.setFixedSize(QSize(1, 1))
+            elif "VIP" in nodeWidget.nodeTag.text():
+                nodeWidget.nodeWidget.setStyleSheet("QWidget {background-color: #d7b521; border-radius: 5px;}")
+            elif "满载" in nodeWidget.nodeTag.text():
+                nodeWidget.nodeWidget.setStyleSheet("QWidget {background-color: #912015; border-radius: 5px;}")
+            nodeWidget.num.setText(f"#{i}")
+            protocolSupportList = [
+                OFVariables.nodeListData[0]["list"][i]["protocolSupport"]["tcp"],
+                OFVariables.nodeListData[0]["list"][i]["protocolSupport"]["udp"],
+                OFVariables.nodeListData[0]["list"][i]["protocolSupport"]["http"],
+                OFVariables.nodeListData[0]["list"][i]["protocolSupport"]["https"],
+            ]
+            enter = "\n"
+            nodeWidget.nodeInfo.setText(
+                f"""{OFVariables.nodeListData[0]['list'][i]['comments']}{f'{enter}需要实名'if OFVariables.nodeListData[0]['list'][i]['needRealname'] else ''}\n{OFVariables.nodeListData[0]['list'][i]['bandwidth']}Mbps × {OFVariables.nodeListData[0]['list'][i]['bandwidthMagnification']}\n{'不允许' if False in protocolSupportList else ''}{' TCP' if not OFVariables.nodeListData[0]['list'][i]['protocolSupport']['tcp'] else ''}{' UDP' if not OFVariables.nodeListData[0]['list'][i]['protocolSupport']['udp'] else ''}{' HTTP' if not OFVariables.nodeListData[0]['list'][i]['protocolSupport']['http'] else ''}{' HTTPS' if not OFVariables.nodeListData[0]['list'][i]['protocolSupport']['https'] else ''}"""
+            )
+            nodeWidget.setObjectName(
+                f"singleNodeWidget_{OFVariables.nodeListData[0]['list'][i]['name']}"
+            )
+            self.nodeLayout.addWidget(nodeWidget)

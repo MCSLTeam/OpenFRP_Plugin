@@ -3,6 +3,7 @@ class OFVariables:
     userSessionID: str = ""
     userAuthorization: str = ""
     userInfo = {}
+    nodeListData = []
     userName: str = ""
     userPassword: str = ""
     loginData = []
