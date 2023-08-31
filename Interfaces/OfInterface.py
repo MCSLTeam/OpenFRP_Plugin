@@ -1,6 +1,5 @@
-from json import dumps
 from PyQt5.QtCore import QSize, Qt, QRect
-from PyQt5.QtGui import QPixmap, QColor
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import (
     QWidget,
     QGridLayout,
