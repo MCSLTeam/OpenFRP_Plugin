@@ -951,8 +951,7 @@ class OpenFrpMainUI(QWidget):
     def getNodeList_API(self):
         OFVariables.nodeListData = []
         try:
-            for i in reversed(range(self.nodeLayout.count())):
-                self.nodeLayout.itemAt(i).widget().deleteLater()
+            self.nodeLayout.takeAllWidgets()
             for i in reversed(range(self.loadingStatusLayout.count())):
                 self.loadingStatusLayout.itemAt(i).widget().deleteLater()
         except Exception:
