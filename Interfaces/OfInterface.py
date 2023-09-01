@@ -34,6 +34,7 @@ from qfluentwidgets import (
 )
 from MCSL2Lib.loadingTipWidget import LoadFailedTip, LoadingTip
 from MCSL2Lib.variables import GlobalMCSL2Variables
+from MCSL2Lib.publicFunctions import isDarkTheme
 from ..variables import OFVariables, variablesLogout
 from ..OFSettingsController import OFSettingsController
 from ..APIThreads import *
@@ -668,7 +669,6 @@ class OpenFrpMainUI(QWidget):
         self.finishNewProxyBtn.setSizePolicy(sizePolicy)
         self.finishNewProxyBtn.setMinimumSize(QSize(0, 50))
         self.finishNewProxyBtn.setObjectName("finishNewProxyBtn")
-
         self.gridLayout_5.addWidget(self.finishNewProxyBtn, 2, 3, 1, 1)
         self.nodeStackedWidget = QStackedWidget(self.newProxyPage)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
@@ -679,7 +679,6 @@ class OpenFrpMainUI(QWidget):
         )
         self.nodeStackedWidget.setSizePolicy(sizePolicy)
         self.nodeStackedWidget.setObjectName("nodeStackedWidget")
-
         self.loadingPage = QWidget()
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -687,13 +686,10 @@ class OpenFrpMainUI(QWidget):
         sizePolicy.setHeightForWidth(self.loadingPage.sizePolicy().hasHeightForWidth())
         self.loadingPage.setSizePolicy(sizePolicy)
         self.loadingPage.setObjectName("loadingPage")
-
         self.gridLayout_8 = QGridLayout(self.loadingPage)
         self.gridLayout_8.setObjectName("gridLayout_8")
-
         self.loadingStatusLayout = QGridLayout()
         self.loadingStatusLayout.setObjectName("loadingStatusLayout")
-
         self.gridLayout_8.addLayout(self.loadingStatusLayout, 0, 0, 1, 1)
         self.nodeStackedWidget.addWidget(self.loadingPage)
         self.nodePage = QWidget()
@@ -703,28 +699,130 @@ class OpenFrpMainUI(QWidget):
         sizePolicy.setHeightForWidth(self.nodePage.sizePolicy().hasHeightForWidth())
         self.nodePage.setSizePolicy(sizePolicy)
         self.nodePage.setObjectName("nodePage")
-
         self.gridLayout_6 = QGridLayout(self.nodePage)
         self.gridLayout_6.setObjectName("gridLayout_6")
-
         self.nodeScrollArea = SmoothScrollArea(self.nodePage)
         self.nodeScrollArea.setFrameShape(QFrame.NoFrame)
         self.nodeScrollArea.setWidgetResizable(True)
         self.nodeScrollArea.setAlignment(Qt.AlignCenter)
         self.nodeScrollArea.setObjectName("nodeScrollArea")
-
         self.nodeScrollAreaWidgetContents = QWidget()
         self.nodeScrollAreaWidgetContents.setGeometry(QRect(0, 0, 287, 435))
         self.nodeScrollAreaWidgetContents.setObjectName("nodeScrollAreaWidgetContents")
-
-        self.nodeLayout = FlowLayout(self.nodeScrollAreaWidgetContents, needAni=True)
-        self.nodeLayout.setObjectName("nodeLayout")
-
+        self.gridLayout_10 = QGridLayout(self.nodeScrollAreaWidgetContents)
+        self.gridLayout_10.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_10.setObjectName("gridLayout_10")
+        self.nodeTotalLayout = QVBoxLayout()
+        self.nodeTotalLayout.setObjectName("nodeTotalLayout")
+        self.cnNodeContainer = QWidget(self.nodeScrollAreaWidgetContents)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.cnNodeContainer.sizePolicy().hasHeightForWidth()
+        )
+        self.cnNodeContainer.setSizePolicy(sizePolicy)
+        self.cnNodeContainer.setObjectName("cnNodeContainer")
+        self.gridLayout_9 = QGridLayout(self.cnNodeContainer)
+        self.gridLayout_9.setObjectName("gridLayout_9")
+        self.cnNodeTitle = SubtitleLabel(self.cnNodeContainer)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.cnNodeTitle.sizePolicy().hasHeightForWidth())
+        self.cnNodeTitle.setSizePolicy(sizePolicy)
+        self.cnNodeTitle.setObjectName("cnNodeTitle")
+        self.gridLayout_9.addWidget(self.cnNodeTitle, 0, 0, 1, 1)
+        spacerItem5 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.gridLayout_9.addItem(spacerItem5, 0, 1, 1, 1)
+        self.cnNodeWidget = QWidget(self.cnNodeContainer)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.cnNodeWidget.sizePolicy().hasHeightForWidth())
+        self.cnNodeWidget.setSizePolicy(sizePolicy)
+        self.cnNodeWidget.setObjectName("cnNodeWidget")
+        self.gridLayout_9.addWidget(self.cnNodeWidget, 1, 0, 1, 2)
+        self.nodeTotalLayout.addWidget(self.cnNodeContainer)
+        self.hkTwNodeContainer = QWidget(self.nodeScrollAreaWidgetContents)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.hkTwNodeContainer.sizePolicy().hasHeightForWidth()
+        )
+        self.hkTwNodeContainer.setSizePolicy(sizePolicy)
+        self.hkTwNodeContainer.setObjectName("hkTwNodeContainer")
+        self.gridLayout_12 = QGridLayout(self.hkTwNodeContainer)
+        self.gridLayout_12.setObjectName("gridLayout_12")
+        self.hkTwNodeTitle = SubtitleLabel(self.hkTwNodeContainer)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.hkTwNodeTitle.sizePolicy().hasHeightForWidth()
+        )
+        self.hkTwNodeTitle.setSizePolicy(sizePolicy)
+        self.hkTwNodeTitle.setObjectName("hkTwNodeTitle")
+        self.gridLayout_12.addWidget(self.hkTwNodeTitle, 0, 0, 1, 1)
+        spacerItem6 = QSpacerItem(32, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.gridLayout_12.addItem(spacerItem6, 0, 1, 1, 1)
+        self.hkTwNodeWidget = QWidget(self.hkTwNodeContainer)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.hkTwNodeWidget.sizePolicy().hasHeightForWidth()
+        )
+        self.hkTwNodeWidget.setSizePolicy(sizePolicy)
+        self.hkTwNodeWidget.setObjectName("hkTwNodeWidget")
+        self.gridLayout_12.addWidget(self.hkTwNodeWidget, 1, 0, 1, 2)
+        self.nodeTotalLayout.addWidget(self.hkTwNodeContainer)
+        self.foreignNodeContainer = QWidget(self.nodeScrollAreaWidgetContents)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.foreignNodeContainer.sizePolicy().hasHeightForWidth()
+        )
+        self.foreignNodeContainer.setSizePolicy(sizePolicy)
+        self.foreignNodeContainer.setObjectName("foreignNodeContainer")
+        self.gridLayout_11 = QGridLayout(self.foreignNodeContainer)
+        self.gridLayout_11.setObjectName("gridLayout_11")
+        self.foreignNodeTitle = SubtitleLabel(self.foreignNodeContainer)
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.foreignNodeTitle.sizePolicy().hasHeightForWidth()
+        )
+        self.foreignNodeTitle.setSizePolicy(sizePolicy)
+        self.foreignNodeTitle.setObjectName("foreignNodeTitle")
+        self.gridLayout_11.addWidget(self.foreignNodeTitle, 0, 0, 1, 1)
+        spacerItem7 = QSpacerItem(160, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.gridLayout_11.addItem(spacerItem7, 0, 1, 1, 1)
+        self.foreignNodeWidget = QWidget(self.foreignNodeContainer)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.foreignNodeWidget.sizePolicy().hasHeightForWidth()
+        )
+        self.foreignNodeWidget.setSizePolicy(sizePolicy)
+        self.foreignNodeWidget.setObjectName("foreignNodeWidget")
+        self.gridLayout_11.addWidget(self.foreignNodeWidget, 1, 0, 1, 2)
+        self.nodeTotalLayout.addWidget(self.foreignNodeContainer)
+        self.gridLayout_10.addLayout(self.nodeTotalLayout, 0, 0, 1, 1)
         self.nodeScrollArea.setWidget(self.nodeScrollAreaWidgetContents)
         self.gridLayout_6.addWidget(self.nodeScrollArea, 0, 0, 1, 1)
         self.nodeStackedWidget.addWidget(self.nodePage)
         self.gridLayout_5.addWidget(self.nodeStackedWidget, 1, 0, 2, 3)
         self.stackedWidget.addWidget(self.newProxyPage)
+        self.gridLayout.addWidget(self.stackedWidget, 1, 1, 1, 1)
+        spacerItem8 = QSpacerItem(10, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem8, 1, 0, 2, 1)
+        spacerItem9 = QSpacerItem(20, 10, QSizePolicy.Minimum, QSizePolicy.Fixed)
+        self.gridLayout.addItem(spacerItem9, 0, 0, 1, 2)
 
         self.gridLayout.addWidget(self.stackedWidget, 1, 1, 1, 1)
         spacerItem5 = QSpacerItem(10, 20, QSizePolicy.Fixed, QSizePolicy.Minimum)
@@ -780,6 +878,9 @@ class OpenFrpMainUI(QWidget):
         self.dataGzip.setOffText("已关闭")
         self.requestPass.setPlaceholderText("1145141919810")
         self.finishNewProxyBtn.setText("新建")
+        self.cnNodeTitle.setText("国内节点")
+        self.hkTwNodeTitle.setText("中国台湾/中国香港节点")
+        self.foreignNodeTitle.setText("国外节点")
 
         self.configureProxyScrollArea.viewport().setStyleSheet(
             GlobalMCSL2Variables.scrollAreaViewportQss
@@ -800,6 +901,15 @@ class OpenFrpMainUI(QWidget):
         self.newProxyBtn.clicked.connect(self.getNodeList_API)
         self.newProxyBtn.setEnabled(False)
         self.refreshProxyListBtn.setEnabled(False)
+        self.cnNodeLayout = FlowLayout(self.cnNodeWidget, needAni=True)
+        self.hkTwNodeLayout = FlowLayout(self.hkTwNodeWidget, needAni=True)
+        self.foreignNodeLayout = FlowLayout(self.foreignNodeWidget, needAni=True)
+        self.nodeLayoutList = [
+            "PlaceHolder",
+            self.cnNodeLayout,
+            self.hkTwNodeLayout,
+            self.foreignNodeLayout,
+        ]
 
     def initLoginInterface(self):
         OFVariables.loginData.clear()
@@ -950,7 +1060,8 @@ class OpenFrpMainUI(QWidget):
     def getNodeList_API(self):
         OFVariables.nodeListData = []
         try:
-            self.nodeLayout.takeAllWidgets()
+            for i in range(1, 3):
+                self.nodeLayoutList[i].takeAllWidgets()
             for i in reversed(range(self.loadingStatusLayout.count())):
                 self.loadingStatusLayout.itemAt(i).widget().deleteLater()
         except Exception:
@@ -982,9 +1093,18 @@ class OpenFrpMainUI(QWidget):
             if nodeWidget.nodeTag.text() == "  ":
                 nodeWidget.nodeTag.setFixedSize(QSize(1, 1))
             elif "VIP" in nodeWidget.nodeTag.text():
-                nodeWidget.nodeWidget.setStyleSheet("QWidget {background-color: #d7b521; border-radius: 5px;}")
+                nodeWidget.nodeWidget.setStyleSheet(
+                    "QWidget {background-color: #d7b521; border-radius: 5px;}"
+                )
+                if OFVariables.userInfo[0]["group"] == "normal":
+                    nodeWidget.setClickEnabled(False)
+                    nodeWidget.setEnabled(False)
             elif "满载" in nodeWidget.nodeTag.text():
-                nodeWidget.nodeWidget.setStyleSheet("QWidget {background-color: #912015; border-radius: 5px;}")
+                nodeWidget.nodeWidget.setStyleSheet(
+                    "QWidget {background-color: #912015; border-radius: 5px;}"
+                )
+                nodeWidget.setClickEnabled(False)
+                nodeWidget.setEnabled(False)
             nodeWidget.num.setText(f"#{i}")
             protocolSupportList = [
                 OFVariables.nodeListData[0]["list"][i]["protocolSupport"]["tcp"],
@@ -994,9 +1114,12 @@ class OpenFrpMainUI(QWidget):
             ]
             enter = "\n"
             nodeWidget.nodeInfo.setText(
-                f"""{OFVariables.nodeListData[0]['list'][i]['comments']}{f'{enter}需要实名'if OFVariables.nodeListData[0]['list'][i]['needRealname'] else ''}\n{OFVariables.nodeListData[0]['list'][i]['bandwidth']}Mbps × {OFVariables.nodeListData[0]['list'][i]['bandwidthMagnification']}\n{'不允许' if False in protocolSupportList else ''}{' TCP' if not OFVariables.nodeListData[0]['list'][i]['protocolSupport']['tcp'] else ''}{' UDP' if not OFVariables.nodeListData[0]['list'][i]['protocolSupport']['udp'] else ''}{' HTTP' if not OFVariables.nodeListData[0]['list'][i]['protocolSupport']['http'] else ''}{' HTTPS' if not OFVariables.nodeListData[0]['list'][i]['protocolSupport']['https'] else ''}"""
+                f"""{OFVariables.nodeListData[0]['list'][i]['comments']}{f'{enter}' if OFVariables.nodeListData[0]['list'][i]['comments'] != '' else ''}{f'需要实名'if OFVariables.nodeListData[0]['list'][i]['needRealname'] else ''}\n{OFVariables.nodeListData[0]['list'][i]['bandwidth']}Mbps × {OFVariables.nodeListData[0]['list'][i]['bandwidthMagnification']}\n{'不允许' if False in protocolSupportList else ''}{' TCP' if not OFVariables.nodeListData[0]['list'][i]['protocolSupport']['tcp'] else ''}{' UDP' if not OFVariables.nodeListData[0]['list'][i]['protocolSupport']['udp'] else ''}{' HTTP' if not OFVariables.nodeListData[0]['list'][i]['protocolSupport']['http'] else ''}{' HTTPS' if not OFVariables.nodeListData[0]['list'][i]['protocolSupport']['https'] else ''}"""
             )
             nodeWidget.setObjectName(
                 f"singleNodeWidget_{OFVariables.nodeListData[0]['list'][i]['name']}"
             )
-            self.nodeLayout.addWidget(nodeWidget)
+
+            self.nodeLayoutList[
+                OFVariables.nodeListData[0]["list"][i]["classify"]
+            ].addWidget(nodeWidget)
