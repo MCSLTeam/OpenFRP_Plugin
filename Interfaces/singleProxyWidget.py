@@ -108,7 +108,7 @@ class SingleProxyWidget(CardWidget):
         self.editProxy.setIcon(FIF.EDIT)
         self.deleteProxy.setIcon(FIF.REMOVE)
         
-        self.copyProxyLink.setText("复制链接")
+        self.copyProxyLink.setText("复制")
         self.editProxy.setText("编辑")
         self.SwitchButton.setOnText("开")
         self.SwitchButton.setOffText("关")
