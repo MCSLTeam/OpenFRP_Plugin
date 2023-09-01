@@ -77,4 +77,19 @@ class NewProxyThread(QThread):
                 request_pass=OFVariables.configuringRequestPass,
             )
         except Exception:
-            OFVariables.nodeListData = [None, False, "创建失败"]
+            OFVariables.newProxyData = [None, False, "创建失败"]
+
+
+class GetUserProxiesThread(QThread):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setObjectName("GetUserProxiesThread")
+
+    def run(self):
+        try:
+            OFVariables.userProxiesData = getUserProxies(
+                Authorization=OFVariables.userAuthorization,
+                session=OFVariables.userSessionID,
+            )
+        except Exception:
+            OFVariables.userProxiesData = [0, [], False, "失败"]
