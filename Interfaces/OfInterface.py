@@ -35,13 +35,14 @@ from qfluentwidgets import (
 from MCSL2Lib.loadingTipWidget import LoadFailedTip, LoadingTip
 from MCSL2Lib.variables import GlobalMCSL2Variables
 from MCSL2Lib.publicFunctions import isDarkTheme
-from ..variables import OFVariables, variablesLogout
+from ..variables import OFVariables, clearNewProxyConfig, variablesLogout
 from ..OFSettingsController import OFSettingsController
 from ..APIThreads import *
 from .loginWidget import LoginContainer
 from .singleNodeWidget import SingleNodeWidget
 from .images import *  # noqa: F401
 from .userInfoWidget import UserInfoContainer
+from random import randint
 
 ofSettingsController = OFSettingsController()
 
@@ -910,6 +911,9 @@ class OpenFrpMainUI(QWidget):
             self.hkTwNodeLayout,
             self.foreignNodeLayout,
         ]
+        self.proxyMode.setText("选择后可用")
+        self.proxyProtocol.addItems(["关闭", "V1", "V2（推荐）"])
+        self.finishNewProxyBtn.setEnabled(False)
 
     def initLoginInterface(self):
         OFVariables.loginData.clear()
@@ -1058,6 +1062,7 @@ class OpenFrpMainUI(QWidget):
         self.userEmail.setText("[用户邮箱]")
 
     def getNodeList_API(self):
+        self.finishNewProxyBtn.setEnabled(False)
         OFVariables.nodeListData = []
         try:
             for i in range(1, 3):
@@ -1086,52 +1091,191 @@ class OpenFrpMainUI(QWidget):
     def initNodeListWidget(self):
         for i in range(int(OFVariables.nodeListData[0]["total"])):
             nodeWidget = SingleNodeWidget()
+            # 节点ID
+            nodeWidget.id.setText(f"#{OFVariables.nodeListData[0]['list'][i]['id']}")
+            # 节点名称
             nodeWidget.nodeName.setText(OFVariables.nodeListData[0]["list"][i]["name"])
-            nodeWidget.nodeTag.setText(
-                f"""{'[满载]' if OFVariables.nodeListData[0]['list'][i]['fullyLoaded'] else ''}{'[VIP]' if not 'normal' in OFVariables.nodeListData[0]['list'][i]['group'] else ''}""",
+            # 带宽标签
+            nodeWidget.addNodeTag(
+                type=0,
+                bandWidth=[
+                    OFVariables.nodeListData[0]["list"][i]["bandwidth"],
+                    OFVariables.nodeListData[0]["list"][i]["bandwidthMagnification"],
+                ],
             )
-            if nodeWidget.nodeTag.text() == "  ":
-                nodeWidget.nodeTag.setFixedSize(QSize(1, 1))
-            elif "VIP" in nodeWidget.nodeTag.text():
-                nodeWidget.nodeWidget.setStyleSheet(
-                    "QWidget {background-color: #d7b521; border-radius: 5px;}"
-                )
-                nodeWidget.nodeName.setStyleSheet(
-                    "SubtitleLabel {color: white;}"
-                )
-                nodeWidget.nodeInfo.setStyleSheet(
-                    "BodyLabel {color: white;}"
-                )
+            # VIP标签
+            if not "normal" in OFVariables.nodeListData[0]["list"][i]["group"]:
+                nodeWidget.addNodeTag(type=3)
                 if OFVariables.userInfo[0]["group"] == "normal":
-                    nodeWidget.setClickEnabled(False)
-                    nodeWidget.setEnabled(False)
-            elif "满载" in nodeWidget.nodeTag.text():
-                nodeWidget.nodeWidget.setStyleSheet(
-                    "QWidget {background-color: #912015; border-radius: 5px;}"
+                    nodeWidget.clicked.connect(
+                        lambda: InfoBar.error(
+                            "错误",
+                            "这是VIP节点，但你并不是VIP用户。",
+                            isClosable=False,
+                            duration=1500,
+                            position=InfoBarPosition.TOP,
+                            parent=self,
+                        )
+                    )
+            # 满载标签
+            if OFVariables.nodeListData[0]["list"][i]["fullyLoaded"]:
+                nodeWidget.addNodeTag(type=1)
+                nodeWidget.clicked.connect(
+                    lambda: InfoBar.error(
+                        "错误",
+                        "该节点满载了。",
+                        isClosable=False,
+                        duration=1500,
+                        position=InfoBarPosition.TOP,
+                        parent=self,
+                    )
                 )
-                nodeWidget.nodeName.setStyleSheet(
-                    "SubtitleLabel {color: white;}"
-                )
-                nodeWidget.nodeInfo.setStyleSheet(
-                    "BodyLabel {color: white;}"
-                )
-                nodeWidget.setClickEnabled(False)
-                nodeWidget.setEnabled(False)
-            nodeWidget.num.setText(f"#{OFVariables.nodeListData[0]['list'][i]['id']}")
-            protocolSupportList = [
-                OFVariables.nodeListData[0]["list"][i]["protocolSupport"]["tcp"],
-                OFVariables.nodeListData[0]["list"][i]["protocolSupport"]["udp"],
-                OFVariables.nodeListData[0]["list"][i]["protocolSupport"]["http"],
-                OFVariables.nodeListData[0]["list"][i]["protocolSupport"]["https"],
-            ]
-            enter = "\n"
+            if (
+                "normal" in OFVariables.nodeListData[0]["list"][i]["group"]
+                and not OFVariables.nodeListData[0]["list"][i]["fullyLoaded"]
+            ):
+                nodeWidget.clicked.connect(self.setUpNodeInfoConfiguration)
+
+            # 隧道模式标签
+            protocolTypeList = ["tcp", "udp", "http", "https"]
+            for protocolType in protocolTypeList:
+                if OFVariables.nodeListData[0]["list"][i]["protocolSupport"][
+                    protocolType
+                ]:
+                    nodeWidget.addNodeTag(type=2, protoType=protocolType.upper())
+            # 节点注释
             nodeWidget.nodeInfo.setText(
-                f"""{OFVariables.nodeListData[0]['list'][i]['comments']}{f'{enter}' if OFVariables.nodeListData[0]['list'][i]['comments'] != '' else ''}{f'需要实名'if OFVariables.nodeListData[0]['list'][i]['needRealname'] else ''}\n{OFVariables.nodeListData[0]['list'][i]['bandwidth']}Mbps × {OFVariables.nodeListData[0]['list'][i]['bandwidthMagnification']}\n{'不允许' if False in protocolSupportList else ''}{' TCP' if not OFVariables.nodeListData[0]['list'][i]['protocolSupport']['tcp'] else ''}{' UDP' if not OFVariables.nodeListData[0]['list'][i]['protocolSupport']['udp'] else ''}{' HTTP' if not OFVariables.nodeListData[0]['list'][i]['protocolSupport']['http'] else ''}{' HTTPS' if not OFVariables.nodeListData[0]['list'][i]['protocolSupport']['https'] else ''}"""
+                f"{OFVariables.nodeListData[0]['list'][i]['comments']}"
             )
+
             nodeWidget.setObjectName(
-                f"singleNodeWidget_{OFVariables.nodeListData[0]['list'][i]['name']}"
+                f"singleNodeWidget_{i}_{OFVariables.nodeListData[0]['list'][i]['id']}"
             )
 
             self.nodeLayoutList[
                 OFVariables.nodeListData[0]["list"][i]["classify"]
             ].addWidget(nodeWidget)
+
+    def setUpNodeInfoConfiguration(self):
+        nodeIdxList = (
+            self.sender().objectName().replace("singleNodeWidget_", "").split("_")
+        )
+        OFVariables.configuringNodeIndex = int(nodeIdxList[0])
+        OFVariables.configuringNodeID = int(nodeIdxList[1])
+        self.selectNode.setText(
+            OFVariables.nodeListData[0]["list"][OFVariables.configuringNodeIndex][
+                "name"
+            ]
+        )
+        if (
+            OFVariables.nodeListData[0]["list"][OFVariables.configuringNodeIndex][
+                "allowPort"
+            ]
+            is None
+            or OFVariables.nodeListData[0]["list"][OFVariables.configuringNodeIndex][
+                "allowPort"
+            ]
+            == ""
+        ):
+            self.remotePort.setPlaceholderText("1~65535")
+        else:
+            self.remotePort.setPlaceholderText(
+                OFVariables.nodeListData[0]["list"][OFVariables.configuringNodeIndex][
+                    "allowPort"
+                ]
+                .replace("(", "")
+                .replace(")", "")
+                .replace(",", "~")
+            )
+            portRequirement = (
+                OFVariables.nodeListData[0]["list"][OFVariables.configuringNodeIndex][
+                    "allowPort"
+                ]
+                .replace("(", "")
+                .replace(")", "")
+                .split(",")
+            )
+            OFVariables.configuringNodeMinPort = int(portRequirement[0])
+            OFVariables.configuringNodeMaxPort = int(portRequirement[1])
+        availableProxyModeList = ["tcp", "udp", "http", "https"]
+        for protocolType in availableProxyModeList:
+            if not OFVariables.nodeListData[0]["list"][
+                OFVariables.configuringNodeIndex
+            ]["protocolSupport"][protocolType]:
+                availableProxyModeList.remove(protocolType)
+        self.proxyMode.addItems(availableProxyModeList)
+        self.finishNewProxyBtn.setEnabled(True)
+        self.finishNewProxyBtn.clicked.connect(self.newProxyCheck)
+
+    def newProxyCheck(self):
+        err = False
+        err = bool(self.localAddr.text() == "")
+        err = bool(self.localPort.text() == "")
+        if self.localPort.text() != "":
+            err = not self.localPort.text().isdigit()
+        if self.remotePort.text() != "":
+            err = bool(int(self.remotePort.text()) < OFVariables.configuringNodeMinPort)
+            err = bool(int(self.remotePort.text()) > OFVariables.configuringNodeMaxPort)
+        if err:
+            InfoBar.error(
+                "错误",
+                "请正确填写必需参数！",
+                position=InfoBarPosition.TOP,
+                duration=1500,
+                isClosable=True,
+                parent=self,
+            )
+            return
+        else:
+            OFVariables.configuringProxyName = (
+                self.proxyName.text()
+                if self.proxyName.text() != ""
+                else f"MCSL2_OfProxy_{randint(10000, 50000)}"
+            )
+            OFVariables.configuringProxyType = self.proxyMode.text().strip().lower()
+            OFVariables.configuringProxyLocalAddr = self.localAddr.text()
+            OFVariables.configuringProxyDomainBind = self.domainBind.text()
+            OFVariables.configuringProxyHostRewrite = self.hostRewrite.text()
+            OFVariables.configuringProxyRequestFrom = self.requestFrom.text()
+            OFVariables.configuringProxyCustom = self.custom.toPlainText()
+            OFVariables.configuringProxyURLRoute = self.urlRoute.text()
+            OFVariables.configuringRequestPass = self.requestPass.text()
+            OFVariables.configuringProxyLocalPort = int(self.localPort.text())
+            OFVariables.configuringProxyRemotePort = (
+                int(self.remotePort.text())
+                if self.remotePort.text() != ""
+                else randint(
+                    OFVariables.configuringNodeMinPort,
+                    OFVariables.configuringNodeMaxPort,
+                )
+            )
+            OFVariables.configuringProxyDataEncrypt = self.dataEncrypt.isChecked()
+            OFVariables.configuringProxyDataGZip = self.dataGzip.isChecked()
+            self.newProxy_API()
+
+    def newProxy_API(self):
+        newProxyThread = NewProxyThread(self)
+        newProxyThread.finished.connect(self.afterNewProxy)
+        newProxyThread.start()
+
+    def afterNewProxy(self):
+        if OFVariables.newProxyData[1]:
+            InfoBar.success(
+                "成功",
+                OFVariables.newProxyData[2],
+                position=InfoBarPosition.TOP,
+                duration=1500,
+                isClosable=True,
+                parent=self,
+            )
+            self.stackedWidget.setCurrentIndex(0)
+            clearNewProxyConfig()
+        else:
+            InfoBar.error(
+                "失败",
+                OFVariables.newProxyData[2],
+                position=InfoBarPosition.TOP,
+                duration=1500,
+                isClosable=True,
+                parent=self,
+            )
