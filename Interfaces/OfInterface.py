@@ -1117,7 +1117,7 @@ class OpenFrpMainUI(QWidget):
                 )
                 nodeWidget.setClickEnabled(False)
                 nodeWidget.setEnabled(False)
-            nodeWidget.num.setText(f"#{i}")
+            nodeWidget.num.setText(f"#{OFVariables.nodeListData[0]['list'][i]['id']}")
             protocolSupportList = [
                 OFVariables.nodeListData[0]["list"][i]["protocolSupport"]["tcp"],
                 OFVariables.nodeListData[0]["list"][i]["protocolSupport"]["udp"],
