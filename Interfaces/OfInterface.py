@@ -1096,12 +1096,24 @@ class OpenFrpMainUI(QWidget):
                 nodeWidget.nodeWidget.setStyleSheet(
                     "QWidget {background-color: #d7b521; border-radius: 5px;}"
                 )
+                nodeWidget.nodeName.setStyleSheet(
+                    "SubtitleLabel {color: white;}"
+                )
+                nodeWidget.nodeInfo.setStyleSheet(
+                    "BodyLabel {color: white;}"
+                )
                 if OFVariables.userInfo[0]["group"] == "normal":
                     nodeWidget.setClickEnabled(False)
                     nodeWidget.setEnabled(False)
             elif "满载" in nodeWidget.nodeTag.text():
                 nodeWidget.nodeWidget.setStyleSheet(
                     "QWidget {background-color: #912015; border-radius: 5px;}"
+                )
+                nodeWidget.nodeName.setStyleSheet(
+                    "SubtitleLabel {color: white;}"
+                )
+                nodeWidget.nodeInfo.setStyleSheet(
+                    "BodyLabel {color: white;}"
                 )
                 nodeWidget.setClickEnabled(False)
                 nodeWidget.setEnabled(False)
