@@ -1000,7 +1000,7 @@ class OpenFrpMainUI(QWidget):
             )
 
     def getUserInfo_API(self):
-        OFVariables.userInfo.clear()
+        OFVariables.userInfo = {}
         self.accountInfoBtn.setEnabled(False)
         self.logoutBtn.setEnabled(False)
         getUserInfoThread = GetUserInfoThread(self)
@@ -1042,6 +1042,7 @@ class OpenFrpMainUI(QWidget):
         self.userInfoMessageBox.contentLabel.setParent(None)
         self.userInfoMessageBox.cancelButton.setParent(None)
         self.userInfoMessageBox.yesSignal.connect(self.userInfoMessageBox.hide)
+        self.userInfoMessageBox.yesSignal.connect(self.getUserInfo_API)
         self.accountInfoBtn.clicked.connect(self.userInfoMessageBox.show)
 
     def logout(self):
@@ -1307,7 +1308,7 @@ class OpenFrpMainUI(QWidget):
             )
 
     def initProxiesListWidget(self):
-        for i in range(1, OFVariables.userProxiesData[0]):
+        for i in range(OFVariables.userProxiesData[0]):
             proxyWidget = SingleProxyWidget()
             proxyWidget.proxyName.setText(
                 OFVariables.userProxiesData[1][i]["proxyName"]

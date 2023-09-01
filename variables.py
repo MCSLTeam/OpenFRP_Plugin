@@ -35,7 +35,7 @@ def variablesLogout():
     OFVariables.userAuthorization: str = ""
     OFVariables.userName: str = ""
     OFVariables.userPassword: str = ""
-    OFVariables.userInfo = []
+    OFVariables.userInfo = {}
 
 
 def clearNewProxyConfig():
