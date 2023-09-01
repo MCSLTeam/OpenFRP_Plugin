@@ -31,14 +31,17 @@ def getUserProxies(Authorization: str, session: str):
                  'Authorization': Authorization}
     )
 
-    _userProxies = _APIData.json()['data']
-    numOfProxies = _userProxies['total']
-    proxiesList = _userProxies['list']
+    _userProxies = _APIData.json()
+    numOfProxies = _userProxies['data']['total']
+    proxiesList = _userProxies['data']['list']
+    flag = bool(_userProxies['flag'])
+    msg = str(_userProxies['msg'])
+
 
     if not _APIData.ok:
         _APIData.raise_for_status()
 
-    return numOfProxies, proxiesList
+    return numOfProxies, proxiesList, flag, msg
 
 
 def newProxy(Authorization: str,
