@@ -6,6 +6,7 @@ class OFVariables:
     nodeListData = []
     loginData = []
     newProxyData = []
+    userProxiesData = []
     userName: str = ""
     userPassword: str = ""
     configuringNodeIndex = None
@@ -25,6 +26,8 @@ class OFVariables:
     configuringProxyRemotePort: int = 0
     configuringProxyDataEncrypt: bool = False
     configuringProxyDataGZip: bool = False
+    removeProxyID: int = 0
+    removeProxyData = []
 
 
 def variablesLogout():
@@ -54,3 +57,10 @@ def clearNewProxyConfig():
     OFVariables.configuringProxyDataEncrypt: bool = False
     OFVariables.configuringProxyDataGZip: bool = False
     OFVariables.newProxyData = []
+
+def clearUserProxiesData():
+    OFVariables.userProxiesData = []
+
+def clearRemoveProxyID():
+    OFVariables.removeProxyID: int = 0
+    OFVariables.removeProxyData = []

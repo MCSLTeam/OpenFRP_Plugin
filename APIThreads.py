@@ -93,3 +93,19 @@ class GetUserProxiesThread(QThread):
             )
         except Exception:
             OFVariables.userProxiesData = [0, [], False, "失败"]
+
+
+class RemoveProxyThread(QThread):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setObjectName("RemoveProxyThread")
+
+    def run(self):
+        try:
+            OFVariables.removeProxyData = removeProxy(
+                Authorization=OFVariables.userAuthorization,
+                session=OFVariables.userSessionID,
+                proxy_id=OFVariables.removeProxyID
+            )
+        except Exception:
+            OFVariables.removeProxyData = [None, False, "失败"]

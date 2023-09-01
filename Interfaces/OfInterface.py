@@ -9,6 +9,7 @@ from PyQt5.QtWidgets import (
     QVBoxLayout,
     QSpacerItem,
     QHBoxLayout,
+    QApplication,
 )
 from qfluentwidgets import (
     BodyLabel,
@@ -34,12 +35,12 @@ from qfluentwidgets import (
 )
 from MCSL2Lib.loadingTipWidget import LoadFailedTip, LoadingTip
 from MCSL2Lib.variables import GlobalMCSL2Variables
-from MCSL2Lib.publicFunctions import isDarkTheme
 from ..variables import OFVariables, clearNewProxyConfig, variablesLogout
 from ..OFSettingsController import OFSettingsController
 from ..APIThreads import *
 from .loginWidget import LoginContainer
 from .singleNodeWidget import SingleNodeWidget
+from .singleProxyWidget import SingleProxyWidget
 from .images import *  # noqa: F401
 from .userInfoWidget import UserInfoContainer
 from random import randint
@@ -181,7 +182,6 @@ class OpenFrpMainUI(QWidget):
         self.ofProxiesSmoothScrollArea.setFrameShape(QFrame.NoFrame)
         self.ofProxiesSmoothScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.ofProxiesSmoothScrollArea.setWidgetResizable(True)
-        self.ofProxiesSmoothScrollArea.setAlignment(Qt.AlignCenter)
         self.ofProxiesSmoothScrollArea.setObjectName("ofProxiesSmoothScrollArea")
 
         self.ofProxiesScrollAreaWidgetContents = QWidget()
@@ -190,15 +190,6 @@ class OpenFrpMainUI(QWidget):
             "ofProxiesScrollAreaWidgetContents"
         )
 
-        self.verticalLayout = QVBoxLayout(self.ofProxiesScrollAreaWidgetContents)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout.setObjectName("verticalLayout")
-
-        self.ofProxiesLayout = QVBoxLayout()
-        self.ofProxiesLayout.setObjectName("ofProxiesLayout")
-
-        self.verticalLayout.addLayout(self.ofProxiesLayout)
-        self.ofProxiesSmoothScrollArea.setWidget(self.ofProxiesScrollAreaWidgetContents)
         self.gridLayout_2.addWidget(self.ofProxiesSmoothScrollArea, 4, 0, 1, 6)
         self.titleLimitWidget = QWidget(self.mainPage)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -914,6 +905,10 @@ class OpenFrpMainUI(QWidget):
         self.proxyMode.setText("选择后可用")
         self.proxyProtocol.addItems(["关闭", "V1", "V2（推荐）"])
         self.finishNewProxyBtn.setEnabled(False)
+        self.refreshProxyListBtn.clicked.connect(self.getUserProxies_API)
+        self.proxiesLayout = FlowLayout(
+            self.ofProxiesSmoothScrollArea, needAni=True
+        )
 
     def initLoginInterface(self):
         OFVariables.loginData.clear()
@@ -993,6 +988,7 @@ class OpenFrpMainUI(QWidget):
             self.newProxyBtn.setEnabled(True)
             self.refreshProxyListBtn.setEnabled(True)
             self.getUserInfo_API()
+            self.getUserProxies_API()
         else:
             InfoBar.error(
                 "错误",
@@ -1000,7 +996,7 @@ class OpenFrpMainUI(QWidget):
                 position=InfoBarPosition.TOP_RIGHT,
                 duration=1500,
                 isClosable=True,
-                parent=self.window(),
+                parent=self,
             )
 
     def getUserInfo_API(self):
@@ -1270,11 +1266,113 @@ class OpenFrpMainUI(QWidget):
             )
             self.stackedWidget.setCurrentIndex(0)
             clearNewProxyConfig()
+            self.getUserInfo_API()
+            self.getUserProxies_API()
         else:
             InfoBar.error(
                 "失败",
                 OFVariables.newProxyData[2],
                 position=InfoBarPosition.TOP,
+                duration=1500,
+                isClosable=True,
+                parent=self,
+            )
+
+    def getUserProxies_API(self):
+        self.proxiesLayout.takeAllWidgets()
+        self.gettingUserProxiesInfoBar = InfoBar.info(
+            "提示",
+            "正在获取用户隧道列表...",
+            position=InfoBarPosition.TOP_RIGHT,
+            duration=-1,
+            isClosable=False,
+            parent=self,
+        )
+        getUserProxyThread = GetUserProxiesThread(self)
+        getUserProxyThread.finished.connect(self.afterGetUserProxies)
+        getUserProxyThread.start()
+
+    def afterGetUserProxies(self):
+        self.gettingUserProxiesInfoBar.close()
+        if OFVariables.userProxiesData[2]:
+            self.initProxiesListWidget()
+        else:
+            InfoBar.error(
+                "错误",
+                "获取用户隧道列表失败",
+                position=InfoBarPosition.TOP_RIGHT,
+                duration=1500,
+                isClosable=True,
+                parent=self,
+            )
+
+    def initProxiesListWidget(self):
+        for i in range(1, OFVariables.userProxiesData[0]):
+            proxyWidget = SingleProxyWidget()
+            proxyWidget.proxyName.setText(
+                OFVariables.userProxiesData[1][i]["proxyName"]
+            )
+            proxyWidget.proxyMode.setText(
+                OFVariables.userProxiesData[1][i]["proxyType"].upper()
+            )
+            proxyWidget.proxyLinkInfo.setText(
+                f"{OFVariables.userProxiesData[1][i]['localIp']}:{OFVariables.userProxiesData[1][i]['localPort']} -> {OFVariables.userProxiesData[1][i]['remotePort']}\n#{OFVariables.userProxiesData[1][i]['nid']} {OFVariables.userProxiesData[1][i]['friendlyNode']}"
+            )
+            proxyWidget.SwitchButton.setChecked(
+                OFVariables.userProxiesData[1][i]["online"]
+            )
+            proxyWidget.copyProxyLink.clicked.connect(
+                lambda: QApplication.clipboard().setText(
+                    OFVariables.userProxiesData[1][i]["connectAddress"]
+                )
+            )
+            proxyWidget.copyProxyLink.clicked.connect(
+                lambda: InfoBar.success(
+                    "提示",
+                    "已复制",
+                    position=InfoBarPosition.TOP,
+                    duration=1500,
+                    isClosable=True,
+                    parent=self,
+                )
+            )
+            proxyWidget.editProxy.setObjectName(
+                f"editProxy_{OFVariables.userProxiesData[1][i]['nid']}_{OFVariables.userProxiesData[1][i]['id']}"
+            )
+            proxyWidget.editProxy.setEnabled(False)
+            proxyWidget.deleteProxy.setObjectName(
+                f"editProxy_{OFVariables.userProxiesData[1][i]['id']}"
+            )
+            proxyWidget.deleteProxy.clicked.connect(self.removeProxy)
+            proxyWidget.setObjectName(
+                f"singleProxyWidget_{OFVariables.userProxiesData[1][i]['id']}"
+            )
+            self.proxiesLayout.addWidget(proxyWidget)
+
+    def removeProxy(self):
+        self.sender().setEnabled(False)
+        OFVariables.removeProxyID = int(
+            self.sender().objectName().replace("editProxy_", "")
+        )
+        getUserProxyThread = GetUserProxiesThread(self)
+        getUserProxyThread.finished.connect(self.afterRemoveProxy)
+        getUserProxyThread.start()
+
+    def afterRemoveProxy(self):
+        if OFVariables.removeProxyData[1]:
+            InfoBar.success(
+                "成功",
+                OFVariables.removeProxyData[2],
+                position=InfoBarPosition.TOP_RIGHT,
+                duration=1500,
+                isClosable=True,
+                parent=self,
+            )
+        else:
+            InfoBar.error(
+                "失败",
+                OFVariables.removeProxyData[2],
+                position=InfoBarPosition.TOP_RIGHT,
                 duration=1500,
                 isClosable=True,
                 parent=self,

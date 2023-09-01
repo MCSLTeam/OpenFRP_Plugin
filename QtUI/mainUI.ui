@@ -197,7 +197,7 @@
           <bool>true</bool>
          </property>
          <property name="alignment">
-          <set>Qt::AlignCenter</set>
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
          </property>
          <widget class="QWidget" name="ofProxiesScrollAreaWidgetContents">
           <property name="geometry">
@@ -208,11 +208,6 @@
             <height>380</height>
            </rect>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout">
-           <item>
-            <layout class="QVBoxLayout" name="ofProxiesLayout"/>
-           </item>
-          </layout>
          </widget>
         </widget>
        </item>
@@ -357,8 +352,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>287</width>
-                <height>435</height>
+                <width>252</width>
+                <height>218</height>
                </rect>
               </property>
               <layout class="QGridLayout" name="gridLayout_10">
@@ -603,7 +598,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>345</width>
+            <width>283</width>
             <height>882</height>
            </rect>
           </property>
