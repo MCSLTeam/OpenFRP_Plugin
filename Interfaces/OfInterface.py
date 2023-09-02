@@ -33,9 +33,9 @@ from qfluentwidgets import (
     InfoBarPosition,
     InfoBar,
 )
-from MCSL2Lib.loadingTipWidget import LoadFailedTip, LoadingTip
+from MCSL2Lib.Widgets.loadingTipWidget import LoadFailedTip, LoadingTip
 from MCSL2Lib.variables import GlobalMCSL2Variables
-from ..variables import OFVariables, clearNewProxyConfig, variablesLogout
+from ..variables import clearNewProxyConfig, variablesLogout
 from ..OFSettingsController import OFSettingsController
 from ..APIThreads import *
 from .loginWidget import LoginContainer
@@ -1266,9 +1266,9 @@ class OpenFrpMainUI(QWidget):
                 parent=self,
             )
             self.stackedWidget.setCurrentIndex(0)
-            clearNewProxyConfig()
             self.getUserInfo_API()
             self.getUserProxies_API()
+            clearNewProxyConfig()
         else:
             InfoBar.error(
                 "失败",
