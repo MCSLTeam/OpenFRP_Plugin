@@ -10,8 +10,8 @@ class OFVariables:
     userName: str = ""
     userPassword: str = ""
     configuringNodeIndex = None
-    configuringNodeMinPort: int = 0
-    configuringNodeMaxPort: int = 0
+    configuringNodeMinPort: int = 1
+    configuringNodeMaxPort: int = 65535
     configuringNodeID: int = 0
     configuringProxyName: str = ""
     configuringProxyType: str = ""

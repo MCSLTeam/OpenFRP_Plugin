@@ -909,6 +909,7 @@ class OpenFrpMainUI(QWidget):
         self.proxiesLayout = FlowLayout(
             self.ofProxiesSmoothScrollArea, needAni=True
         )
+        self.finishNewProxyBtn.clicked.connect(self.newProxyCheck)
 
     def initLoginInterface(self):
         OFVariables.loginData.clear()
@@ -1153,6 +1154,12 @@ class OpenFrpMainUI(QWidget):
                 OFVariables.nodeListData[0]["list"][i]["classify"]
             ].addWidget(nodeWidget)
 
+    def clearNodeInfoConfiguration(self):
+        self.selectNode.setText("")
+        self.remotePort.setPlaceholderText("1~65535")
+        self.proxyMode.clear()
+        clearNewProxyConfig()
+
     def setUpNodeInfoConfiguration(self):
         nodeIdxList = (
             self.sender().objectName().replace("singleNodeWidget_", "").split("_")
@@ -1202,7 +1209,6 @@ class OpenFrpMainUI(QWidget):
                 availableProxyModeList.remove(protocolType)
         self.proxyMode.addItems(availableProxyModeList)
         self.finishNewProxyBtn.setEnabled(True)
-        self.finishNewProxyBtn.clicked.connect(self.newProxyCheck)
 
     def newProxyCheck(self):
         err = False
@@ -1268,7 +1274,7 @@ class OpenFrpMainUI(QWidget):
             self.stackedWidget.setCurrentIndex(0)
             self.getUserInfo_API()
             self.getUserProxies_API()
-            clearNewProxyConfig()
+            self.clearNodeInfoConfiguration()
         else:
             InfoBar.error(
                 "失败",
