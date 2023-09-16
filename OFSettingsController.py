@@ -6,6 +6,7 @@ ofConfigTemplate = {
     "bypass_system_proxy": True,
     "fprc_force_tls": False,
     "frpc_debug_mode": False,
+    "frpc_version": "",
     "last_user": "",
     "last_password": "",
 }
@@ -20,11 +21,11 @@ def initOFPluginConfiguration():
         ) as newConfig:
             newConfig.write(dumps(ofConfigTemplate, indent=4))
         print(1111)
-    OFSettingsController().readSettings()
+    OfSettingsController().readSettings()
 
 
 @Singleton
-class OFSettingsController:
+class OfSettingsController:
     def __init__(self):
         self.fileSettings = {}
 

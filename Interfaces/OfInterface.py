@@ -36,7 +36,7 @@ from qfluentwidgets import (
 from MCSL2Lib.Widgets.loadingTipWidget import LoadFailedTip, LoadingTip
 from MCSL2Lib.variables import GlobalMCSL2Variables
 from ..variables import clearNewProxyConfig, variablesLogout
-from ..OFSettingsController import OFSettingsController
+from ..OfSettingsController import OfSettingsController
 from ..APIThreads import *
 from .loginWidget import LoginContainer
 from .singleNodeWidget import SingleNodeWidget
@@ -45,7 +45,7 @@ from .images import *  # noqa: F401
 from .userInfoWidget import UserInfoContainer
 from random import randint
 
-ofSettingsController = OFSettingsController()
+ofSettingsController = OfSettingsController()
 
 
 class OpenFrpMainUI(QWidget):

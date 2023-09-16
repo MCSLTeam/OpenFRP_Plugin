@@ -4,7 +4,7 @@ from PyQt5.QtCore import Qt
 from .Interfaces.frpcConsole import OpenFrpFrpcConsoleUI
 from .Interfaces.ofPluginSettings import OpenFrpSettingsUI
 from .Interfaces.OfInterface import OpenFrpMainUI
-from .OFSettingsController import initOFPluginConfiguration
+from .OfSettingsController import initOFPluginConfiguration
 from qfluentwidgets import (
     FluentIcon as FIF,
     InfoBar,
