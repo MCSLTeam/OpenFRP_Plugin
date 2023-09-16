@@ -1361,9 +1361,9 @@ class OpenFrpMainUI(QWidget):
         OFVariables.removeProxyID = int(
             self.sender().objectName().replace("editProxy_", "")
         )
-        getUserProxyThread = GetUserProxiesThread(self)
-        getUserProxyThread.finished.connect(self.afterRemoveProxy)
-        getUserProxyThread.start()
+        removeProxyThread = RemoveProxyThread(self)
+        removeProxyThread.finished.connect(self.afterRemoveProxy)
+        removeProxyThread.start()
 
     def afterRemoveProxy(self):
         if OFVariables.removeProxyData[1]:
@@ -1375,6 +1375,8 @@ class OpenFrpMainUI(QWidget):
                 isClosable=True,
                 parent=self,
             )
+            self.getUserInfo_API()
+            self.getUserProxies_API()
         else:
             InfoBar.error(
                 "失败",
