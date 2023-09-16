@@ -114,9 +114,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-16</y>
+        <y>0</y>
         <width>649</width>
-        <height>475</height>
+        <height>478</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -219,7 +219,7 @@
               </spacer>
              </item>
              <item>
-              <widget class="SwitchButton" name="SwitchButton">
+              <widget class="SwitchButton" name="bypassSystemProxySwitchBtn">
                <property name="text">
                 <string>关</string>
                </property>

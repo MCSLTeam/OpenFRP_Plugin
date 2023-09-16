@@ -19,6 +19,7 @@ def initOFPluginConfiguration():
             encoding="utf-8",
         ) as newConfig:
             newConfig.write(dumps(ofConfigTemplate, indent=4))
+        print(1111)
     OFSettingsController().readSettings()
 
 

@@ -42,6 +42,7 @@ def enable():
             duration=2500,
             parent=Window().pluginsInterface,
         )
+        ofSettingInterface.initSettings()
     except Exception as e:
         InfoBar.error(
             title="提示",

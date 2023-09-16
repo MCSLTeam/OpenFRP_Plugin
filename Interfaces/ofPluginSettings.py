@@ -24,6 +24,9 @@ from qfluentwidgets import (
 from MCSL2Lib.variables import GlobalMCSL2Variables
 from ..variables import OFVariables
 from ..OpenFrpLib import __version__ as OFLibVersion
+from ..OFSettingsController import OFSettingsController
+
+ofSettingsController = OFSettingsController()
 
 
 class OpenFrpSettingsUI(QWidget):
@@ -140,10 +143,10 @@ class OpenFrpSettingsUI(QWidget):
         self.horizontalLayout_2.addWidget(self.bypassSystemProxyTip)
         spacerItem4 = QSpacerItem(42, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.horizontalLayout_2.addItem(spacerItem4)
-        self.SwitchButton = SwitchButton(self.bypassSystemProxy)
-        self.SwitchButton.setObjectName("SwitchButton")
+        self.bypassSystemProxySwitchBtn = SwitchButton(self.bypassSystemProxy)
+        self.bypassSystemProxySwitchBtn.setObjectName("bypassSystemProxySwitchBtn")
 
-        self.horizontalLayout_2.addWidget(self.SwitchButton)
+        self.horizontalLayout_2.addWidget(self.bypassSystemProxySwitchBtn)
         self.gridLayout_2.addWidget(self.bypassSystemProxy, 0, 0, 1, 1)
         self.ofLibVerWidget = QWidget(self.moduleSettingsWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
@@ -387,9 +390,9 @@ class OpenFrpSettingsUI(QWidget):
         self.bypassSystemProxyTitle.setText("绕过系统代理")
         self.bypassSystemProxyTip.setText("可防止在系统开启代理时本插件无法连接 OpenFrp API的问题。")
 
-        self.SwitchButton.setText("关")
-        self.SwitchButton.setOnText("开")
-        self.SwitchButton.setOffText("关")
+        self.bypassSystemProxySwitchBtn.setText("关")
+        self.bypassSystemProxySwitchBtn.setOnText("开")
+        self.bypassSystemProxySwitchBtn.setOffText("关")
         self.ofLibVerTitle.setText("OpenFrpLib 库当前版本：")
         self.ofLibVer.setText(OFLibVersion)
         self.ofFrpcSettingsTitle.setText("OpenFrp Frpc 设置")
@@ -412,4 +415,37 @@ class OpenFrpSettingsUI(QWidget):
         self.pluginCheckUpdateBtn.setText("检查更新")
         self.ofSettingsSmoothScrollArea.viewport().setStyleSheet(
             GlobalMCSL2Variables.scrollAreaViewportQss
+        )
+
+        self.bypassSystemProxySwitchBtn.checkedChanged.connect(
+            lambda: ofSettingsController.changeSettings(
+                {
+                    "bypass_system_proxy": self.bypassSystemProxySwitchBtn.isChecked(),
+                }
+            )
+        )
+        self.forceTLSSwitchBtn.checkedChanged.connect(
+            lambda: ofSettingsController.changeSettings(
+                {
+                    "fprc_force_tls": self.forceTLSSwitchBtn.isChecked(),
+                }
+            )
+        )
+        self.frpcDebugModeSwitchBtn.checkedChanged.connect(
+            lambda: ofSettingsController.changeSettings(
+                {
+                    "frpc_debug_mode": self.frpcDebugModeSwitchBtn.isChecked(),
+                }
+            )
+        )
+
+    def initSettings(self):
+        self.bypassSystemProxySwitchBtn.setChecked(
+            ofSettingsController.fileSettings["bypass_system_proxy"]
+        )
+        self.forceTLSSwitchBtn.setChecked(
+            ofSettingsController.fileSettings["fprc_force_tls"]
+        )
+        self.frpcDebugModeSwitchBtn.setChecked(
+            ofSettingsController.fileSettings["frpc_debug_mode"]
         )
