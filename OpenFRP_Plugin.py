@@ -27,38 +27,9 @@ def load():
 
 def enable():
     try:
-        Window().stackedWidget.addWidget(ofInterface)
-        Window().stackedWidget.addWidget(ofFrpcInterface)
-        Window().stackedWidget.addWidget(ofSettingInterface)
-        ofMainNav = NavigationTreeWidget(icon=FIF.WIFI, text="OpenFrp", isSelectable=False)
-        # ofMainNav.set
-
-        ofHomeNav = NavigationTreeWidget(icon=FIF.HOME, text="主页", isSelectable=True)
-        ofHomeNav.clicked.connect(lambda: Window().switchTo(ofInterface))
-        ofMainNav.addChild(ofHomeNav)
-
-        ofFrpcConsoleNav = NavigationTreeWidget(icon=FIF.COMMAND_PROMPT, text="Frpc终端", isSelectable=True)
-        ofFrpcConsoleNav.clicked.connect(lambda: Window().switchTo(ofFrpcInterface))
-        ofMainNav.addChild(ofFrpcConsoleNav)
-
-        ofSettingsNav = NavigationTreeWidget(icon=FIF.SETTING, text="设置", isSelectable=False)
-        ofSettingsNav.clicked.connect(lambda: Window().switchTo(ofSettingInterface))
-        ofMainNav.addChild(ofSettingsNav)
-
-        Window().navigationInterface.addWidget(
-            routeKey="OpenFrp",
-            widget=ofMainNav,
-            tooltip="OpenFrp",
-            position=NavigationItemPosition.SCROLL,
-        )
-        # Window().addSubInterface(ofInterface, FIF.WIFI, "OpenFrp主页", position=NavigationItemPosition.SCROLL)
-        # Window().addSubInterface(ofFrpcInterface, FIF.COMMAND_PROMPT, "Frpc终端", position=NavigationItemPosition.SCROLL)
-        # Window().addSubInterface(
-        #     ofSettingInterface,
-        #     FIF.SETTING,
-        #     "OpenFrp设置",
-        #     position=NavigationItemPosition.SCROLL,
-        # )
+        Window().addSubInterface(ofInterface, FIF.WIFI, "OpenFrp", position=NavigationItemPosition.SCROLL)
+        Window().addSubInterface(ofFrpcInterface, FIF.COMMAND_PROMPT, "Frpc终端", position=NavigationItemPosition.SCROLL, parent=ofInterface)
+        Window().addSubInterface(ofSettingInterface, FIF.SETTING, "插件设置", position=NavigationItemPosition.SCROLL, parent=ofInterface)
         InfoBar.success(
             title="提示",
             content="OpenFrp 插件已启用。\n如果看不到所有功能，请展开导航栏，\n然后点击“OpenFrp”的“展开”按钮。",
