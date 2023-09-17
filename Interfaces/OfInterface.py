@@ -912,7 +912,7 @@ class OpenFrpMainUI(QWidget):
         self.finishNewProxyBtn.clicked.connect(self.newProxyCheck)
 
     def initLoginInterface(self):
-        OFVariables.loginData.clear()
+        OFVariables.loginData = []
         self.loginMessageBox = MessageBox("", "", self)
         self.loginWidget = LoginContainer()
         self.loginWidget.cancelBtn.clicked.connect(self.loginMessageBox.hide)
