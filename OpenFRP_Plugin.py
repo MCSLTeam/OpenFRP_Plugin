@@ -25,14 +25,15 @@ def load():
 
 def enable():
     try:
-        Window().addSubInterface(ofInterface, FIF.WIFI, "OpenFrp", position=NavigationItemPosition.SCROLL)
-        Window().addSubInterface(ofFrpcInterface, FIF.COMMAND_PROMPT, "OF终端", position=NavigationItemPosition.SCROLL)
+        Window().addSubInterface(ofInterface, FIF.WIFI, "OpenFrp主页", position=NavigationItemPosition.SCROLL)
+        Window().addSubInterface(ofFrpcInterface, FIF.COMMAND_PROMPT, "Frpc终端", position=NavigationItemPosition.SCROLL)
         Window().addSubInterface(
             ofSettingInterface,
             FIF.SETTING,
-            "OF设置",
+            "OpenFrp设置",
             position=NavigationItemPosition.SCROLL,
         )
+        Window().navigationInterface.addSeparator(position=NavigationItemPosition.SCROLL)
         InfoBar.success(
             title="提示",
             content="OpenFrp 插件已启用。",
