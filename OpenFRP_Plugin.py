@@ -10,6 +10,8 @@ from qfluentwidgets import (
     InfoBar,
     InfoBarPosition,
     NavigationItemPosition,
+    NavigationTreeWidget,
+    NavigationPushButton,
 )
 
 OpenFRP_Plugin = Plugin()
@@ -25,17 +27,41 @@ def load():
 
 def enable():
     try:
-        Window().addSubInterface(ofInterface, FIF.WIFI, "OpenFrp主页", position=NavigationItemPosition.SCROLL)
-        Window().addSubInterface(ofFrpcInterface, FIF.COMMAND_PROMPT, "Frpc终端", position=NavigationItemPosition.SCROLL)
-        Window().addSubInterface(
-            ofSettingInterface,
-            FIF.SETTING,
-            "OpenFrp设置",
+        Window().stackedWidget.addWidget(ofInterface)
+        Window().stackedWidget.addWidget(ofFrpcInterface)
+        Window().stackedWidget.addWidget(ofSettingInterface)
+        ofMainNav = NavigationTreeWidget(icon=FIF.WIFI, text="OpenFrp", isSelectable=False)
+        # ofMainNav.set
+
+        ofHomeNav = NavigationTreeWidget(icon=FIF.HOME, text="主页", isSelectable=True)
+        ofHomeNav.clicked.connect(lambda: Window().switchTo(ofInterface))
+        ofMainNav.addChild(ofHomeNav)
+
+        ofFrpcConsoleNav = NavigationTreeWidget(icon=FIF.COMMAND_PROMPT, text="Frpc终端", isSelectable=True)
+        ofFrpcConsoleNav.clicked.connect(lambda: Window().switchTo(ofFrpcInterface))
+        ofMainNav.addChild(ofFrpcConsoleNav)
+
+        ofSettingsNav = NavigationTreeWidget(icon=FIF.SETTING, text="设置", isSelectable=False)
+        ofSettingsNav.clicked.connect(lambda: Window().switchTo(ofSettingInterface))
+        ofMainNav.addChild(ofSettingsNav)
+
+        Window().navigationInterface.addWidget(
+            routeKey="OpenFrp",
+            widget=ofMainNav,
+            tooltip="OpenFrp",
             position=NavigationItemPosition.SCROLL,
         )
+        # Window().addSubInterface(ofInterface, FIF.WIFI, "OpenFrp主页", position=NavigationItemPosition.SCROLL)
+        # Window().addSubInterface(ofFrpcInterface, FIF.COMMAND_PROMPT, "Frpc终端", position=NavigationItemPosition.SCROLL)
+        # Window().addSubInterface(
+        #     ofSettingInterface,
+        #     FIF.SETTING,
+        #     "OpenFrp设置",
+        #     position=NavigationItemPosition.SCROLL,
+        # )
         InfoBar.success(
             title="提示",
-            content="OpenFrp 插件已启用。",
+            content="OpenFrp 插件已启用。\n如果看不到所有功能，请展开导航栏，\n然后点击“OpenFrp”的“展开”按钮。",
             orient=Qt.Horizontal,
             isClosable=True,
             position=InfoBarPosition.BOTTOM_LEFT,
@@ -57,11 +83,7 @@ def enable():
 
 def disable():
     try:
-        Window().navigationInterface.removeWidget(routeKey=ofInterface.objectName())
-        Window().navigationInterface.removeWidget(routeKey=ofFrpcInterface.objectName())
-        Window().navigationInterface.removeWidget(
-            routeKey=ofSettingInterface.objectName()
-        )
+        Window().navigationInterface.removeWidget(routeKey="OpenFrp")
         ofInterface.setParent(None)
         InfoBar.success(
             title="提示",
