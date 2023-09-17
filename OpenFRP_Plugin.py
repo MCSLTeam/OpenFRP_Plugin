@@ -27,10 +27,24 @@ def load():
 
 def enable():
     try:
-        Window().addSubInterface(ofInterface, FIF.WIFI, "OpenFrp", position=NavigationItemPosition.SCROLL)
-        Window().addSubInterface(ofFrpcInterface, FIF.COMMAND_PROMPT, "Frpc终端", position=NavigationItemPosition.SCROLL, parent=ofInterface)
-        Window().addSubInterface(ofSettingInterface, FIF.SETTING, "插件设置", position=NavigationItemPosition.SCROLL, parent=ofInterface)
-        
+        Window().addSubInterface(
+            ofInterface, FIF.WIFI, "OpenFrp", position=NavigationItemPosition.SCROLL
+        )
+        Window().addSubInterface(
+            ofFrpcInterface,
+            FIF.COMMAND_PROMPT,
+            "Frpc终端",
+            position=NavigationItemPosition.SCROLL,
+            parent=ofInterface,
+        )
+        Window().addSubInterface(
+            ofSettingInterface,
+            FIF.SETTING,
+            "插件设置",
+            position=NavigationItemPosition.SCROLL,
+            parent=ofInterface,
+        )
+
         InfoBar.success(
             title="提示",
             content="OpenFrp 插件已启用。\n如果看不到所有功能，请展开导航栏，\n然后点击“OpenFrp”的“展开”按钮。",
@@ -55,7 +69,11 @@ def enable():
 
 def disable():
     try:
-        Window().navigationInterface.removeWidget(routeKey="OpenFrp")
+        Window().navigationInterface.removeWidget(routeKey=ofInterface.objectName())
+        Window().navigationInterface.removeWidget(routeKey=ofFrpcInterface.objectName())
+        Window().navigationInterface.removeWidget(
+            routeKey=ofSettingInterface.objectName()
+        )
         ofInterface.setParent(None)
         InfoBar.success(
             title="提示",
