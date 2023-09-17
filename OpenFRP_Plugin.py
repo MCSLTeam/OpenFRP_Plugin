@@ -33,7 +33,6 @@ def enable():
             "OpenFrp设置",
             position=NavigationItemPosition.SCROLL,
         )
-        Window().navigationInterface.addSeparator(position=NavigationItemPosition.SCROLL)
         InfoBar.success(
             title="提示",
             content="OpenFrp 插件已启用。",

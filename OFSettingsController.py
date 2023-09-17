@@ -1,4 +1,4 @@
-from os import path as ospath
+from os import path as osp, makedirs
 from json import dumps, loads
 from MCSL2Lib.singleton import Singleton
 
@@ -13,14 +13,14 @@ ofConfigTemplate = {
 
 
 def initOFPluginConfiguration():
-    if not ospath.exists(r"./Plugins/OpenFRP_Plugin/MCSL2_OpenFrpPluginConfig.json"):
+    if not osp.exists(r"./Plugins/OpenFRP_Plugin/MCSL2_OpenFrpPluginConfig.json"):
         with open(
             "./Plugins/OpenFRP_Plugin/MCSL2_OpenFrpPluginConfig.json",
             "w+",
             encoding="utf-8",
         ) as newConfig:
             newConfig.write(dumps(ofConfigTemplate, indent=4))
-        print(1111)
+    makedirs(r"./Plugins/OpenFRP_Plugin/frpc", exist_ok=True)
     OfSettingsController().readSettings()
 
 
@@ -31,9 +31,9 @@ class OfSettingsController:
 
     def readSettings(self):
         """重新将文件中的配置强制覆盖到程序中，不管是否保存了"""
-        if ospath.exists(r"./Plugins/OpenFRP_Plugin/MCSL2_OpenFrpPluginConfig.json"):
+        if osp.exists(r"./Plugins/OpenFRP_Plugin/MCSL2_OpenFrpPluginConfig.json"):
             if (
-                ospath.getsize(
+                osp.getsize(
                     r"./Plugins/OpenFRP_Plugin/MCSL2_OpenFrpPluginConfig.json"
                 )
                 != 0
