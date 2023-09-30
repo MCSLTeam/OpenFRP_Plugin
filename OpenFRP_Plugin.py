@@ -4,25 +4,27 @@ from PyQt5.QtCore import Qt
 from .Interfaces.frpcConsole import OpenFrpFrpcConsoleUI
 from .Interfaces.ofPluginSettings import OpenFrpSettingsUI
 from .Interfaces.OfInterface import OpenFrpMainUI
-from .OfSettingsController import initOFPluginConfiguration
+from .OfFrpcUpdater import OfFrpcUpdater
+from .OfSettingsController import OfSettingsController, initOFPluginConfiguration
 from qfluentwidgets import (
     FluentIcon as FIF,
     InfoBar,
     InfoBarPosition,
     NavigationItemPosition,
-    NavigationTreeWidget,
-    NavigationPushButton,
 )
 
 OpenFRP_Plugin = Plugin()
 
+# ofSettingsController = OfSettingsController()
 ofInterface = OpenFrpMainUI()
 ofFrpcInterface = OpenFrpFrpcConsoleUI()
 ofSettingInterface = OpenFrpSettingsUI()
-
+ofFrpcUpdater = OfFrpcUpdater(ofInterface)
 
 def load():
     initOFPluginConfiguration()
+    ofFrpcUpdater.setUpFrpcEnv()
+    ofFrpcUpdater.start()
 
 
 def enable():

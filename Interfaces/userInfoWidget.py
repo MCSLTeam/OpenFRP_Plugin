@@ -10,7 +10,6 @@ from qfluentwidgets import (
     BodyLabel,
     SubtitleLabel,
     TitleLabel,
-    CardWidget
 )
 
 

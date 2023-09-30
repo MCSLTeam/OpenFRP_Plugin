@@ -1,7 +1,7 @@
 from MCSL2Lib.Controllers.aria2ClientController import Aria2Controller
 from MCSL2Lib.Controllers.networkController import Session
 from MCSL2Lib.Widgets.DownloadProgressWidget import DownloadMessageBox
-from .OfSettingsController import OfSettingsController
+from .OFSettingsController import OfSettingsController
 from qfluentwidgets import (
     MessageBox,
     InfoBar,
@@ -9,11 +9,10 @@ from qfluentwidgets import (
     PushButton,
     FluentIcon as FIF,
 )
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QThread
 from random import randint
 from zipfile import ZipFile
-from os import remove
-
+from os import remove, makedirs
 ofSettingsController = OfSettingsController()
 
 
@@ -25,26 +24,32 @@ class FrpcVersion:
         self.v3 = ver[2]
 
 
-class OfFrpcUpdater:
+class OfFrpcUpdater(QThread):
     def __init__(self, parent):
+        super().__init__(parent)
         self.parent = parent
         self.updateAPI = "https://of-dev-api.bfsea.xyz/commonQuery/get?key=software"
         self.oldVer = (
-            FrpcVersion(ofSettingsController.fileSettings["frpc_version"])
-            if not ofSettingsController.fileSettings["frpc_version"] == ""
-            else None
+            None
+            if ofSettingsController.fileSettings["frpc_version"] == ""
+            else FrpcVersion(ofSettingsController.fileSettings["frpc_version"])
         )
 
+    def setUpFrpcEnv(self):
+        makedirs(r"./Plugins/OpenFRP_Plugin/frpc", exist_ok=True)
+
+    def run(self):
+        self.getUpdateInfo()
+
     def getUpdateInfo(self):
-        info = Session.get(self.updateAPI).json()  # type: dict
+        info = Session().get(url=self.updateAPI).json()
         onlineVer = FrpcVersion(info["latest_ver"])
         if self.oldVer is not None:
-            stat = self.cmp(oldVer=self.oldVer, newVer=onlineVer)
-        if stat:
-            self.downloadFrpc(
-                latest=info["latest"], source=info["source"], soft_win="frpc_windows_386.zip"
-            )
-            OfSettingsController.changeSettings({"frpc_version": info["latest_ver"]})
+            if self.cmp(oldVer=self.oldVer, newVer=onlineVer):
+                self.downloadFrpc(
+                    latest=info["latest"], source=info["source"], soft_win="frpc_windows_386.zip"
+                )
+                OfSettingsController.changeSettings({"frpc_version": info["latest_ver"]})
 
     def cmp(self, oldVer: FrpcVersion, newVer: FrpcVersion):
         return (
@@ -82,7 +87,7 @@ class OfFrpcUpdater:
     def downloadFrpc(self, latest, source, soft_win):
         if not Aria2Controller.testAria2Service():
             if not Aria2Controller.startAria2():
-                box = MessageBox(title="无法下载", content="Aria2可能未安装或启动失败", parent=self.parent)
+                box = MessageBox(title="无法下载Frpc", content="MCSL2的Aria2可能未安装或启动失败。", parent=self.parent)
                 box.exec()
                 return
         self.downloadingBox = DownloadMessageBox(soft_win, parent=self)
@@ -92,13 +97,15 @@ class OfFrpcUpdater:
         self.downloadingBox.DownloadWidget().closeBoxBtnFailed.clicked.connect(
             self.downloadingBox.close
         )
+        uri = f"{source[randint(0, len(source)-1)]}{latest}{soft_win}"
         gid = Aria2Controller.download(
-            uri=f"{source[randint(0, len(source)-1)]}{latest}{soft_win}",
+            uri=uri,
             watch=True,
             info_get=self.downloadingBox.onInfoGet,
-            stopped=self.downloadingBox.onDownloadFinished,
+            stopped=self.extract(f"MCSL2/Downloads/{soft_win}"),
             interval=0.2,
         )
+        print(uri)
         self.downloadingBox.canceled.connect(
             lambda: Aria2Controller.cancelDownloadTask(gid)
         )
