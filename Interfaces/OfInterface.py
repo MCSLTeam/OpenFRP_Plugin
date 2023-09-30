@@ -1,4 +1,8 @@
-from PyQt5.QtCore import QSize, Qt, QRect
+from os import remove, rename
+from shutil import copyfile
+from typing import Optional
+from zipfile import ZipFile
+from PyQt5.QtCore import QSize, Qt, QRect, pyqtSlot
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import (
     QWidget,
@@ -11,6 +15,7 @@ from PyQt5.QtWidgets import (
     QHBoxLayout,
     QApplication,
 )
+from aria2p import Download
 from qfluentwidgets import (
     BodyLabel,
     ComboBox,
@@ -33,6 +38,7 @@ from qfluentwidgets import (
     InfoBarPosition,
     InfoBar,
 )
+from MCSL2Lib.Controllers.aria2ClientController import Aria2Controller
 from MCSL2Lib.Widgets.loadingTipWidget import LoadFailedTip, LoadingTip
 from MCSL2Lib.Widgets.DownloadProgressWidget import DownloadMessageBox
 from MCSL2Lib.variables import GlobalMCSL2Variables
@@ -910,30 +916,6 @@ class OpenFrpMainUI(QWidget):
         self.proxiesLayout = FlowLayout(self.ofProxiesSmoothScrollArea, needAni=True)
         self.finishNewProxyBtn.clicked.connect(self.newProxyCheck)
 
-    def callDownloadMsgBox(self, soft_win, aria2Cancel, aria2Pause, aria2Resume):
-        self.downloadingBox = DownloadMessageBox(soft_win, parent=self)
-        self.downloadingBox.downloadProgressWidget.PrimaryPushButton.clicked.connect(
-            self.hideDownloadHelper
-        )
-        self.downloadingBox.canceled.connect(lambda: aria2Cancel)
-        self.downloadingBox.paused.connect(lambda x: aria2Pause if x else aria2Resume)
-        self.downloadingBox.show()
-        return self.downloadingBox
-
-    def downloadFinishedHelper(self):
-        try:
-            self.downloadingInfoBar.close()
-            InfoBar.success("安装Frpc完毕。")
-        except:
-            pass
-    
-    def downloadFailedHelper(self):
-        try:
-            self.downloadingInfoBar.close()
-            InfoBar.error("安装Frpc失败。")
-        except:
-            pass
-
     def hideDownloadHelper(self):
         self.downloadingInfoBar = InfoBar(
             icon=FIF.DOWNLOAD,
@@ -952,6 +934,93 @@ class OpenFrpMainUI(QWidget):
         showDownloadMsgBoxBtn.clicked.connect(self.downloadingInfoBar.close)
         self.downloadingInfoBar.addWidget(showDownloadMsgBoxBtn)
         self.downloadingInfoBar.show()
+
+    @pyqtSlot(list)
+    def extractFrpc(self, _: list):
+        self.frpcInfoBar.close()
+        [dl, t] = _
+        dl: Optional[Download]
+        self.downloadingBox.hide()
+        self.downloadingBox.show()
+        if dl is not None:
+            if dl.status == "complete":
+                self.downloadingBox.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(
+                    1
+                )
+            elif dl.status == "error":
+                self.downloadingBox.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(
+                    2
+                )
+            elif dl.status == "removed":
+                self.downloadingBox.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(
+                    2
+                )
+        else:
+            self.downloadingBox.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(
+                2
+            )
+        self.downloadingBox.downloadProgressWidget.downloading = False
+        self.downloadingBox.DownloadWidget().closeBoxBtnFinished.click()
+        InfoBar.info(title="正在解压Frpc", content="请稍后...", duration=1900, parent=self)
+        try:
+            try:
+                remove("./Plugins/OpenFRP_Plugin/frpc/frpc.exe")
+            except Exception:
+                pass
+            frpcArchive = ZipFile("MCSL2/Downloads/frpc_windows_386.zip", "r")
+            frpcArchive.extractall("./Plugins/OpenFRP_Plugin/frpc")
+            frpcArchive.close()
+            rename("./Plugins/OpenFRP_Plugin/frpc/frpc_windows_386.exe", "./Plugins/OpenFRP_Plugin/frpc/frpc.exe")
+            remove("MCSL2/Downloads/frpc_windows_386.zip")
+            InfoBar.success(title="解压Frpc", content="成功！", duration=1900, parent=self)
+        except Exception:
+            InfoBar.error(title="解压Frpc", content="失败！", duration=1900, parent=self)
+
+    @pyqtSlot(list)
+    def downloadFrpc(self, updateInfo):
+        if not Aria2Controller.testAria2Service():
+            if not Aria2Controller.startAria2():
+                box = MessageBox(
+                    title="无法下载Frpc",
+                    content="MCSL2的Aria2可能未安装或启动失败。",
+                    parent=self.parent(),
+                )
+                box.exec()
+                return
+        self.window().switchTo(self)
+        uri = f"{updateInfo[1][0]['value']}{updateInfo[0]}frpc_windows_386.zip"
+        self.downloadingBox = DownloadMessageBox("frpc_windows_386.zip", parent=self)
+        gid = Aria2Controller.download(
+            uri=uri,
+            watch=True,
+            info_get=self.downloadingBox.onInfoGet,
+            stopped=self.extractFrpc,
+            interval=0.2,
+        )
+        self.frpcInfoBar = InfoBar(
+            icon=FIF.DOWNLOAD,
+            title="正在更新Frpc",
+            content=f"链接：\n{uri}",
+            orient=Qt.Horizontal,
+            isClosable=False,
+            duration=-1,
+            position=InfoBarPosition.TOP_RIGHT,
+            parent=self,
+        )
+        self.frpcInfoBar.show()
+        self.downloadingBox.downloadProgressWidget.PrimaryPushButton.clicked.connect(
+            self.hideDownloadHelper
+        )
+        self.downloadingBox.canceled.connect(
+            lambda: Aria2Controller.cancelDownloadTask(gid)
+        )
+        self.downloadingBox.canceled.connect(self.downloadingBox.close)
+        self.downloadingBox.paused.connect(
+            lambda x: Aria2Controller.pauseDownloadTask(gid)
+            if x
+            else Aria2Controller.resumeDownloadTask(gid)
+        )
+        self.downloadingBox.show()
 
     def initLoginInterface(self):
         OFVariables.loginData = []

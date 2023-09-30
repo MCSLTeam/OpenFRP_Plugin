@@ -1,3 +1,4 @@
+from inspect import currentframe, getframeinfo, getmodulename
 from os import path as osp, makedirs
 from json import dumps, loads
 from MCSL2Lib.singleton import Singleton
@@ -47,7 +48,10 @@ class OfSettingsController:
 
     def changeSettings(self, setting: dict):
         """改设置并且直接保存"""
+        print(getmodulename(getframeinfo(currentframe().f_back).filename), getframeinfo(currentframe().f_back).filename)
+        print(111, setting)
         self.fileSettings.update(setting)
+        print(self.fileSettings)
         with open(
             r"./Plugins/OpenFRP_Plugin/MCSL2_OpenFrpPluginConfig.json",
             "w+",

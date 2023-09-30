@@ -417,6 +417,18 @@ class OpenFrpSettingsUI(QWidget):
             GlobalMCSL2Variables.scrollAreaViewportQss
         )
 
+    def initSettings(self):
+        self.bypassSystemProxySwitchBtn.setChecked(
+            ofSettingsController.fileSettings["bypass_system_proxy"]
+        )
+        self.forceTLSSwitchBtn.setChecked(
+            ofSettingsController.fileSettings["fprc_force_tls"]
+        )
+        self.frpcDebugModeSwitchBtn.setChecked(
+            ofSettingsController.fileSettings["frpc_debug_mode"]
+        )
+    
+    def conn(self):
         self.bypassSystemProxySwitchBtn.checkedChanged.connect(
             lambda: ofSettingsController.changeSettings(
                 {
@@ -438,14 +450,8 @@ class OpenFrpSettingsUI(QWidget):
                 }
             )
         )
-
-    def initSettings(self):
-        self.bypassSystemProxySwitchBtn.setChecked(
-            ofSettingsController.fileSettings["bypass_system_proxy"]
-        )
-        self.forceTLSSwitchBtn.setChecked(
-            ofSettingsController.fileSettings["fprc_force_tls"]
-        )
-        self.frpcDebugModeSwitchBtn.setChecked(
-            ofSettingsController.fileSettings["frpc_debug_mode"]
-        )
+    
+    def disconn(self):
+        self.bypassSystemProxySwitchBtn.checkedChanged.disconnect()
+        self.forceTLSSwitchBtn.checkedChanged.disconnect()
+        self.frpcDebugModeSwitchBtn.checkedChanged.disconnect()

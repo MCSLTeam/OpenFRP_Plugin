@@ -1,5 +1,6 @@
 __pycache__/**
 OpenFrpLib/OpenFrpLib/__pycache__/**
 Interfaces/__pycache__/**
+frpc/**
 .vscode/**
 MCSL2_OpenFrpPluginConfig.json

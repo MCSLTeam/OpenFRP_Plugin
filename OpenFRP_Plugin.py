@@ -5,7 +5,6 @@ from .Interfaces.frpcConsole import OpenFrpFrpcConsoleUI
 from .Interfaces.ofPluginSettings import OpenFrpSettingsUI
 from .Interfaces.OfInterface import OpenFrpMainUI
 from .OfFrpcUpdater import OfFrpcUpdater
-from .OfSettingsController import initOFPluginConfiguration
 from qfluentwidgets import (
     FluentIcon as FIF,
     InfoBar,
@@ -22,6 +21,7 @@ ofFrpcUpdater = OfFrpcUpdater(ofInterface)
 
 def load():
     ofFrpcUpdater.setUpFrpcEnv()
+    ofFrpcUpdater.updateInfo.connect(ofInterface.downloadFrpc)
     ofFrpcUpdater.start()
 
 def enable():
@@ -54,6 +54,7 @@ def enable():
             parent=Window().pluginsInterface,
         )
         ofSettingInterface.initSettings()
+        ofSettingInterface.conn()
     except Exception as e:
         InfoBar.error(
             title="提示",
@@ -73,6 +74,7 @@ def disable():
         Window().navigationInterface.removeWidget(
             routeKey=ofSettingInterface.objectName()
         )
+        ofSettingInterface.disconn()
         ofInterface.setParent(None)
         InfoBar.success(
             title="提示",
@@ -83,6 +85,8 @@ def disable():
             duration=2500,
             parent=Window().pluginsInterface,
         )
+        ofFrpcUpdater.updateInfo.disconnect()
+        ofFrpcUpdater.setParent(None)
     except Exception as e:
         InfoBar.error(
             title="提示",
