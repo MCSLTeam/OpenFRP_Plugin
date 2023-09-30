@@ -1,0 +1,3 @@
+[submodule "OpenFrpLib"]
+	path = OpenFrpLib
+	url = https://github.com/LxHTT/OpenFrpLib/

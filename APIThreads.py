@@ -1,5 +1,5 @@
 from PyQt5.QtCore import QThread
-from .OpenFrpLib import *
+from .OpenFrpLib.OpenFrpLib import *
 from .variables import OFVariables
 
 
