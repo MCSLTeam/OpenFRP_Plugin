@@ -23,7 +23,7 @@ from qfluentwidgets import (
 
 from MCSL2Lib.variables import GlobalMCSL2Variables
 from ..variables import OFVariables
-from ..OpenFrpLib import __version__ as OFLibVersion
+from ..OpenFrpLib.OpenFrpLib import __version__ as OFLibVersion
 from ..OfSettingsController import OfSettingsController
 
 ofSettingsController = OfSettingsController()

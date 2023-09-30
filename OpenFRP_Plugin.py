@@ -5,7 +5,7 @@ from .Interfaces.frpcConsole import OpenFrpFrpcConsoleUI
 from .Interfaces.ofPluginSettings import OpenFrpSettingsUI
 from .Interfaces.OfInterface import OpenFrpMainUI
 from .OfFrpcUpdater import OfFrpcUpdater
-from .OfSettingsController import OfSettingsController, initOFPluginConfiguration
+from .OfSettingsController import initOFPluginConfiguration
 from qfluentwidgets import (
     FluentIcon as FIF,
     InfoBar,
@@ -15,17 +15,14 @@ from qfluentwidgets import (
 
 OpenFRP_Plugin = Plugin()
 
-# ofSettingsController = OfSettingsController()
 ofInterface = OpenFrpMainUI()
 ofFrpcInterface = OpenFrpFrpcConsoleUI()
 ofSettingInterface = OpenFrpSettingsUI()
 ofFrpcUpdater = OfFrpcUpdater(ofInterface)
 
 def load():
-    initOFPluginConfiguration()
     ofFrpcUpdater.setUpFrpcEnv()
     ofFrpcUpdater.start()
-
 
 def enable():
     try:

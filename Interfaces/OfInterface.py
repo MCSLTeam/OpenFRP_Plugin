@@ -34,6 +34,7 @@ from qfluentwidgets import (
     InfoBar,
 )
 from MCSL2Lib.Widgets.loadingTipWidget import LoadFailedTip, LoadingTip
+from MCSL2Lib.Widgets.DownloadProgressWidget import DownloadMessageBox
 from MCSL2Lib.variables import GlobalMCSL2Variables
 from ..variables import clearNewProxyConfig, variablesLogout
 from ..OfSettingsController import OfSettingsController
@@ -906,10 +907,51 @@ class OpenFrpMainUI(QWidget):
         self.proxyProtocol.addItems(["关闭", "V1", "V2（推荐）"])
         self.finishNewProxyBtn.setEnabled(False)
         self.refreshProxyListBtn.clicked.connect(self.getUserProxies_API)
-        self.proxiesLayout = FlowLayout(
-            self.ofProxiesSmoothScrollArea, needAni=True
-        )
+        self.proxiesLayout = FlowLayout(self.ofProxiesSmoothScrollArea, needAni=True)
         self.finishNewProxyBtn.clicked.connect(self.newProxyCheck)
+
+    def callDownloadMsgBox(self, soft_win, aria2Cancel, aria2Pause, aria2Resume):
+        self.downloadingBox = DownloadMessageBox(soft_win, parent=self)
+        self.downloadingBox.downloadProgressWidget.PrimaryPushButton.clicked.connect(
+            self.hideDownloadHelper
+        )
+        self.downloadingBox.canceled.connect(lambda: aria2Cancel)
+        self.downloadingBox.paused.connect(lambda x: aria2Pause if x else aria2Resume)
+        self.downloadingBox.show()
+        return self.downloadingBox
+
+    def downloadFinishedHelper(self):
+        try:
+            self.downloadingInfoBar.close()
+            InfoBar.success("安装Frpc完毕。")
+        except:
+            pass
+    
+    def downloadFailedHelper(self):
+        try:
+            self.downloadingInfoBar.close()
+            InfoBar.error("安装Frpc失败。")
+        except:
+            pass
+
+    def hideDownloadHelper(self):
+        self.downloadingInfoBar = InfoBar(
+            icon=FIF.DOWNLOAD,
+            title="已隐藏下载窗口",
+            content="仍在下载Frpc中，点击按钮恢复下载窗口...",
+            orient=Qt.Horizontal,
+            isClosable=False,
+            duration=-1,
+            position=InfoBarPosition.TOP_RIGHT,
+            parent=self,
+        )
+        self.downloadingInfoBar.setCustomBackgroundColor("white", "#202020")
+        showDownloadMsgBoxBtn = PushButton()
+        showDownloadMsgBoxBtn.setText("恢复")
+        showDownloadMsgBoxBtn.clicked.connect(self.downloadingBox.show)
+        showDownloadMsgBoxBtn.clicked.connect(self.downloadingInfoBar.close)
+        self.downloadingInfoBar.addWidget(showDownloadMsgBoxBtn)
+        self.downloadingInfoBar.show()
 
     def initLoginInterface(self):
         OFVariables.loginData = []
