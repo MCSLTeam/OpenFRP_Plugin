@@ -1,5 +1,5 @@
 from MCSL2Lib.Controllers.networkController import Session
-from .OfSettingsController import OfSettingsController, initOFPluginConfiguration
+from ..OfSettingsController import OfSettingsController, initOFPluginConfiguration
 from PyQt5.QtCore import QThread, pyqtSignal
 from os import makedirs
 
@@ -40,7 +40,9 @@ class OfFrpcUpdater(QThread):
                     {"frpc_version": str(info["latest_ver"])}
                 )
         else:
-            ofSettingsController.changeSettings({"frpc_version": str(info["latest_ver"])})
+            ofSettingsController.changeSettings(
+                {"frpc_version": str(info["latest_ver"])}
+            )
             self.updateInfo.emit([info["latest"], info["source"]])
 
     def cmp(self, oldVer: FrpcVersion, newVer: FrpcVersion):

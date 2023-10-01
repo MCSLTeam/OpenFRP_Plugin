@@ -87,3 +87,5 @@ class OpenFrpFrpcConsoleUI(QWidget):
         self.clearFrpcConsoleBtn.setText("清空")
         self.titleLabel.setText("OpenFrp Frpc 终端")
         self.saveFrpcConsoleBtn.setText("保存")
+
+    
