@@ -1,37 +1,34 @@
-from typing import List
-
 from MCSL2Lib.singleton import Singleton
-from .OfFrpcProcessController import FrpcHandler, FrpcProcess
-from ..variables import OFVariables
+from ..Interfaces.frpcConsole import OpenFrpFrpcConsoleUI
+from .OfFrpcProcessController import FrpcHandler
+from ..variables import FrpcConsoleVariables, OFVariables
 from PyQt5.QtCore import QObject
 
 @Singleton
 class FrpcBridge(QObject):
     def __init__(self, parent):
         super().__init__(parent)
-        self.processList: List[str, FrpcProcess] = ["PlaceHolder"]
-        self.handlerList = ["PlaceHolder"]
-        self.totalLogList: List[str] = []
-        self.singleLogList: List[List[str], str] = ["PlaceHolder"]
 
-    def newFrpc(self, tunnelId: str) -> int:
-        frpcProcessListId = len(self.processList)
-        self.singleLogList.append([])
-
+    def newFrpc(self, proxyName: str, tunnelId: str) -> int:
+        frpcConsole = OpenFrpFrpcConsoleUI()
         frpcHandler = FrpcHandler()
-        frpcHandler.frpcLogOutput.connect(self.totalLogList.append)
-        frpcHandler.frpcLogOutput.connect(self.singleLogList[frpcProcessListId].append)
-        # frpcHandler.frpcClosed.connect
-        # frpcHandler.frpcRestarted.connect
+        frpcProcessListId = len(FrpcConsoleVariables.processList)
+        frpcConsole.frpcClientComboBox.addItem(f"#{tunnelId} {proxyName}")
+        FrpcConsoleVariables.singleLogList.append([])
 
-        self.handlerList.append(frpcHandler)
-        self.processList.append(
+        frpcHandler.frpcLogOutput.connect(FrpcConsoleVariables.totalLogList.append)
+        frpcHandler.frpcLogOutput.connect(frpcConsole.colorConsoleText)
+        frpcHandler.frpcLogOutput.connect(FrpcConsoleVariables.singleLogList[frpcProcessListId].append)
+
+        FrpcConsoleVariables.handlerList.append(frpcHandler)
+        FrpcConsoleVariables.processList.append(
             frpcHandler.startFrpc(OFVariables.userInfo[0]["token"], tunnelId)
         )
-
         return frpcProcessListId
 
     def stopFrpc(self, frpcProcessListId: int):
-        self.handlerList[frpcProcessListId].stopFrpc()
-        self.handlerList.pop(frpcProcessListId)
-        self.processList.pop(frpcProcessListId)
+        FrpcConsoleVariables.handlerList[frpcProcessListId].stopFrpc()
+        FrpcConsoleVariables.handlerList.pop(frpcProcessListId)
+        FrpcConsoleVariables.processList.pop(frpcProcessListId)
+        frpcConsole = OpenFrpFrpcConsoleUI()
+        frpcConsole.frpcClientComboBox.removeItem(frpcProcessListId)

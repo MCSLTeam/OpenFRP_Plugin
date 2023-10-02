@@ -36,6 +36,7 @@ class FrpcHandler(QObject):
         self.AFrpc = None
         self.frpcLogOutput.connect(print)
         self.FrpcProcess = self.getFrpcProcess()
+        self.frpcClosed.connect(print)
 
     def getFrpcProcess(self) -> FrpcProcess:
         """
@@ -63,7 +64,7 @@ class FrpcHandler(QObject):
         self.partialData = lines.pop()
         for line in lines:
             newOutput = line.decode("utf-8", errors="replace")
-            self.frpcLogOutput.emit(newOutput)
+            self.frpcLogOutput.emit(f"{newOutput}\n")
 
     def restartFrpc(self):
         """

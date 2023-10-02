@@ -1,6 +1,7 @@
 from Adapters.Plugin import Plugin
 from MCSL2Lib.windowInterface import Window
 from PyQt5.QtCore import Qt
+
 from .Interfaces.frpcConsole import OpenFrpFrpcConsoleUI
 from .Interfaces.ofPluginSettings import OpenFrpSettingsUI
 from .Interfaces.OfInterface import OpenFrpMainUI

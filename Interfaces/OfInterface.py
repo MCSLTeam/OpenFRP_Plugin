@@ -1520,9 +1520,11 @@ class OpenFrpMainUI(QWidget):
         if self.sender().isChecked():
             # 在|前的是隧道id，后为列表中的frpc进程id
             # 设置objectName同时启动Frpc
-            self.sender().setObjectName(f"{id}|{FrpcBridge(self).newFrpc(tunnelId=id)}")
+            self.sender().setObjectName(
+                f"{id}|{FrpcBridge(self).newFrpc(proxyName=self.sender().parent().parent().proxyName.text(), tunnelId=id)}"
+            )
         else:
             # 先关闭Frpc
-            FrpcBridge(self).stopFrpc(int(self.sender().objectName().split('|')[1]))
+            FrpcBridge(self).stopFrpc(int(self.sender().objectName().split("|")[1]))
             # 设置objectName
             self.sender().setObjectName(f"{self.sender().objectName().split('|')[0]}")

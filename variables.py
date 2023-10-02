@@ -30,6 +30,13 @@ class OFVariables:
     removeProxyData = []
 
 
+class FrpcConsoleVariables:
+    processList = ["PlaceHolder"]
+    handlerList = ["PlaceHolder"]
+    totalLogList = []
+    singleLogList = ["PlaceHolder"]
+
+
 def variablesLogout():
     OFVariables.userSessionID: str = ""
     OFVariables.userAuthorization: str = ""
@@ -58,8 +65,10 @@ def clearNewProxyConfig():
     OFVariables.configuringProxyDataGZip: bool = False
     OFVariables.newProxyData = []
 
+
 def clearUserProxiesData():
     OFVariables.userProxiesData = []
+
 
 def clearRemoveProxyID():
     OFVariables.removeProxyID: int = 0
