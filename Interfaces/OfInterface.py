@@ -1,5 +1,4 @@
 from os import remove, rename
-from shutil import copyfile
 from typing import Optional
 from zipfile import ZipFile
 from PyQt5.QtCore import QSize, Qt, QRect, pyqtSlot
@@ -42,6 +41,7 @@ from MCSL2Lib.Controllers.aria2ClientController import Aria2Controller
 from MCSL2Lib.Widgets.loadingTipWidget import LoadFailedTip, LoadingTip
 from MCSL2Lib.Widgets.DownloadProgressWidget import DownloadMessageBox
 from MCSL2Lib.variables import GlobalMCSL2Variables
+from ..FrpcController.OfFrpcBridge import FrpcBridge
 from ..variables import clearNewProxyConfig, variablesLogout
 from ..OfSettingsController import OfSettingsController
 from ..APIThreads import *
@@ -53,6 +53,19 @@ from .userInfoWidget import UserInfoContainer
 from random import randint
 
 ofSettingsController = OfSettingsController()
+
+
+class UserInfoMessageBox(MessageBox):
+    def __init__(self, title: str, content: str, parent=None):
+        super().__init__(title, content, parent)
+        self.yesSignal.connect(self.killSelf)
+
+    def killSelf(self):
+        self.yesSignal.disconnect()
+        self.parent().accountInfoBtn.clicked.disconnect()
+        self.parent().initUserInfoWidget()
+        self.deleteLater()
+        self.setParent(None)
 
 
 class OpenFrpMainUI(QWidget):
@@ -970,7 +983,10 @@ class OpenFrpMainUI(QWidget):
             frpcArchive = ZipFile("MCSL2/Downloads/frpc_windows_386.zip", "r")
             frpcArchive.extractall("./Plugins/OpenFRP_Plugin/frpc")
             frpcArchive.close()
-            rename("./Plugins/OpenFRP_Plugin/frpc/frpc_windows_386.exe", "./Plugins/OpenFRP_Plugin/frpc/frpc.exe")
+            rename(
+                "./Plugins/OpenFRP_Plugin/frpc/frpc_windows_386.exe",
+                "./Plugins/OpenFRP_Plugin/frpc/frpc.exe",
+            )
             remove("MCSL2/Downloads/frpc_windows_386.zip")
             InfoBar.success(title="解压Frpc", content="成功！", duration=1900, parent=self)
         except Exception:
@@ -1148,7 +1164,7 @@ class OpenFrpMainUI(QWidget):
         self.userInfoWidget.inoutLimit.setText(
             f"↑ {round(OFVariables.userInfo[0]['outLimit'] / 1024 * 8, 2)}Mbps | ↓ {round(OFVariables.userInfo[0]['inLimit'] / 1024 * 8, 2)}Mbps"
         )
-        self.userInfoMessageBox = MessageBox("", "", self)
+        self.userInfoMessageBox = UserInfoMessageBox("", "", self)
         self.userInfoMessageBox.textLayout.addWidget(self.userInfoWidget.userInfoWidget)
         self.userInfoMessageBox.titleLabel.setParent(None)
         self.userInfoMessageBox.contentLabel.setParent(None)
@@ -1462,9 +1478,10 @@ class OpenFrpMainUI(QWidget):
                 f"editProxy_{OFVariables.userProxiesData[1][i]['id']}"
             )
             proxyWidget.deleteProxy.clicked.connect(self.removeProxy)
-            proxyWidget.setObjectName(
-                f"singleProxyWidget_{OFVariables.userProxiesData[1][i]['id']}"
+            proxyWidget.SwitchButton.setObjectName(
+                f"{OFVariables.userProxiesData[1][i]['id']}|"
             )
+            proxyWidget.SwitchButton.checkedChanged.connect(self.switchProxy)
             self.proxiesLayout.addWidget(proxyWidget)
 
     def removeProxy(self):
@@ -1497,3 +1514,15 @@ class OpenFrpMainUI(QWidget):
                 isClosable=True,
                 parent=self,
             )
+
+    def switchProxy(self):
+        id = self.sender().objectName().split("|")[0]
+        if self.sender().isChecked():
+            # 在|前的是隧道id，后为列表中的frpc进程id
+            # 设置objectName同时启动Frpc
+            self.sender().setObjectName(f"{id}|{FrpcBridge(self).newFrpc(tunnelId=id)}")
+        else:
+            # 先关闭Frpc
+            FrpcBridge(self).stopFrpc(int(self.sender().objectName().split('|')[1]))
+            # 设置objectName
+            self.sender().setObjectName(f"{self.sender().objectName().split('|')[0]}")

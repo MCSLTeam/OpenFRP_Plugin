@@ -1,14 +1,10 @@
 from os import getcwd
-from typing import List, Optional
+from typing import Optional
 from PyQt5.QtCore import QProcess, QObject, pyqtSignal
-
 from ..OfSettingsController import OfSettingsController
 
 ofSettingsController = OfSettingsController()
-processList = ["PlaceHolder"]
-handlerList = ["PlaceHolder"]
-totalLogList = []
-singleProcessList = ["PlaceHolder"]
+
 
 class FrpcProcess:
     """Frpc进程"""
@@ -21,13 +17,10 @@ class FrpcProcess:
 class FrpcHandler(QObject):
     """Frpc进程操控器"""
 
-    # 当输出日志时发出的信号(发送一个字符串)
     frpcLogOutput = pyqtSignal(str)
 
-    # 当关闭时发出的信号(发送一个整数exit code)
     frpcClosed = pyqtSignal(int)
 
-    # 当重启时发出的信号
     frpcRestarted = pyqtSignal()
 
     def __init__(self):
@@ -41,6 +34,7 @@ class FrpcHandler(QObject):
         self.cwd: str = f"{getcwd()}\\Plugins\\OpenFRP_Plugin\\frpc\\"
         self.partialData: str = b""
         self.AFrpc = None
+        self.frpcLogOutput.connect(print)
         self.FrpcProcess = self.getFrpcProcess()
 
     def getFrpcProcess(self) -> FrpcProcess:
@@ -63,30 +57,24 @@ class FrpcHandler(QObject):
         return self.AFrpc
 
     def frpcLogOutputHandler(self):
-        """
-        When the server outputs change, emit a signal with the updated output.
-        """
         newData = self.FrpcProcess.frpcProcess.readAllStandardOutput().data()
-        self.partialData += newData  # Append the incoming data to the buffer
-        lines = self.partialData.split(b"\n")  # Split the buffer into lines
-        self.partialData = (
-            lines.pop()
-        )  # The last element might be incomplete, so keep it in the buffer
-
+        self.partialData += newData
+        lines = self.partialData.split(b"\n")
+        self.partialData = lines.pop()
         for line in lines:
-            newOutput = line.decode("ansi", errors="replace")
+            newOutput = line.decode("utf-8", errors="replace")
             self.frpcLogOutput.emit(newOutput)
 
     def restartFrpc(self):
         """
         重启Frpc
         """
-        self.killFrpc()
+        self.stopFrpc()
         self.FrpcProcess.frpcProcess.waitForFinished()
         self.FrpcProcess.frpcProcess.start()
         self.frpcRestarted.emit()
 
-    def killFrpc(self):
+    def stopFrpc(self):
         """
         强制停止Frpc
         """
@@ -99,7 +87,7 @@ class FrpcHandler(QObject):
             return False
         return self.FrpcProcess.frpcProcess.state() == QProcess.Running
 
-    def startFrpc(self, userToken: str, tunnelId: str):
+    def startFrpc(self, userToken: str, tunnelId: str) -> FrpcProcess:
         """
         启动Frpc
         """
@@ -111,3 +99,4 @@ class FrpcHandler(QObject):
             arg.append("--debug")
         self.FrpcProcess.frpcProcess.setArguments(arg)
         self.FrpcProcess.frpcProcess.start()
+        return self.FrpcProcess
