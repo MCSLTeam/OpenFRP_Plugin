@@ -1,7 +1,7 @@
 from MCSL2Lib.singleton import Singleton
 from ..Interfaces.frpcConsole import OpenFrpFrpcConsoleUI
 from .OfFrpcProcessController import FrpcHandler
-from ..variables import FrpcConsoleVariables, OFVariables
+from ..variables import FrpcConsoleVariables, OFVariables, switchBtnStat
 from PyQt5.QtCore import QObject
 
 @Singleton
@@ -18,6 +18,7 @@ class FrpcBridge(QObject):
 
         frpcHandler.frpcLogOutput.connect(FrpcConsoleVariables.totalLogList.append)
         frpcHandler.frpcLogOutput.connect(frpcConsole.colorConsoleText)
+        frpcHandler.frpcClosed.connect(lambda: switchBtnStat(frpcProcessListId))
         frpcHandler.frpcLogOutput.connect(FrpcConsoleVariables.singleLogList[frpcProcessListId].append)
 
         FrpcConsoleVariables.handlerList.append(frpcHandler)

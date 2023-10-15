@@ -33,9 +33,7 @@ class OfSettingsController:
         """重新将文件中的配置强制覆盖到程序中，不管是否保存了"""
         if osp.exists(r"./Plugins/OpenFRP_Plugin/MCSL2_OpenFrpPluginConfig.json"):
             if (
-                osp.getsize(
-                    r"./Plugins/OpenFRP_Plugin/MCSL2_OpenFrpPluginConfig.json"
-                )
+                osp.getsize(r"./Plugins/OpenFRP_Plugin/MCSL2_OpenFrpPluginConfig.json")
                 != 0
             ):
                 with open(
@@ -44,6 +42,14 @@ class OfSettingsController:
                     encoding="utf-8",
                 ) as readConfig:
                     self.fileSettings = loads(readConfig.read())
+        if set(self.fileSettings.keys()) == set(ofConfigTemplate.keys()):
+            pass
+        else:
+            missingKeys = set(ofConfigTemplate.keys()) - set(self.fileSettings.keys())
+            for key in missingKeys:
+                self.fileSettings[key] = ofConfigTemplate[key]
+        with open(r"./Plugins/OpenFRP_Plugin/MCSL2_OpenFrpPluginConfig.json", "w+", encoding="utf-8") as config:
+            config.write(dumps(self.fileSettings, indent=4))
 
     def changeSettings(self, setting: dict):
         """改设置并且直接保存"""

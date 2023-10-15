@@ -1,7 +1,7 @@
 from MCSL2Lib.Controllers.networkController import Session
 from ..OfSettingsController import OfSettingsController, initOFPluginConfiguration
 from PyQt5.QtCore import QThread, pyqtSignal
-from os import makedirs
+from os import makedirs, listdir
 
 ofSettingsController = OfSettingsController()
 
@@ -34,7 +34,7 @@ class OfFrpcUpdater(QThread):
         info = Session().get(url=self.updateAPI).json()["data"]
         onlineVer = FrpcVersion(info["latest_ver"])
         if self.oldVer is not None:
-            if self.cmp(oldVer=self.oldVer, newVer=onlineVer):
+            if self.cmp(oldVer=self.oldVer, newVer=onlineVer) or not len(listdir(r"./Plugins/OpenFRP_Plugin/frpc")):
                 self.updateInfo.emit([info["latest"], info["source"]])
                 ofSettingsController.changeSettings(
                     {"frpc_version": str(info["latest_ver"])}

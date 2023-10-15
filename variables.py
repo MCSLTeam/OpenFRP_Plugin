@@ -35,6 +35,11 @@ class FrpcConsoleVariables:
     handlerList = ["PlaceHolder"]
     totalLogList = []
     singleLogList = ["PlaceHolder"]
+    switchBtnList = ["PlaceHolder"]
+
+def switchBtnStat(frpcProcessListId):
+    FrpcConsoleVariables.switchBtnList[frpcProcessListId].setChecked(False)
+    FrpcConsoleVariables.switchBtnList.pop(frpcProcessListId)
 
 
 def variablesLogout():

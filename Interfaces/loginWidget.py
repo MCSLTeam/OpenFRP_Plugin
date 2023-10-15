@@ -14,6 +14,7 @@ from qfluentwidgets import (
     PrimaryPushButton,
     PushButton,
     TitleLabel,
+    PasswordLineEdit,
 )
 
 
@@ -115,7 +116,7 @@ class LoginContainer(QWidget):
         self.tipLabel.setObjectName("tipLabel")
 
         self.gridLayout.addWidget(self.tipLabel, 1, 0, 1, 1)
-        self.passwordLineEdit = LineEdit(self.loginWidget)
+        self.passwordLineEdit = PasswordLineEdit(self.loginWidget)
         self.passwordLineEdit.setObjectName("passwordLineEdit")
 
         self.gridLayout.addWidget(self.passwordLineEdit, 3, 0, 1, 1)
@@ -150,4 +151,3 @@ class LoginContainer(QWidget):
         self.loginBtn.setText("登录")
         self.cancelBtn.setText("取消")
         self.userNameLineEdit.setClearButtonEnabled(True)
-        self.passwordLineEdit.setEchoMode(LineEdit.Password)

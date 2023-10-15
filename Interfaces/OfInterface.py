@@ -41,8 +41,9 @@ from MCSL2Lib.Controllers.aria2ClientController import Aria2Controller
 from MCSL2Lib.Widgets.loadingTipWidget import LoadFailedTip, LoadingTip
 from MCSL2Lib.Widgets.DownloadProgressWidget import DownloadMessageBox
 from MCSL2Lib.variables import GlobalMCSL2Variables
+from ..encrypt import getPassword, saveUser, getUser
 from ..FrpcController.OfFrpcBridge import FrpcBridge
-from ..variables import clearNewProxyConfig, variablesLogout
+from ..variables import FrpcConsoleVariables, clearNewProxyConfig, variablesLogout
 from ..OfSettingsController import OfSettingsController
 from ..APIThreads import *
 from .loginWidget import LoginContainer
@@ -1052,13 +1053,9 @@ class OpenFrpMainUI(QWidget):
             )
         )
         if ofSettingsController.fileSettings["last_user"] != "":
-            self.loginWidget.userNameLineEdit.setText(
-                ofSettingsController.fileSettings["last_user"]
-            )
+            self.loginWidget.userNameLineEdit.setText(getUser())
         if ofSettingsController.fileSettings["last_password"] != "":
-            self.loginWidget.passwordLineEdit.setText(
-                ofSettingsController.fileSettings["last_password"]
-            )
+            self.loginWidget.passwordLineEdit.setText(getPassword())
         self.loginMessageBox.textLayout.addWidget(self.loginWidget.loginWidget)
         self.loginMessageBox.titleLabel.setParent(None)
         self.loginMessageBox.contentLabel.setParent(None)
@@ -1092,12 +1089,7 @@ class OpenFrpMainUI(QWidget):
             loginThread.start()
 
     def afterLogin(self):
-        ofSettingsController.changeSettings(
-            {
-                "last_user": OFVariables.userName,
-                "last_password": OFVariables.userPassword,
-            }
-        )
+        saveUser()
         self.loginWidget.loginBtn.setEnabled(True)
         self.loginingInfoBar.close()
         if OFVariables.loginData[2]:
@@ -1516,6 +1508,7 @@ class OpenFrpMainUI(QWidget):
             )
 
     def switchProxy(self):
+        FrpcConsoleVariables.switchBtnList.append(self.sender())
         id = self.sender().objectName().split("|")[0]
         if self.sender().isChecked():
             # 在|前的是隧道id，后为列表中的frpc进程id

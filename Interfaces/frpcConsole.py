@@ -95,6 +95,7 @@ class OpenFrpFrpcConsoleUI(QWidget):
         self.clearFrpcConsoleBtn.clicked.connect(self.frpcOutput.clear)
         self.saveFrpcConsoleBtn.setEnabled(False)
         self.frpcClientComboBox.addItem("#0 全部日志")
+        self.frpcClientComboBox.currentIndexChanged.connect(self.switchFrpcLog)
 
     @pyqtSlot(str)
     def colorConsoleText(self, frpcLogOutput):

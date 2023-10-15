@@ -19,7 +19,9 @@ class FrpcHandler(QObject):
 
     frpcLogOutput = pyqtSignal(str)
 
-    frpcClosed = pyqtSignal(int)
+    frpcClosed = pyqtSignal()
+
+    frpcExitCode = pyqtSignal(int)
 
     frpcRestarted = pyqtSignal()
 
@@ -34,9 +36,8 @@ class FrpcHandler(QObject):
         self.cwd: str = f"{getcwd()}\\Plugins\\OpenFRP_Plugin\\frpc\\"
         self.partialData: str = b""
         self.AFrpc = None
-        self.frpcLogOutput.connect(print)
         self.FrpcProcess = self.getFrpcProcess()
-        self.frpcClosed.connect(print)
+        self.frpcExitCode.connect(print)
 
     def getFrpcProcess(self) -> FrpcProcess:
         """
@@ -53,8 +54,9 @@ class FrpcHandler(QObject):
             self.frpcLogOutputHandler
         )
         self.AFrpc.frpcProcess.finished.connect(
-            lambda: self.frpcClosed.emit(self.AFrpc.frpcProcess.exitCode())
+            lambda: self.frpcExitCode.emit(self.AFrpc.frpcProcess.exitCode())
         )
+        self.AFrpc.frpcProcess.finished.connect(self.frpcClosed.emit)
         return self.AFrpc
 
     def frpcLogOutputHandler(self):
