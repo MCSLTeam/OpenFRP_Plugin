@@ -2,10 +2,9 @@
 [![](https://img.shields.io/github/v/tag/MCSLTeam/OpenFRP_Plugin?label=ver&style=for-the-badge "Version")](https://github.com/MCSLTeam/OpenFRP_Plugin/releases/latest)   [![](https://img.shields.io/github/downloads/MCSLTeam/OpenFRP_Plugin/total?style=for-the-badge "Downloads")](https://github.com/MCSLTeam/OpenFRP_Plugin/releases)  [![](https://img.shields.io/github/license/MCSLTeam/OpenFRP_Plugin?style=for-the-badge "License")](https://github.com/MCSLTeam/OpenFRP_Plugin/blob/master/LICENSE)
 ### 前言
 这是一个可以在MCSL2上使用OpenFRP功能的插件，需要你的OpenFRP账号密码，可以提供服务器的内网穿透功能。  
-为MCSL2量身打造。  
-支持MCSL2 2.2.1.3及以上版本。  
+为MCSL2量身打造，支持MCSL2 2.2.2.3及以上版本。  
 ### 关于账密安全  
-OpenFRP OPENAPI调用前提必须使用账密登录，登录全程不会上传MCSL2。账密、Cookie等均保存在本地，MCSL2不会泄露。  
+OpenFRP OPENAPI调用前提必须使用账密登录，登录全程不会上传MCSL2。账密等均加密保存在本地，MCSL2不会泄露。  
 ### 安装方法  
 #### 下载插件  
 先[点击此处](https://github.com/MCSLTeam/OpenFRP_Plugin/releases)下载最新版插件。  
