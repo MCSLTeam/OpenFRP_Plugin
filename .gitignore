@@ -5,6 +5,6 @@ FrpcController/__pycache__/**
 frpc/**
 .vscode/**
 MCSL2_OpenFrpPluginConfig.json
-encrypt.py
+1encrypt.py
 encrypt.pyi
 encrypt.build/**
