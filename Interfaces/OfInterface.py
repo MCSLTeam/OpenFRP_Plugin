@@ -1478,9 +1478,17 @@ class OpenFrpMainUI(QWidget):
 
     def removeProxy(self):
         self.sender().setEnabled(False)
+        w = MessageBox("确定删除该隧道？", "此操作不可逆。是否继续？", self)
+        w.yesButton.setText("取消")
+        w.cancelButton.setText("删除")
+        w.cancelSignal.connect(self.removeProxy_API)
         OFVariables.removeProxyID = int(
             self.sender().objectName().replace("editProxy_", "")
         )
+        w.show()
+        self.sender().setEnabled(True)
+
+    def removeProxy_API(self):
         removeProxyThread = RemoveProxyThread(self)
         removeProxyThread.finished.connect(self.afterRemoveProxy)
         removeProxyThread.start()
