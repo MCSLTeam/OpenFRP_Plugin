@@ -1,10 +1,7 @@
 from typing import Optional
 from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtWidgets import QGridLayout, QSizePolicy, QSpacerItem, QWidget
-from qfluentwidgets import BodyLabel, CardWidget, FlowLayout, SubtitleLabel
-from .nodeTag import VIPTag, AllowProtocolTag, BandWidthTag, FullTag
-
-
+from qfluentwidgets import BodyLabel, CardWidget, FlowLayout, SubtitleLabel, InfoBadge
 class SingleNodeWidget(CardWidget):
     def __init__(self):
         super().__init__()
@@ -14,7 +11,7 @@ class SingleNodeWidget(CardWidget):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sizePolicy().hasHeightForWidth())
         self.setSizePolicy(sizePolicy)
-        self.setFixedSize(QSize(300, 220))
+        self.setFixedSize(QSize(300, 125))
 
         self.gridLayout = QGridLayout(self)
         self.gridLayout.setObjectName("gridLayout")
@@ -99,12 +96,11 @@ class SingleNodeWidget(CardWidget):
         2 - AllowProtocol, but argument 'protoType' is required, like 'TCP'.\n
         3 - VIP.
         """
-        nodeTagList = [BandWidthTag(), FullTag(), AllowProtocolTag(), VIPTag()]
         if not type:
-            nodeTagList[type].setText(f"{bandWidth[0]}Mbps × {bandWidth[1]}")
-            self.tagFlowLayout.addWidget(nodeTagList[type])
+            self.tagFlowLayout.addWidget(InfoBadge.info(f"{bandWidth[0]}Mbps × {bandWidth[1]}"))
+        elif type == 3:
+            self.tagFlowLayout.addWidget(InfoBadge.warning("VIP"))
         elif type == 2:
-            nodeTagList[type].selfSetText(protoType)
-            self.tagFlowLayout.addWidget(nodeTagList[type])
-        else:
-            self.tagFlowLayout.addWidget(nodeTagList[type])
+            self.tagFlowLayout.addWidget(InfoBadge.attension(protoType))
+        elif type == 1:
+            self.tagFlowLayout.addWidget(InfoBadge.error("! 满载"))

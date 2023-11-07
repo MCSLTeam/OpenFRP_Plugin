@@ -92,7 +92,7 @@ class OpenFrpFrpcConsoleUI(QWidget):
         self.clearFrpcConsoleBtn.setText("清空")
         self.titleLabel.setText("OpenFrp Frpc 终端")
         self.saveFrpcConsoleBtn.setText("保存")
-        self.clearFrpcConsoleBtn.clicked.connect(self.frpcOutput.clear)
+        self.clearFrpcConsoleBtn.clicked.connect(self.clearFrpcLog)
         self.saveFrpcConsoleBtn.setEnabled(False)
         self.frpcClientComboBox.addItem("#0 全部日志")
         self.frpcClientComboBox.currentIndexChanged.connect(self.switchFrpcLog)
@@ -130,3 +130,10 @@ class OpenFrpFrpcConsoleUI(QWidget):
             self.frpcOutput.setPlainText("".join(FrpcConsoleVariables.totalLogList))
         else:
             self.frpcOutput.setPlainText("".join(FrpcConsoleVariables.singleLogList[self.sender().currentIndex()]))
+
+    def clearFrpcLog(self):
+        self.frpcOutput.clear()
+        if not self.frpcClientComboBox.currentIndex():
+            FrpcConsoleVariables.totalLogList = []
+        else:
+            FrpcConsoleVariables.singleLogList[self.sender().currentIndex()] = []

@@ -1128,7 +1128,7 @@ class OpenFrpMainUI(QWidget):
                     isClosable=True,
                     parent=self,
                 )
-        finally:
+        except Exception:
             InfoBar.error(
                     "错误",
                     "插件出现错误，请联系作者解决。",
