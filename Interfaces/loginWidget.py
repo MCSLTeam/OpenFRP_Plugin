@@ -13,7 +13,7 @@ from qfluentwidgets import (
     LineEdit,
     PrimaryPushButton,
     PushButton,
-    TitleLabel,
+    SubtitleLabel,
     PasswordLineEdit,
 )
 
@@ -97,7 +97,7 @@ class LoginContainer(QWidget):
 
         self.horizontalLayout_2.addWidget(self.ofRegisterLabel)
         self.gridLayout.addWidget(self.ofAgreementBtnWidget, 4, 0, 1, 1)
-        self.loginTitle = TitleLabel(self.loginWidget)
+        self.loginTitle = SubtitleLabel(self.loginWidget)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -144,9 +144,9 @@ class LoginContainer(QWidget):
         self.ofPrivacyLabel.setFixedSize(QSize(56, 19))
         self.ofPolicyLabel.setFixedSize(QSize(56, 19))
         self.ofRegisterLabel.setFixedSize(QSize(56, 19))
-        self.loginTitle.setText("登录")
+        self.loginTitle.setText("登录Natayark ID")
         self.userNameLineEdit.setPlaceholderText("用户名或邮箱")
-        self.tipLabel.setText("登录 OpenFrp 账户即代表您遵守以下协议。")
+        self.tipLabel.setText("登录即代表您遵守以下协议。")
         self.passwordLineEdit.setPlaceholderText("密码")
         self.loginBtn.setText("登录")
         self.cancelBtn.setText("取消")

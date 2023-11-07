@@ -1092,32 +1092,51 @@ class OpenFrpMainUI(QWidget):
         saveUser()
         self.loginWidget.loginBtn.setEnabled(True)
         self.loginingInfoBar.close()
-        if OFVariables.loginData[2]:
-            OFVariables.userSessionID = OFVariables.loginData[0]
-            OFVariables.userAuthorization = OFVariables.loginData[1]
-            self.loginMessageBox.hide()
-            InfoBar.success(
-                "成功",
-                "登录成功",
-                position=InfoBarPosition.TOP_RIGHT,
-                duration=1500,
-                isClosable=True,
-                parent=self,
-            )
-            self.userInfoStackedWidget.setCurrentIndex(1)
-            self.newProxyBtn.setEnabled(True)
-            self.refreshProxyListBtn.setEnabled(True)
-            self.getUserInfo_API()
-            self.getUserProxies_API()
-        else:
+        try:
+            if OFVariables.loginData[2]:
+                OFVariables.userSessionID = OFVariables.loginData[0]
+                OFVariables.userAuthorization = OFVariables.loginData[1]
+                self.loginMessageBox.hide()
+                InfoBar.success(
+                    "成功",
+                    "登录成功",
+                    position=InfoBarPosition.TOP_RIGHT,
+                    duration=1500,
+                    isClosable=True,
+                    parent=self,
+                )
+                self.userInfoStackedWidget.setCurrentIndex(1)
+                self.newProxyBtn.setEnabled(True)
+                self.refreshProxyListBtn.setEnabled(True)
+                self.getUserInfo_API()
+                self.getUserProxies_API()
+            else:
+                InfoBar.error(
+                    "错误",
+                    "登录失败",
+                    position=InfoBarPosition.TOP_RIGHT,
+                    duration=1500,
+                    isClosable=True,
+                    parent=self,
+                )
+        except TypeError:
             InfoBar.error(
-                "错误",
-                "登录失败",
-                position=InfoBarPosition.TOP_RIGHT,
-                duration=1500,
-                isClosable=True,
-                parent=self,
-            )
+                    "错误",
+                    "登录失败",
+                    position=InfoBarPosition.TOP_RIGHT,
+                    duration=1500,
+                    isClosable=True,
+                    parent=self,
+                )
+        finally:
+            InfoBar.error(
+                    "错误",
+                    "插件出现错误，请联系作者解决。",
+                    position=InfoBarPosition.TOP_RIGHT,
+                    duration=-1,
+                    isClosable=True,
+                    parent=self,
+                )
 
     def getUserInfo_API(self):
         OFVariables.userInfo = {}
