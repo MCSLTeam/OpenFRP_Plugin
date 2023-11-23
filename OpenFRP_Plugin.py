@@ -20,10 +20,11 @@ ofFrpcInterface = OpenFrpFrpcConsoleUI()
 ofSettingInterface = OpenFrpSettingsUI()
 ofFrpcUpdater = OfFrpcUpdater(ofInterface)
 
+
 def load():
     ofFrpcUpdater.setUpFrpcEnv()
     ofFrpcUpdater.updateInfo.connect(ofInterface.downloadFrpc)
-    ofFrpcUpdater.start()
+
 
 def enable():
     try:
@@ -44,10 +45,10 @@ def enable():
             position=NavigationItemPosition.SCROLL,
             parent=ofInterface,
         )
-
+        Window().stackedWidget.currentChanged.connect(decideCheckFrpc)
         InfoBar.success(
             title="提示",
-            content="OpenFrp 插件已启用。\n如果看不到所有功能，请展开导航栏，\n然后点击“OpenFrp”的“展开”按钮。",
+            content="OpenFrp 插件已启用。",
             orient=Qt.Horizontal,
             isClosable=True,
             position=InfoBarPosition.BOTTOM_LEFT,
@@ -99,6 +100,16 @@ def disable():
             parent=Window().pluginsInterface,
         )
 
+def decideCheckFrpc():
+    global frpcChecked
+    if frpcChecked:
+        Window().stackedWidget.currentChanged.disconnect(decideCheckFrpc)
+        return
+    if Window().stackedWidget.currentWidget() == ofInterface:
+        frpcChecked = 1
+        ofFrpcUpdater.start()
+
+frpcChecked = 0
 
 # 注册加载代码
 OpenFRP_Plugin.register_loadFunc(load)

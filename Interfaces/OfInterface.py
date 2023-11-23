@@ -975,7 +975,6 @@ class OpenFrpMainUI(QWidget):
             )
         self.downloadingBox.downloadProgressWidget.downloading = False
         self.downloadingBox.DownloadWidget().closeBoxBtnFinished.click()
-        InfoBar.info(title="正在解压Frpc", content="请稍后...", duration=1900, parent=self)
         try:
             try:
                 remove("./Plugins/OpenFRP_Plugin/frpc/frpc.exe")
@@ -991,7 +990,7 @@ class OpenFrpMainUI(QWidget):
             remove("MCSL2/Downloads/frpc_windows_386.zip")
             InfoBar.success(title="解压Frpc", content="成功！", duration=1900, parent=self)
         except Exception:
-            InfoBar.error(title="解压Frpc", content="失败！", duration=1900, parent=self)
+            InfoBar.error(title="解压Frpc", content="失败！请删除本插件目录的frpc文件夹，并重新启用插件。", duration=1900, parent=self)
 
     @pyqtSlot(list)
     def downloadFrpc(self, updateInfo):
@@ -1005,7 +1004,7 @@ class OpenFrpMainUI(QWidget):
                 box.exec()
                 return
         self.window().switchTo(self)
-        uri = f"{updateInfo[1][0]['value']}{updateInfo[0]}frpc_windows_386.zip"
+        uri = f"{updateInfo[1][randint(0, len(updateInfo[1]) - 1)]['value']}{updateInfo[0]}frpc_windows_386.zip"
         self.downloadingBox = DownloadMessageBox("frpc_windows_386.zip", parent=self)
         gid = Aria2Controller.download(
             uri=uri,
@@ -1093,7 +1092,7 @@ class OpenFrpMainUI(QWidget):
         self.loginWidget.loginBtn.setEnabled(True)
         self.loginingInfoBar.close()
         try:
-            if OFVariables.loginData[2]:
+            if OFVariables.loginData[1]:
                 OFVariables.userSessionID = OFVariables.loginData[0]
                 OFVariables.userAuthorization = OFVariables.loginData[1]
                 self.loginMessageBox.hide()
