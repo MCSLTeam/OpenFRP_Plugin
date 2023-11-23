@@ -6,7 +6,6 @@ ofConfigTemplate = {
     "bypass_system_proxy": True,
     "fprc_force_tls": False,
     "frpc_debug_mode": False,
-    "frpc_version": "",
     "last_user": "",
     "last_password": "",
 }

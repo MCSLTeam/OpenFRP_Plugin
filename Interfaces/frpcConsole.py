@@ -1,11 +1,22 @@
-from PyQt5.QtWidgets import QGridLayout, QSizePolicy, QFrame, QSpacerItem, QWidget
+from PyQt5.QtWidgets import (
+    QGridLayout,
+    QSizePolicy,
+    QFrame,
+    QSpacerItem,
+    QWidget,
+    QApplication,
+)
 from qfluentwidgets import (
     ComboBox,
     PlainTextEdit,
     TitleLabel,
     TransparentPushButton,
+    PushButton,
     FluentIcon as FIF,
+    InfoBarPosition,
+    InfoBar,
 )
+import re
 from PyQt5.QtCore import Qt, pyqtSlot
 from PyQt5.QtGui import QColor, QTextCharFormat
 
@@ -49,13 +60,6 @@ class OpenFrpFrpcConsoleUI(QWidget):
         self.frpcOutput.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.frpcOutput.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.frpcOutput.setReadOnly(True)
-        self.frpcOutput.setReadOnly(True)
-        self.frpcOutput.setReadOnly(True)
-        self.frpcOutput.setReadOnly(True)
-        self.frpcOutput.setReadOnly(True)
-        self.frpcOutput.setReadOnly(True)
-        self.frpcOutput.setReadOnly(True)
-        self.frpcOutput.setReadOnly(True)
         self.frpcOutput.setObjectName("frpcOutput")
 
         self.gridLayout.addWidget(self.frpcOutput, 3, 1, 1, 4)
@@ -98,7 +102,7 @@ class OpenFrpFrpcConsoleUI(QWidget):
         self.frpcClientComboBox.currentIndexChanged.connect(self.switchFrpcLog)
 
     @pyqtSlot(str)
-    def colorConsoleText(self, frpcLogOutput):
+    def colorConsoleText(self, frpcLogOutput: str):
         fmt = QTextCharFormat()
         color = [
             QColor(52, 185, 96),
@@ -116,24 +120,39 @@ class OpenFrpFrpcConsoleUI(QWidget):
             fmt.setForeground(color[3])
         self.frpcOutput.mergeCurrentCharFormat(fmt)
         self.frpcOutput.appendPlainText(frpcLogOutput[:-1])
-        self.frpcOutput.setReadOnly(True)
-        self.frpcOutput.setReadOnly(True)
-        self.frpcOutput.setReadOnly(True)
-        self.frpcOutput.setReadOnly(True)
-        self.frpcOutput.setReadOnly(True)
-        self.frpcOutput.setReadOnly(True)
-        self.frpcOutput.setReadOnly(True)
-        self.frpcOutput.setReadOnly(True)
+        if "启动成功, 请使用" in frpcLogOutput:
+            msgMatcher = re.compile(r"\[([A-Z]+)\] 隧道 \[([^]]+)\] 启动成功").search(
+                frpcLogOutput[:-1]
+            )
+            url = (
+                frpcLogOutput[:-1].split("启动成功, 请使用 [")[1].split("] 来连接服务, 或使用IP地址")[0]
+            )
+            finishBtn = PushButton(icon=FIF.COPY, text="复制链接地址", parent=self)
+            finishBtn.clicked.connect(lambda: QApplication.clipboard().setText(url))
+            i = InfoBar.success(
+                title="完成",
+                content=f"[{msgMatcher.group(1)}] 隧道 [{msgMatcher.group(2)}] 启动成功",
+                orient=Qt.Horizontal,
+                isClosable=True,
+                position=InfoBarPosition.TOP,
+                duration=8000,
+                parent=self.window(),
+            )
+            i.addWidget(finishBtn)
 
     def switchFrpcLog(self):
         if not self.sender().currentIndex():
             self.frpcOutput.setPlainText("".join(FrpcConsoleVariables.totalLogList))
         else:
-            self.frpcOutput.setPlainText("".join(FrpcConsoleVariables.singleLogList[self.sender().currentIndex()]))
+            self.frpcOutput.setPlainText(
+                "".join(
+                    FrpcConsoleVariables.singleLogList[self.sender().currentIndex()]
+                )
+            )
 
     def clearFrpcLog(self):
         self.frpcOutput.clear()
         if not self.frpcClientComboBox.currentIndex():
             FrpcConsoleVariables.totalLogList = []
         else:
-            FrpcConsoleVariables.singleLogList[self.sender().currentIndex()] = []
+            FrpcConsoleVariables.singleLogList[self.frpcClientComboBox.currentIndex()] = []
