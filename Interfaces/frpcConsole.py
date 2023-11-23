@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import (
     QSpacerItem,
     QWidget,
     QApplication,
+    QFileDialog,
 )
 from qfluentwidgets import (
     ComboBox,
@@ -19,8 +20,9 @@ from qfluentwidgets import (
 import re
 from PyQt5.QtCore import Qt, pyqtSlot
 from PyQt5.QtGui import QColor, QTextCharFormat
-
+from os import getcwd
 from MCSL2Lib.singleton import Singleton
+from MCSL2Lib.utils import openLocalFile
 from ..variables import FrpcConsoleVariables
 
 
@@ -97,7 +99,7 @@ class OpenFrpFrpcConsoleUI(QWidget):
         self.titleLabel.setText("OpenFrp Frpc 终端")
         self.saveFrpcConsoleBtn.setText("保存")
         self.clearFrpcConsoleBtn.clicked.connect(self.clearFrpcLog)
-        self.saveFrpcConsoleBtn.setEnabled(False)
+        self.saveFrpcConsoleBtn.clicked.connect(self.saveFrpcLog)
         self.frpcClientComboBox.addItem("#0 全部日志")
         self.frpcClientComboBox.currentIndexChanged.connect(self.switchFrpcLog)
 
@@ -156,3 +158,35 @@ class OpenFrpFrpcConsoleUI(QWidget):
             FrpcConsoleVariables.totalLogList = []
         else:
             FrpcConsoleVariables.singleLogList[self.frpcClientComboBox.currentIndex()] = []
+
+    def saveFrpcLog(self):
+        saveLogFileDialog = QFileDialog(self, "MCSL2 - 保存OpenFrp Frpc日志", getcwd())
+        saveLogFileDialog.setAcceptMode(QFileDialog.AcceptSave)
+        saveLogFileDialog.setNameFilter("Text Files (*.txt);;Log Files (*.log)")
+        saveLogFileDialog.selectFile("MCSL2_OpenFRP_Plugin_Frpc.log")
+        if saveLogFileDialog.exec_() == QFileDialog.Accepted:
+            try:
+                with open(saveLogFileDialog.selectedFiles()[0], "w+", encoding="utf-8") as f:
+                    f.write(self.frpcOutput.toPlainText())
+                finishBtn = PushButton(icon=FIF.LINK, text="打开文件", parent=self)
+                finishBtn.clicked.connect(lambda: openLocalFile(saveLogFileDialog.selectedFiles()[0]))
+                i = InfoBar.success(
+                    title="成功",
+                    content=f"日志已保存至 {saveLogFileDialog.selectedFiles()[0]}",
+                    isClosable=True,
+                    position=InfoBarPosition.TOP,
+                    duration=5000,
+                    parent=self.window(),
+                )
+                i.addWidget(finishBtn)
+            except Exception as e:
+                InfoBar.error(
+                    title="保存日志失败",
+                    content=e,
+                    isClosable=True,
+                    position=InfoBarPosition.TOP,
+                    duration=5000,
+                    parent=self.window(),
+                )
+        else:
+            return
