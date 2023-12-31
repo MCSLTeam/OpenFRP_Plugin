@@ -1,4 +1,4 @@
-from MCSL2Lib.Controllers.networkController import MCSLNetworkSession
+from MCSL2Lib.ProgramControllers.networkController import MCSLNetworkSession
 from ..OfSettingsController import OfSettingsController, initOFPluginConfiguration
 from PyQt5.QtCore import QThread, pyqtSignal, QProcess
 from os import makedirs, listdir, path as osp

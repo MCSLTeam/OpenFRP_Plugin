@@ -37,7 +37,7 @@ from qfluentwidgets import (
     InfoBarPosition,
     InfoBar,
 )
-from MCSL2Lib.Controllers.aria2ClientController import Aria2Controller
+from MCSL2Lib.ProgramControllers.aria2ClientController import Aria2Controller
 from MCSL2Lib.Widgets.loadingTipWidget import LoadFailedTip, LoadingTip
 from MCSL2Lib.Widgets.DownloadProgressWidget import DownloadMessageBox
 from MCSL2Lib.variables import GlobalMCSL2Variables
