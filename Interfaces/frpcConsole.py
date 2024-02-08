@@ -48,9 +48,7 @@ class OpenFrpFrpcConsoleUI(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.clearFrpcConsoleBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.clearFrpcConsoleBtn.sizePolicy().hasHeightForWidth())
         self.clearFrpcConsoleBtn.setSizePolicy(sizePolicy)
         self.clearFrpcConsoleBtn.setObjectName("clearFrpcConsoleBtn")
 
@@ -87,9 +85,7 @@ class OpenFrpFrpcConsoleUI(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.saveFrpcConsoleBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.saveFrpcConsoleBtn.sizePolicy().hasHeightForWidth())
         self.saveFrpcConsoleBtn.setSizePolicy(sizePolicy)
         self.saveFrpcConsoleBtn.setObjectName("saveFrpcConsoleBtn")
 
@@ -123,23 +119,22 @@ class OpenFrpFrpcConsoleUI(QWidget):
         self.frpcOutput.mergeCurrentCharFormat(fmt)
         self.frpcOutput.appendPlainText(frpcLogOutput[:-1])
         if "启动成功, 请使用" in frpcLogOutput:
-            msgMatcher = re.compile(r"\[([A-Z]+)\] 隧道 \[([^]]+)\] 启动成功").search(
-                frpcLogOutput[:-1]
-            )
             url = (
-                frpcLogOutput[:-1].split("启动成功, 请使用 [")[1].split("] 来连接服务, 或使用IP地址")[0]
+                frpcLogOutput[:-1]
+                .split("启动成功, 请使用 [")[1]
+                .split("] 来连接服务, 或使用IP地址")[0]
             )
-            finishBtn = PushButton(icon=FIF.COPY, text="复制链接地址", parent=self)
-            finishBtn.clicked.connect(lambda: QApplication.clipboard().setText(url))
             i = InfoBar.success(
                 title="完成",
-                content=f"[{msgMatcher.group(1)}] 隧道 [{msgMatcher.group(2)}] 启动成功",
+                content=f"{(k := frpcLogOutput.split(', 请使用 [')[0].split('] '))[3]}] {k[4]}] 启动成功",
                 orient=Qt.Horizontal,
                 isClosable=True,
                 position=InfoBarPosition.TOP,
                 duration=8000,
                 parent=self.window(),
             )
+            finishBtn = PushButton(icon=FIF.COPY, text="复制链接地址", parent=i)
+            finishBtn.clicked.connect(lambda: QApplication.clipboard().setText(url))
             i.addWidget(finishBtn)
 
     def switchFrpcLog(self):
@@ -147,9 +142,7 @@ class OpenFrpFrpcConsoleUI(QWidget):
             self.frpcOutput.setPlainText("".join(FrpcConsoleVariables.totalLogList))
         else:
             self.frpcOutput.setPlainText(
-                "".join(
-                    FrpcConsoleVariables.singleLogList[self.sender().currentIndex()]
-                )
+                "".join(FrpcConsoleVariables.singleLogList[self.sender().currentIndex()])
             )
 
     def clearFrpcLog(self):
@@ -162,14 +155,16 @@ class OpenFrpFrpcConsoleUI(QWidget):
     def saveFrpcLog(self):
         saveLogFileDialog = QFileDialog(self, "MCSL2 - 保存OpenFrp Frpc日志", getcwd())
         saveLogFileDialog.setAcceptMode(QFileDialog.AcceptSave)
-        saveLogFileDialog.setNameFilter("Text Files (*.txt);;Log Files (*.log)")
+        saveLogFileDialog.setNameFilter("Log Files (*.log);;Text Files (*.txt)")
         saveLogFileDialog.selectFile("MCSL2_OpenFRP_Plugin_Frpc.log")
         if saveLogFileDialog.exec_() == QFileDialog.Accepted:
             try:
                 with open(saveLogFileDialog.selectedFiles()[0], "w+", encoding="utf-8") as f:
                     f.write(self.frpcOutput.toPlainText())
                 finishBtn = PushButton(icon=FIF.LINK, text="打开文件", parent=self)
-                finishBtn.clicked.connect(lambda: openLocalFile(saveLogFileDialog.selectedFiles()[0]))
+                finishBtn.clicked.connect(
+                    lambda: openLocalFile(saveLogFileDialog.selectedFiles()[0])
+                )
                 i = InfoBar.success(
                     title="成功",
                     content=f"日志已保存至 {saveLogFileDialog.selectedFiles()[0]}",
