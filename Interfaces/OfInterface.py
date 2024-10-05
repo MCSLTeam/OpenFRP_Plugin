@@ -96,9 +96,7 @@ class OpenFrpMainUI(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.userInfoStackedWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.userInfoStackedWidget.sizePolicy().hasHeightForWidth())
         self.userInfoStackedWidget.setSizePolicy(sizePolicy)
         self.userInfoStackedWidget.setObjectName("userInfoStackedWidget")
 
@@ -123,9 +121,7 @@ class OpenFrpMainUI(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.loginEntryBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.loginEntryBtn.sizePolicy().hasHeightForWidth())
         self.loginEntryBtn.setSizePolicy(sizePolicy)
         self.loginEntryBtn.setMinimumSize(QSize(65, 32))
         self.loginEntryBtn.setMaximumSize(QSize(65, 32))
@@ -207,18 +203,14 @@ class OpenFrpMainUI(QWidget):
 
         self.ofProxiesScrollAreaWidgetContents = QWidget()
         self.ofProxiesScrollAreaWidgetContents.setGeometry(QRect(0, 0, 648, 380))
-        self.ofProxiesScrollAreaWidgetContents.setObjectName(
-            "ofProxiesScrollAreaWidgetContents"
-        )
+        self.ofProxiesScrollAreaWidgetContents.setObjectName("ofProxiesScrollAreaWidgetContents")
 
         self.gridLayout_2.addWidget(self.ofProxiesSmoothScrollArea, 4, 0, 1, 6)
         self.titleLimitWidget = QWidget(self.mainPage)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.titleLimitWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.titleLimitWidget.sizePolicy().hasHeightForWidth())
         self.titleLimitWidget.setSizePolicy(sizePolicy)
         self.titleLimitWidget.setObjectName("titleLimitWidget")
 
@@ -239,13 +231,9 @@ class OpenFrpMainUI(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.pluginVerTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.pluginVerTitle.sizePolicy().hasHeightForWidth())
         self.pluginVerTitle.setSizePolicy(sizePolicy)
-        self.pluginVerTitle.setAlignment(
-            Qt.AlignBottom | Qt.AlignLeading | Qt.AlignLeft
-        )
+        self.pluginVerTitle.setAlignment(Qt.AlignBottom | Qt.AlignLeading | Qt.AlignLeft)
         self.pluginVerTitle.setObjectName("pluginVerTitle")
 
         self.gridLayout_3.addWidget(self.pluginVerTitle, 0, 1, 1, 1)
@@ -273,9 +261,7 @@ class OpenFrpMainUI(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.refreshProxyListBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.refreshProxyListBtn.sizePolicy().hasHeightForWidth())
         self.refreshProxyListBtn.setSizePolicy(sizePolicy)
         self.refreshProxyListBtn.setIcon(FIF.UPDATE)
         self.refreshProxyListBtn.setObjectName("refreshProxyListBtn")
@@ -294,9 +280,7 @@ class OpenFrpMainUI(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.newProxyTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.newProxyTitle.sizePolicy().hasHeightForWidth())
         self.newProxyTitle.setSizePolicy(sizePolicy)
         self.newProxyTitle.setObjectName("newProxyTitle")
 
@@ -309,18 +293,14 @@ class OpenFrpMainUI(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.configureProxyScrollArea.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.configureProxyScrollArea.sizePolicy().hasHeightForWidth())
         self.configureProxyScrollArea.setSizePolicy(sizePolicy)
         self.configureProxyScrollArea.setMinimumSize(QSize(345, 0))
         self.configureProxyScrollArea.setMaximumSize(QSize(345, 16777215))
         self.configureProxyScrollArea.setFrameShape(QFrame.NoFrame)
         self.configureProxyScrollArea.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.configureProxyScrollArea.setWidgetResizable(True)
-        self.configureProxyScrollArea.setAlignment(
-            Qt.AlignLeading | Qt.AlignLeft | Qt.AlignTop
-        )
+        self.configureProxyScrollArea.setAlignment(Qt.AlignLeading | Qt.AlignLeft | Qt.AlignTop)
         self.configureProxyScrollArea.setObjectName("configureProxyScrollArea")
 
         self.configureProxyScrollAreaWidgetContents = QWidget()
@@ -333,41 +313,29 @@ class OpenFrpMainUI(QWidget):
         self.gridLayout_7.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_7.setObjectName("gridLayout_7")
 
-        self.requestPassTitle = StrongBodyLabel(
-            self.configureProxyScrollAreaWidgetContents
-        )
+        self.requestPassTitle = StrongBodyLabel(self.configureProxyScrollAreaWidgetContents)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.requestPassTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.requestPassTitle.sizePolicy().hasHeightForWidth())
         self.requestPassTitle.setSizePolicy(sizePolicy)
         self.requestPassTitle.setObjectName("requestPassTitle")
 
         self.gridLayout_7.addWidget(self.requestPassTitle, 22, 0, 1, 1)
-        self.proxyProtocolTitle = StrongBodyLabel(
-            self.configureProxyScrollAreaWidgetContents
-        )
+        self.proxyProtocolTitle = StrongBodyLabel(self.configureProxyScrollAreaWidgetContents)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.proxyProtocolTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.proxyProtocolTitle.sizePolicy().hasHeightForWidth())
         self.proxyProtocolTitle.setSizePolicy(sizePolicy)
         self.proxyProtocolTitle.setObjectName("proxyProtocolTitle")
 
         self.gridLayout_7.addWidget(self.proxyProtocolTitle, 16, 0, 1, 1)
-        self.selectNodeTtle = StrongBodyLabel(
-            self.configureProxyScrollAreaWidgetContents
-        )
+        self.selectNodeTtle = StrongBodyLabel(self.configureProxyScrollAreaWidgetContents)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.selectNodeTtle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.selectNodeTtle.sizePolicy().hasHeightForWidth())
         self.selectNodeTtle.setSizePolicy(sizePolicy)
         self.selectNodeTtle.setObjectName("selectNodeTtle")
 
@@ -385,15 +353,11 @@ class OpenFrpMainUI(QWidget):
         self.remotePort.setObjectName("remotePort")
 
         self.gridLayout_7.addWidget(self.remotePort, 6, 1, 1, 1)
-        self.localPortTitle = StrongBodyLabel(
-            self.configureProxyScrollAreaWidgetContents
-        )
+        self.localPortTitle = StrongBodyLabel(self.configureProxyScrollAreaWidgetContents)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.localPortTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.localPortTitle.sizePolicy().hasHeightForWidth())
         self.localPortTitle.setSizePolicy(sizePolicy)
         self.localPortTitle.setObjectName("localPortTitle")
 
@@ -402,15 +366,11 @@ class OpenFrpMainUI(QWidget):
         self.dataTip.setObjectName("dataTip")
 
         self.gridLayout_7.addWidget(self.dataTip, 14, 0, 1, 2)
-        self.hostRewriteTitle = StrongBodyLabel(
-            self.configureProxyScrollAreaWidgetContents
-        )
+        self.hostRewriteTitle = StrongBodyLabel(self.configureProxyScrollAreaWidgetContents)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.hostRewriteTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.hostRewriteTitle.sizePolicy().hasHeightForWidth())
         self.hostRewriteTitle.setSizePolicy(sizePolicy)
         self.hostRewriteTitle.setObjectName("hostRewriteTitle")
 
@@ -419,30 +379,22 @@ class OpenFrpMainUI(QWidget):
         self.hostRewrite.setObjectName("hostRewrite")
 
         self.gridLayout_7.addWidget(self.hostRewrite, 21, 1, 1, 1)
-        self.remotePortTitle = StrongBodyLabel(
-            self.configureProxyScrollAreaWidgetContents
-        )
+        self.remotePortTitle = StrongBodyLabel(self.configureProxyScrollAreaWidgetContents)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.remotePortTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.remotePortTitle.sizePolicy().hasHeightForWidth())
         self.remotePortTitle.setSizePolicy(sizePolicy)
         self.remotePortTitle.setObjectName("remotePortTitle")
 
         self.gridLayout_7.addWidget(self.remotePortTitle, 6, 0, 1, 1)
         spacerItem2 = QSpacerItem(20, 5, QSizePolicy.Minimum, QSizePolicy.Fixed)
         self.gridLayout_7.addItem(spacerItem2, 15, 0, 1, 2)
-        self.extendedOptionsTitle = SubtitleLabel(
-            self.configureProxyScrollAreaWidgetContents
-        )
+        self.extendedOptionsTitle = SubtitleLabel(self.configureProxyScrollAreaWidgetContents)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.extendedOptionsTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.extendedOptionsTitle.sizePolicy().hasHeightForWidth())
         self.extendedOptionsTitle.setSizePolicy(sizePolicy)
         self.extendedOptionsTitle.setObjectName("extendedOptionsTitle")
 
@@ -451,9 +403,7 @@ class OpenFrpMainUI(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.proxyProtocol.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.proxyProtocol.sizePolicy().hasHeightForWidth())
         self.proxyProtocol.setSizePolicy(sizePolicy)
         self.proxyProtocol.setMinimumSize(QSize(110, 33))
         self.proxyProtocol.setMaximumSize(QSize(16777215, 33))
@@ -480,41 +430,29 @@ class OpenFrpMainUI(QWidget):
         self.localAddr.setObjectName("localAddr")
 
         self.gridLayout_7.addWidget(self.localAddr, 4, 1, 1, 1)
-        self.domainBindTitle = StrongBodyLabel(
-            self.configureProxyScrollAreaWidgetContents
-        )
+        self.domainBindTitle = StrongBodyLabel(self.configureProxyScrollAreaWidgetContents)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.domainBindTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.domainBindTitle.sizePolicy().hasHeightForWidth())
         self.domainBindTitle.setSizePolicy(sizePolicy)
         self.domainBindTitle.setObjectName("domainBindTitle")
 
         self.gridLayout_7.addWidget(self.domainBindTitle, 19, 0, 1, 1)
-        self.basicConfigProxyTitle = SubtitleLabel(
-            self.configureProxyScrollAreaWidgetContents
-        )
+        self.basicConfigProxyTitle = SubtitleLabel(self.configureProxyScrollAreaWidgetContents)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.basicConfigProxyTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.basicConfigProxyTitle.sizePolicy().hasHeightForWidth())
         self.basicConfigProxyTitle.setSizePolicy(sizePolicy)
         self.basicConfigProxyTitle.setObjectName("basicConfigProxyTitle")
 
         self.gridLayout_7.addWidget(self.basicConfigProxyTitle, 0, 0, 1, 1)
-        self.proxyModeTitle = StrongBodyLabel(
-            self.configureProxyScrollAreaWidgetContents
-        )
+        self.proxyModeTitle = StrongBodyLabel(self.configureProxyScrollAreaWidgetContents)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.proxyModeTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.proxyModeTitle.sizePolicy().hasHeightForWidth())
         self.proxyModeTitle.setSizePolicy(sizePolicy)
         self.proxyModeTitle.setObjectName("proxyModeTitle")
 
@@ -527,9 +465,7 @@ class OpenFrpMainUI(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.extendedOptionsTip.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.extendedOptionsTip.sizePolicy().hasHeightForWidth())
         self.extendedOptionsTip.setSizePolicy(sizePolicy)
         self.extendedOptionsTip.setObjectName("extendedOptionsTip")
 
@@ -538,15 +474,11 @@ class OpenFrpMainUI(QWidget):
         self.urlRoute.setObjectName("urlRoute")
 
         self.gridLayout_7.addWidget(self.urlRoute, 18, 1, 1, 1)
-        self.urlRouteTitle = StrongBodyLabel(
-            self.configureProxyScrollAreaWidgetContents
-        )
+        self.urlRouteTitle = StrongBodyLabel(self.configureProxyScrollAreaWidgetContents)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.urlRouteTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.urlRouteTitle.sizePolicy().hasHeightForWidth())
         self.urlRouteTitle.setSizePolicy(sizePolicy)
         self.urlRouteTitle.setObjectName("urlRouteTitle")
 
@@ -555,35 +487,25 @@ class OpenFrpMainUI(QWidget):
         self.proxyProtocolTip.setObjectName("proxyProtocolTip")
 
         self.gridLayout_7.addWidget(self.proxyProtocolTip, 17, 0, 1, 2)
-        self.dataGzipTitle = StrongBodyLabel(
-            self.configureProxyScrollAreaWidgetContents
-        )
+        self.dataGzipTitle = StrongBodyLabel(self.configureProxyScrollAreaWidgetContents)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.dataGzipTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.dataGzipTitle.sizePolicy().hasHeightForWidth())
         self.dataGzipTitle.setSizePolicy(sizePolicy)
         self.dataGzipTitle.setObjectName("dataGzipTitle")
 
         self.gridLayout_7.addWidget(self.dataGzipTitle, 13, 0, 1, 1)
-        self.localAddrTitle = StrongBodyLabel(
-            self.configureProxyScrollAreaWidgetContents
-        )
+        self.localAddrTitle = StrongBodyLabel(self.configureProxyScrollAreaWidgetContents)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.localAddrTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.localAddrTitle.sizePolicy().hasHeightForWidth())
         self.localAddrTitle.setSizePolicy(sizePolicy)
         self.localAddrTitle.setObjectName("localAddrTitle")
 
         self.gridLayout_7.addWidget(self.localAddrTitle, 4, 0, 1, 1)
-        self.HorizontalSeparator = HorizontalSeparator(
-            self.configureProxyScrollAreaWidgetContents
-        )
+        self.HorizontalSeparator = HorizontalSeparator(self.configureProxyScrollAreaWidgetContents)
         self.HorizontalSeparator.setObjectName("HorizontalSeparator")
 
         self.gridLayout_7.addWidget(self.HorizontalSeparator, 7, 0, 1, 2)
@@ -598,15 +520,11 @@ class OpenFrpMainUI(QWidget):
         self.proxyMode.setObjectName("proxyMode")
 
         self.gridLayout_7.addWidget(self.proxyMode, 3, 1, 1, 1)
-        self.requestFromTitle = StrongBodyLabel(
-            self.configureProxyScrollAreaWidgetContents
-        )
+        self.requestFromTitle = StrongBodyLabel(self.configureProxyScrollAreaWidgetContents)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.requestFromTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.requestFromTitle.sizePolicy().hasHeightForWidth())
         self.requestFromTitle.setSizePolicy(sizePolicy)
         self.requestFromTitle.setObjectName("requestFromTitle")
 
@@ -622,28 +540,20 @@ class OpenFrpMainUI(QWidget):
         self.gridLayout_7.addWidget(self.selectNode, 1, 1, 1, 1)
         spacerItem4 = QSpacerItem(20, 5, QSizePolicy.Minimum, QSizePolicy.Fixed)
         self.gridLayout_7.addItem(spacerItem4, 12, 0, 1, 2)
-        self.dataEncryptTitle = StrongBodyLabel(
-            self.configureProxyScrollAreaWidgetContents
-        )
+        self.dataEncryptTitle = StrongBodyLabel(self.configureProxyScrollAreaWidgetContents)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.dataEncryptTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.dataEncryptTitle.sizePolicy().hasHeightForWidth())
         self.dataEncryptTitle.setSizePolicy(sizePolicy)
         self.dataEncryptTitle.setObjectName("dataEncryptTitle")
 
         self.gridLayout_7.addWidget(self.dataEncryptTitle, 11, 0, 1, 1)
-        self.proxyNameTitle = StrongBodyLabel(
-            self.configureProxyScrollAreaWidgetContents
-        )
+        self.proxyNameTitle = StrongBodyLabel(self.configureProxyScrollAreaWidgetContents)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.proxyNameTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.proxyNameTitle.sizePolicy().hasHeightForWidth())
         self.proxyNameTitle.setSizePolicy(sizePolicy)
         self.proxyNameTitle.setObjectName("proxyNameTitle")
 
@@ -668,17 +578,13 @@ class OpenFrpMainUI(QWidget):
         self.custom.setObjectName("custom")
 
         self.gridLayout_7.addWidget(self.custom, 24, 0, 1, 2)
-        self.configureProxyScrollArea.setWidget(
-            self.configureProxyScrollAreaWidgetContents
-        )
+        self.configureProxyScrollArea.setWidget(self.configureProxyScrollAreaWidgetContents)
         self.gridLayout_5.addWidget(self.configureProxyScrollArea, 1, 3, 1, 1)
         self.finishNewProxyBtn = PrimaryPushButton(self.newProxyPage)
         sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.finishNewProxyBtn.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.finishNewProxyBtn.sizePolicy().hasHeightForWidth())
         self.finishNewProxyBtn.setSizePolicy(sizePolicy)
         self.finishNewProxyBtn.setMinimumSize(QSize(0, 50))
         self.finishNewProxyBtn.setObjectName("finishNewProxyBtn")
@@ -687,9 +593,7 @@ class OpenFrpMainUI(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.nodeStackedWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.nodeStackedWidget.sizePolicy().hasHeightForWidth())
         self.nodeStackedWidget.setSizePolicy(sizePolicy)
         self.nodeStackedWidget.setObjectName("nodeStackedWidget")
         self.loadingPage = QWidget()
@@ -731,9 +635,7 @@ class OpenFrpMainUI(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.cnNodeContainer.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.cnNodeContainer.sizePolicy().hasHeightForWidth())
         self.cnNodeContainer.setSizePolicy(sizePolicy)
         self.cnNodeContainer.setObjectName("cnNodeContainer")
         self.gridLayout_9 = QGridLayout(self.cnNodeContainer)
@@ -761,9 +663,7 @@ class OpenFrpMainUI(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.hkTwNodeContainer.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.hkTwNodeContainer.sizePolicy().hasHeightForWidth())
         self.hkTwNodeContainer.setSizePolicy(sizePolicy)
         self.hkTwNodeContainer.setObjectName("hkTwNodeContainer")
         self.gridLayout_12 = QGridLayout(self.hkTwNodeContainer)
@@ -772,9 +672,7 @@ class OpenFrpMainUI(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.hkTwNodeTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.hkTwNodeTitle.sizePolicy().hasHeightForWidth())
         self.hkTwNodeTitle.setSizePolicy(sizePolicy)
         self.hkTwNodeTitle.setObjectName("hkTwNodeTitle")
         self.gridLayout_12.addWidget(self.hkTwNodeTitle, 0, 0, 1, 1)
@@ -784,9 +682,7 @@ class OpenFrpMainUI(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.hkTwNodeWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.hkTwNodeWidget.sizePolicy().hasHeightForWidth())
         self.hkTwNodeWidget.setSizePolicy(sizePolicy)
         self.hkTwNodeWidget.setObjectName("hkTwNodeWidget")
         self.gridLayout_12.addWidget(self.hkTwNodeWidget, 1, 0, 1, 2)
@@ -795,9 +691,7 @@ class OpenFrpMainUI(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.foreignNodeContainer.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.foreignNodeContainer.sizePolicy().hasHeightForWidth())
         self.foreignNodeContainer.setSizePolicy(sizePolicy)
         self.foreignNodeContainer.setObjectName("foreignNodeContainer")
         self.gridLayout_11 = QGridLayout(self.foreignNodeContainer)
@@ -806,9 +700,7 @@ class OpenFrpMainUI(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.foreignNodeTitle.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.foreignNodeTitle.sizePolicy().hasHeightForWidth())
         self.foreignNodeTitle.setSizePolicy(sizePolicy)
         self.foreignNodeTitle.setObjectName("foreignNodeTitle")
         self.gridLayout_11.addWidget(self.foreignNodeTitle, 0, 0, 1, 1)
@@ -818,9 +710,7 @@ class OpenFrpMainUI(QWidget):
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.foreignNodeWidget.sizePolicy().hasHeightForWidth()
-        )
+        sizePolicy.setHeightForWidth(self.foreignNodeWidget.sizePolicy().hasHeightForWidth())
         self.foreignNodeWidget.setSizePolicy(sizePolicy)
         self.foreignNodeWidget.setObjectName("foreignNodeWidget")
         self.gridLayout_11.addWidget(self.foreignNodeWidget, 1, 0, 1, 2)
@@ -878,7 +768,9 @@ class OpenFrpMainUI(QWidget):
         self.extendedOptionsTip.setText("这些选项仅给有需要的人使用。\n若无需求，请勿乱动。")
         self.urlRoute.setPlaceholderText("\\")
         self.urlRouteTitle.setText("URL路由：")
-        self.proxyProtocolTip.setText("Proxy Protocol 开启时,如果服务并不支持,\n或未使用该协议,那么会无法访问。")
+        self.proxyProtocolTip.setText(
+            "Proxy Protocol 开启时,如果服务并不支持,\n或未使用该协议,那么会无法访问。"
+        )
         self.dataGzipTitle.setText("数据压缩：")
         self.localAddrTitle.setText("本地地址：")
         self.requestFromTitle.setText("请求来源：")
@@ -892,8 +784,8 @@ class OpenFrpMainUI(QWidget):
         self.requestPass.setPlaceholderText("1145141919810")
         self.finishNewProxyBtn.setText("新建")
         self.cnNodeTitle.setText("国内节点")
-        self.hkTwNodeTitle.setText("中国台湾/中国香港节点")
-        self.foreignNodeTitle.setText("国外节点")
+        self.hkTwNodeTitle.setText("中国台湾/中国香港/中国澳门节点")
+        self.foreignNodeTitle.setText("海外节点")
 
         self.configureProxyScrollArea.viewport().setStyleSheet(
             GlobalMCSL2Variables.scrollAreaViewportQss
@@ -901,15 +793,11 @@ class OpenFrpMainUI(QWidget):
         self.ofProxiesSmoothScrollArea.viewport().setStyleSheet(
             GlobalMCSL2Variables.scrollAreaViewportQss
         )
-        self.nodeScrollArea.viewport().setStyleSheet(
-            GlobalMCSL2Variables.scrollAreaViewportQss
-        )
+        self.nodeScrollArea.viewport().setStyleSheet(GlobalMCSL2Variables.scrollAreaViewportQss)
         self.userImage.setPixmap(QPixmap(":/OFImages/user.png"))
         self.userImage.setFixedSize(QSize(60, 60))
         self.loginEntryBtn.clicked.connect(self.initLoginInterface)
-        self.newProxyBackBtn.clicked.connect(
-            lambda: self.stackedWidget.setCurrentIndex(0)
-        )
+        self.newProxyBackBtn.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(0))
         self.newProxyBtn.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(1))
         self.newProxyBtn.clicked.connect(self.getNodeList_API)
         self.newProxyBtn.setEnabled(False)
@@ -970,9 +858,7 @@ class OpenFrpMainUI(QWidget):
                     2
                 )
         else:
-            self.downloadingBox.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(
-                2
-            )
+            self.downloadingBox.downloadProgressWidget.downloadProgressMainWidget.setCurrentIndex(2)
         self.downloadingBox.downloadProgressWidget.downloading = False
         self.downloadingBox.DownloadWidget().closeBoxBtnFinished.click()
         try:
@@ -990,7 +876,12 @@ class OpenFrpMainUI(QWidget):
             remove("MCSL2/Downloads/frpc_windows_386.zip")
             InfoBar.success(title="解压Frpc", content="成功！", duration=1900, parent=self)
         except Exception:
-            InfoBar.error(title="解压Frpc", content="失败！请删除本插件目录的frpc文件夹，并重新启用插件。", duration=1900, parent=self)
+            InfoBar.error(
+                title="解压Frpc",
+                content="失败！请删除本插件目录的frpc文件夹，并重新启用插件。",
+                duration=1900,
+                parent=self,
+            )
 
     @pyqtSlot(list)
     def downloadFrpc(self, updateInfo):
@@ -1027,9 +918,7 @@ class OpenFrpMainUI(QWidget):
         self.downloadingBox.downloadProgressWidget.PrimaryPushButton.clicked.connect(
             self.hideDownloadHelper
         )
-        self.downloadingBox.canceled.connect(
-            lambda: Aria2Controller.cancelDownloadTask(gid)
-        )
+        self.downloadingBox.canceled.connect(lambda: Aria2Controller.cancelDownloadTask(gid))
         self.downloadingBox.canceled.connect(self.downloadingBox.close)
         self.downloadingBox.paused.connect(
             lambda x: Aria2Controller.pauseDownloadTask(gid)
@@ -1120,22 +1009,22 @@ class OpenFrpMainUI(QWidget):
                 )
         except TypeError:
             InfoBar.error(
-                    "错误",
-                    "登录失败",
-                    position=InfoBarPosition.TOP_RIGHT,
-                    duration=1500,
-                    isClosable=True,
-                    parent=self,
-                )
+                "错误",
+                "登录失败",
+                position=InfoBarPosition.TOP_RIGHT,
+                duration=1500,
+                isClosable=True,
+                parent=self,
+            )
         except Exception:
             InfoBar.error(
-                    "错误",
-                    "插件出现错误，请联系作者解决。",
-                    position=InfoBarPosition.TOP_RIGHT,
-                    duration=-1,
-                    isClosable=True,
-                    parent=self,
-                )
+                "错误",
+                "插件出现错误，请联系作者解决。",
+                position=InfoBarPosition.TOP_RIGHT,
+                duration=-1,
+                isClosable=True,
+                parent=self,
+            )
 
     def getUserInfo_API(self):
         OFVariables.userInfo = {}
@@ -1185,12 +1074,10 @@ class OpenFrpMainUI(QWidget):
 
     def logout(self):
         variablesLogout()
-        ofSettingsController.changeSettings(
-            {
-                "last_user": OFVariables.userName,
-                "last_password": OFVariables.userPassword,
-            }
-        )
+        ofSettingsController.changeSettings({
+            "last_user": OFVariables.userName,
+            "last_password": OFVariables.userPassword,
+        })
         self.accountInfoBtn.clicked.disconnect()
         self.userInfoStackedWidget.setCurrentIndex(0)
         self.userName.setText("[用户名]")
@@ -1274,22 +1161,18 @@ class OpenFrpMainUI(QWidget):
             # 隧道模式标签
             protocolTypeList = ["tcp", "udp", "http", "https"]
             for protocolType in protocolTypeList:
-                if OFVariables.nodeListData[0]["list"][i]["protocolSupport"][
-                    protocolType
-                ]:
+                if OFVariables.nodeListData[0]["list"][i]["protocolSupport"][protocolType]:
                     nodeWidget.addNodeTag(type=2, protoType=protocolType.upper())
             # 节点注释
-            nodeWidget.nodeInfo.setText(
-                f"{OFVariables.nodeListData[0]['list'][i]['comments']}"
-            )
+            nodeWidget.nodeInfo.setText(f"{OFVariables.nodeListData[0]['list'][i]['comments']}")
 
             nodeWidget.setObjectName(
                 f"singleNodeWidget_{i}_{OFVariables.nodeListData[0]['list'][i]['id']}"
             )
 
-            self.nodeLayoutList[
-                OFVariables.nodeListData[0]["list"][i]["classify"]
-            ].addWidget(nodeWidget)
+            self.nodeLayoutList[OFVariables.nodeListData[0]["list"][i]["classify"]].addWidget(
+                nodeWidget
+            )
 
     def clearNodeInfoConfiguration(self):
         self.selectNode.setText("")
@@ -1298,40 +1181,28 @@ class OpenFrpMainUI(QWidget):
         clearNewProxyConfig()
 
     def setUpNodeInfoConfiguration(self):
-        nodeIdxList = (
-            self.sender().objectName().replace("singleNodeWidget_", "").split("_")
-        )
+        nodeIdxList = self.sender().objectName().replace("singleNodeWidget_", "").split("_")
         OFVariables.configuringNodeIndex = int(nodeIdxList[0])
         OFVariables.configuringNodeID = int(nodeIdxList[1])
         self.selectNode.setText(
-            OFVariables.nodeListData[0]["list"][OFVariables.configuringNodeIndex][
-                "name"
-            ]
+            OFVariables.nodeListData[0]["list"][OFVariables.configuringNodeIndex]["name"]
         )
         if (
-            OFVariables.nodeListData[0]["list"][OFVariables.configuringNodeIndex][
-                "allowPort"
-            ]
+            OFVariables.nodeListData[0]["list"][OFVariables.configuringNodeIndex]["allowPort"]
             is None
-            or OFVariables.nodeListData[0]["list"][OFVariables.configuringNodeIndex][
-                "allowPort"
-            ]
+            or OFVariables.nodeListData[0]["list"][OFVariables.configuringNodeIndex]["allowPort"]
             == ""
         ):
             self.remotePort.setPlaceholderText("1~65535")
         else:
             self.remotePort.setPlaceholderText(
-                OFVariables.nodeListData[0]["list"][OFVariables.configuringNodeIndex][
-                    "allowPort"
-                ]
+                OFVariables.nodeListData[0]["list"][OFVariables.configuringNodeIndex]["allowPort"]
                 .replace("(", "")
                 .replace(")", "")
                 .replace(",", "~")
             )
             portRequirement = (
-                OFVariables.nodeListData[0]["list"][OFVariables.configuringNodeIndex][
-                    "allowPort"
-                ]
+                OFVariables.nodeListData[0]["list"][OFVariables.configuringNodeIndex]["allowPort"]
                 .replace("(", "")
                 .replace(")", "")
                 .split(",")
@@ -1340,9 +1211,9 @@ class OpenFrpMainUI(QWidget):
             OFVariables.configuringNodeMaxPort = int(portRequirement[1])
         availableProxyModeList = ["tcp", "udp", "http", "https"]
         for protocolType in availableProxyModeList:
-            if not OFVariables.nodeListData[0]["list"][
-                OFVariables.configuringNodeIndex
-            ]["protocolSupport"][protocolType]:
+            if not OFVariables.nodeListData[0]["list"][OFVariables.configuringNodeIndex][
+                "protocolSupport"
+            ][protocolType]:
                 availableProxyModeList.remove(protocolType)
         self.proxyMode.addItems(availableProxyModeList)
         self.finishNewProxyBtn.setEnabled(True)
@@ -1370,7 +1241,7 @@ class OpenFrpMainUI(QWidget):
             OFVariables.configuringProxyName = (
                 self.proxyName.text()
                 if self.proxyName.text() != ""
-                else f"MCSL2_OfProxy_{randint(10000, 50000)}"
+                else f"MCSL2_{randint(10000, 50000)}"
             )
             OFVariables.configuringProxyType = self.proxyMode.text().strip().lower()
             OFVariables.configuringProxyLocalAddr = self.localAddr.text()
@@ -1453,18 +1324,12 @@ class OpenFrpMainUI(QWidget):
     def initProxiesListWidget(self):
         for i in range(OFVariables.userProxiesData[0]):
             proxyWidget = SingleProxyWidget()
-            proxyWidget.proxyName.setText(
-                OFVariables.userProxiesData[1][i]["proxyName"]
-            )
-            proxyWidget.proxyMode.setText(
-                OFVariables.userProxiesData[1][i]["proxyType"].upper()
-            )
+            proxyWidget.proxyName.setText(OFVariables.userProxiesData[1][i]["proxyName"])
+            proxyWidget.proxyMode.setText(OFVariables.userProxiesData[1][i]["proxyType"].upper())
             proxyWidget.proxyLinkInfo.setText(
                 f"{OFVariables.userProxiesData[1][i]['localIp']}:{OFVariables.userProxiesData[1][i]['localPort']} -> {OFVariables.userProxiesData[1][i]['remotePort']}\n#{OFVariables.userProxiesData[1][i]['nid']} {OFVariables.userProxiesData[1][i]['friendlyNode']}"
             )
-            proxyWidget.SwitchButton.setChecked(
-                OFVariables.userProxiesData[1][i]["online"]
-            )
+            proxyWidget.SwitchButton.setChecked(OFVariables.userProxiesData[1][i]["online"])
             proxyWidget.copyProxyLink.clicked.connect(
                 lambda: QApplication.clipboard().setText(
                     OFVariables.userProxiesData[1][i]["connectAddress"]
@@ -1488,9 +1353,7 @@ class OpenFrpMainUI(QWidget):
                 f"editProxy_{OFVariables.userProxiesData[1][i]['id']}"
             )
             proxyWidget.deleteProxy.clicked.connect(self.removeProxy)
-            proxyWidget.SwitchButton.setObjectName(
-                f"{OFVariables.userProxiesData[1][i]['id']}|"
-            )
+            proxyWidget.SwitchButton.setObjectName(f"{OFVariables.userProxiesData[1][i]['id']}|")
             proxyWidget.SwitchButton.checkedChanged.connect(self.switchProxy)
             self.proxiesLayout.addWidget(proxyWidget)
 
@@ -1500,9 +1363,7 @@ class OpenFrpMainUI(QWidget):
         w.yesButton.setText("取消")
         w.cancelButton.setText("删除")
         w.cancelSignal.connect(self.removeProxy_API)
-        OFVariables.removeProxyID = int(
-            self.sender().objectName().replace("editProxy_", "")
-        )
+        OFVariables.removeProxyID = int(self.sender().objectName().replace("editProxy_", ""))
         w.show()
         self.sender().setEnabled(True)
 

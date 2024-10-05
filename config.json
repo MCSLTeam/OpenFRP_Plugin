@@ -1,9 +1,9 @@
 {
     "plugin_name": "OpenFRP_Plugin",
-    "version": "1.2.0",
-    "description": "OpenFRP映射的插件",
+    "version": "1.3.0",
+    "description": "OpenFRP 映射的插件",
     "icon": "of.png",
     "author": "落雪无痕LxHTT",
-    "author_email": "lxhtt@zyghit.cn",
+    "author_email": "lxhtt@mcsl.com.cn",
     "on_new_thread": false
   }

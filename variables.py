@@ -1,5 +1,5 @@
 class OFVariables:
-    ofPluginVersion = "1.2.0"
+    ofPluginVersion = "1.3.0"
     userSessionID: str = ""
     userAuthorization: str = ""
     userInfo = {}

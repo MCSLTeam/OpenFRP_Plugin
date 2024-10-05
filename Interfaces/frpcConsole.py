@@ -117,7 +117,7 @@ class OpenFrpFrpcConsoleUI(QWidget):
         if "[D]" in frpcLogOutput:
             fmt.setForeground(color[3])
         self.frpcOutput.mergeCurrentCharFormat(fmt)
-        self.frpcOutput.appendPlainText(frpcLogOutput[:-1])
+        self.frpcOutput.appendPlainText(frpcLogOutput[:-1].replace("[0m", "").replace("[1;34m", "").replace("[1;31m", "").replace("[1;33m", ""))
         if "启动成功, 请使用" in frpcLogOutput:
             url = (
                 frpcLogOutput[:-1]

@@ -37,7 +37,6 @@ class FrpcHandler(QObject):
         self.partialData: str = b""
         self.AFrpc = None
         self.FrpcProcess = self.getFrpcProcess()
-        self.frpcExitCode.connect(print)
 
     def getFrpcProcess(self) -> FrpcProcess:
         """
