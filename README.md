@@ -1,4 +1,4 @@
-![大头图](https://socialify.git.ci/MCSLTeam/OpenFRP_Plugin/image?description=1&font=Jost&language=1&owner=1&pattern=Circuit%20Board&theme=Auto&logo=https://img.fastmirror.net/s/2023/07/17/64b5471e1d478.png)
+![大头图](https://socialify.git.ci/MCSLTeam/OpenFRP_Plugin/image?description=1&font=Jost&language=1&owner=1&pattern=Circuit%20Board&theme=Auto&logo=https%3A%2F%2Fimages.mcsl.com.cn%2Fnew%2FMCSL2.png)
 [![](https://img.shields.io/github/v/tag/MCSLTeam/OpenFRP_Plugin?label=ver&style=for-the-badge "Version")](https://github.com/MCSLTeam/OpenFRP_Plugin/releases/latest)   [![](https://img.shields.io/github/downloads/MCSLTeam/OpenFRP_Plugin/total?style=for-the-badge "Downloads")](https://github.com/MCSLTeam/OpenFRP_Plugin/releases)  [![](https://img.shields.io/github/license/MCSLTeam/OpenFRP_Plugin?style=for-the-badge "License")](https://github.com/MCSLTeam/OpenFRP_Plugin/blob/master/LICENSE)
 ### 前言
 这是一个可以在MCSL2上使用OpenFRP内网穿透的插件，请确保您拥有用于登录的Natayark ID和密码。  
