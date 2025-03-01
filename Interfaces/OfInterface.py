@@ -41,7 +41,6 @@ from MCSL2Lib.ProgramControllers.aria2ClientController import Aria2Controller
 from MCSL2Lib.Widgets.loadingTipWidget import LoadFailedTip, LoadingTip
 from MCSL2Lib.Widgets.DownloadProgressWidget import DownloadMessageBox
 from MCSL2Lib.variables import GlobalMCSL2Variables
-from ..encrypt import getPassword, saveUser, getUser
 from ..FrpcController.OfFrpcBridge import FrpcBridge
 from ..variables import FrpcConsoleVariables, clearNewProxyConfig, variablesLogout
 from ..OfSettingsController import OfSettingsController
@@ -932,52 +931,28 @@ class OpenFrpMainUI(QWidget):
         self.loginMessageBox = MessageBox("", "", self)
         self.loginWidget = LoginContainer()
         self.loginWidget.cancelBtn.clicked.connect(self.loginMessageBox.hide)
-        self.loginWidget.userNameLineEdit.clear()
-        self.loginWidget.passwordLineEdit.clear()
-        self.loginWidget.loginBtn.clicked.connect(
-            lambda: self.login_API(
-                username=self.loginWidget.userNameLineEdit.text(),
-                password=self.loginWidget.passwordLineEdit.text(),
-            )
-        )
-        if ofSettingsController.fileSettings["last_user"] != "":
-            self.loginWidget.userNameLineEdit.setText(getUser())
-        if ofSettingsController.fileSettings["last_password"] != "":
-            self.loginWidget.passwordLineEdit.setText(getPassword())
+        self.loginWidget.loginBtn.clicked.connect(self.login_API)
         self.loginMessageBox.textLayout.addWidget(self.loginWidget.loginWidget)
         self.loginMessageBox.titleLabel.setParent(None)
         self.loginMessageBox.contentLabel.setParent(None)
         self.loginMessageBox.buttonGroup.setParent(None)
         self.loginMessageBox.show()
 
-    def login_API(self, username, password):
-        if username == "" or password == "":
-            InfoBar.error(
-                "错误",
-                "任何一项都不能为空",
-                position=InfoBarPosition.TOP_RIGHT,
-                duration=1500,
-                isClosable=True,
-                parent=self.loginMessageBox,
-            )
-        else:
-            self.loginingInfoBar = InfoBar.info(
-                "提示",
-                "正在登录...",
-                position=InfoBarPosition.TOP_RIGHT,
-                duration=-1,
-                isClosable=False,
-                parent=self.loginMessageBox,
-            )
-            OFVariables.userName = username
-            OFVariables.userPassword = password
-            self.loginWidget.loginBtn.setEnabled(False)
-            loginThread = LoginThread(self)
-            loginThread.finished.connect(self.afterLogin)
-            loginThread.start()
+    def login_API(self):
+        self.loginingInfoBar = InfoBar.info(
+            "正在登录",
+            "稍后将打开浏览器进行授权",
+            position=InfoBarPosition.TOP_RIGHT,
+            duration=-1,
+            isClosable=False,
+            parent=self.loginMessageBox,
+        )
+        self.loginWidget.loginBtn.setEnabled(False)
+        loginThread = LoginThread(self)
+        loginThread.finished.connect(self.afterLogin)
+        loginThread.start()
 
     def afterLogin(self):
-        saveUser()
         self.loginWidget.loginBtn.setEnabled(True)
         self.loginingInfoBar.close()
         try:
@@ -1074,10 +1049,6 @@ class OpenFrpMainUI(QWidget):
 
     def logout(self):
         variablesLogout()
-        ofSettingsController.changeSettings({
-            "last_user": OFVariables.userName,
-            "last_password": OFVariables.userPassword,
-        })
         self.accountInfoBtn.clicked.disconnect()
         self.userInfoStackedWidget.setCurrentIndex(0)
         self.userName.setText("[用户名]")

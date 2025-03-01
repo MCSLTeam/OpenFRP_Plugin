@@ -422,7 +422,7 @@ class OpenFrpSettingsUI(QWidget):
             ofSettingsController.fileSettings["bypass_system_proxy"]
         )
         self.forceTLSSwitchBtn.setChecked(
-            ofSettingsController.fileSettings["fprc_force_tls"]
+            ofSettingsController.fileSettings["frpc_force_tls"]
         )
         self.frpcDebugModeSwitchBtn.setChecked(
             ofSettingsController.fileSettings["frpc_debug_mode"]
@@ -439,7 +439,7 @@ class OpenFrpSettingsUI(QWidget):
         self.forceTLSSwitchBtn.checkedChanged.connect(
             lambda: ofSettingsController.changeSettings(
                 {
-                    "fprc_force_tls": self.forceTLSSwitchBtn.isChecked(),
+                    "frpc_force_tls": self.forceTLSSwitchBtn.isChecked(),
                 }
             )
         )

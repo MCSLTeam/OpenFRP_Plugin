@@ -32,7 +32,7 @@ class OfFrpcUpdater(QThread):
 
     def __init__(self, parent):
         super().__init__(parent)
-        self.updateAPI = "https://of-dev-api.bfsea.xyz/commonQuery/get?key=software"
+        self.updateAPI = "https://api.openfrp.net/commonQuery/get?key=software"
         self.oldVer: str
 
     def setUpFrpcEnv(self) -> None:

@@ -4,7 +4,7 @@ from MCSL2Lib.singleton import Singleton
 
 ofConfigTemplate = {
     "bypass_system_proxy": True,
-    "fprc_force_tls": False,
+    "frpc_force_tls": False,
     "frpc_debug_mode": False,
     "last_user": "",
     "last_password": "",
@@ -41,6 +41,7 @@ class OfSettingsController:
                     encoding="utf-8",
                 ) as readConfig:
                     self.fileSettings = loads(readConfig.read())
+                    self.fileSettings["frpc_force_tls"] = self.fileSettings["fprc_force_tls"]
         if set(self.fileSettings.keys()) == set(ofConfigTemplate.keys()):
             pass
         else:

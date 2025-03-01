@@ -7,8 +7,6 @@ class OFVariables:
     loginData = []
     newProxyData = []
     userProxiesData = []
-    userName: str = ""
-    userPassword: str = ""
     configuringNodeIndex = None
     configuringNodeMinPort: int = 1
     configuringNodeMaxPort: int = 65535
