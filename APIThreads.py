@@ -1,5 +1,12 @@
 from PyQt5.QtCore import QThread
-from .OpenFrpLib.OpenFrpLib import *
+from .OpenFrpLib.OpenFrpLib import (
+    login,
+    getUserInfo,
+    getNodeList,
+    newProxy,
+    getUserProxies,
+    removeProxy,
+)
 from .variables import OFVariables
 
 
@@ -9,12 +16,8 @@ class LoginThread(QThread):
         self.setObjectName("LoginThread")
 
     def run(self):
-        try:
-            OFVariables.loginData = login(
-                user=OFVariables.userName, password=OFVariables.userPassword
-            )
-        except Exception:
-            OFVariables.loginData = ["", "", False, "失败"]
+        OFVariables.loginData = login()
+        print(OFVariables.loginData)
 
 
 class GetUserInfoThread(QThread):
@@ -105,7 +108,7 @@ class RemoveProxyThread(QThread):
             OFVariables.removeProxyData = removeProxy(
                 Authorization=OFVariables.userAuthorization,
                 session=OFVariables.userSessionID,
-                proxy_id=OFVariables.removeProxyID
+                proxy_id=OFVariables.removeProxyID,
             )
         except Exception:
             OFVariables.removeProxyData = [None, False, "失败"]

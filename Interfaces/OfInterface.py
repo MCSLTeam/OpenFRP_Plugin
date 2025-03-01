@@ -1327,7 +1327,7 @@ class OpenFrpMainUI(QWidget):
             proxyWidget.proxyName.setText(OFVariables.userProxiesData[1][i]["proxyName"])
             proxyWidget.proxyMode.setText(OFVariables.userProxiesData[1][i]["proxyType"].upper())
             proxyWidget.proxyLinkInfo.setText(
-                f"{OFVariables.userProxiesData[1][i]['localIp']}:{OFVariables.userProxiesData[1][i]['localPort']} -> {OFVariables.userProxiesData[1][i]['remotePort']}\n#{OFVariables.userProxiesData[1][i]['nid']} {OFVariables.userProxiesData[1][i]['friendlyNode']}"
+                f"{OFVariables.userProxiesData[1][i]['localIp']}:{OFVariables.userProxiesData[1][i]['localPort']} -> {OFVariables.userProxiesData[1][i]['remotePort']}\n#{OFVariables.userProxiesData[1][i]['nid']} {OFVariables.userProxiesData[1][i]['friendlyNode']}" if "http" not in OFVariables.userProxiesData[1][i]['proxyType'] else f"{OFVariables.userProxiesData[1][i]['localIp']}:{OFVariables.userProxiesData[1][i]['localPort']} -> {OFVariables.userProxiesData[1][i]['domain']}\n#{OFVariables.userProxiesData[1][i]['nid']} {OFVariables.userProxiesData[1][i]['friendlyNode']}"
             )
             proxyWidget.SwitchButton.setChecked(OFVariables.userProxiesData[1][i]["online"])
             proxyWidget.copyProxyLink.clicked.connect(
